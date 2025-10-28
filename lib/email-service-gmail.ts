@@ -92,8 +92,8 @@ export class GmailEmailService {
             <div class="bank-info">
               <h3>🏦 입금 계좌 정보</h3>
               <table style="width: 100%; border-collapse: collapse;">
-                <tr><td style="padding: 8px 0; border-bottom: 1px solid #ddd;"><strong>은행명:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #ddd;">토스뱅크</td></tr>
-                <tr><td style="padding: 8px 0; border-bottom: 1px solid #ddd;"><strong>계좌번호:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #ddd;" class="highlight">1002-1803-4527</td></tr>
+                <tr><td style="padding: 8px 0; border-bottom: 1px solid #ddd;"><strong>은행명:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #ddd;">케이뱅크</td></tr>
+                <tr><td style="padding: 8px 0; border-bottom: 1px solid #ddd;"><strong>계좌번호:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #ddd;" class="highlight">100-232-962872</td></tr>
                 <tr><td style="padding: 8px 0; border-bottom: 1px solid #ddd;"><strong>예금주:</strong></td><td style="padding: 8px 0; border-bottom: 1px solid #ddd;">김형원</td></tr>
                 <tr><td style="padding: 8px 0;"><strong>입금금액:</strong></td><td style="padding: 8px 0;" class="highlight">₩${orderData.amount.toLocaleString()}</td></tr>
               </table>
@@ -157,8 +157,8 @@ Blog Pro 주문이 성공적으로 접수되었습니다.
 - 연락처: ${orderData.phone}
 
 🏦 입금 계좌 정보
-- 은행명: 토스뱅크
-- 계좌번호: 1002-1803-4527
+- 은행명: 케이뱅크
+- 계좌번호: 100-232-962872
 - 예금주: 김형원
 - 입금금액: ₩${orderData.amount.toLocaleString()}
 

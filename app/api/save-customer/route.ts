@@ -94,13 +94,13 @@ export async function POST(request: NextRequest) {
       await googleSheetsService.addCustomerData(customerData);
       console.log("✅ Google Sheets 자동 연동 성공:", orderId);
 
-      // 이메일 발송 (Brevo 우선, Gmail 대체)
+      // 이메일 발송 (Gmail 우선, Brevo 대체)
       let emailSent = false;
       try {
-        // Brevo 이메일 서비스 시도
-        if (process.env.BREVO_API_KEY && process.env.BREVO_API_KEY !== "your_brevo_api_key_here") {
-          const emailService = new EmailService();
-          await emailService.sendOrderConfirmationEmail({
+        // Gmail 이메일 서비스 우선 시도
+        if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
+          const gmailService = new GmailEmailService();
+          await gmailService.sendOrderConfirmationEmail({
             email,
             name,
             orderId,
@@ -111,19 +111,19 @@ export async function POST(request: NextRequest) {
             months,
             phone
           });
-          console.log("✅ Brevo 주문 확인 이메일 발송 성공:", email);
+          console.log("✅ Gmail 주문 확인 이메일 발송 성공:", email);
           emailSent = true;
         } else {
-          throw new Error("Brevo API 키가 설정되지 않았습니다.");
+          throw new Error("Gmail 설정이 완료되지 않았습니다.");
         }
-      } catch (brevoError) {
-        console.warn("⚠️ Brevo 이메일 발송 실패, Gmail로 재시도:", brevoError);
+      } catch (gmailError) {
+        console.warn("⚠️ Gmail 이메일 발송 실패, Brevo로 재시도:", gmailError);
         
-        // Gmail 이메일 서비스로 대체
+        // Brevo 이메일 서비스로 대체
         try {
-          if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
-            const gmailService = new GmailEmailService();
-            await gmailService.sendOrderConfirmationEmail({
+          if (process.env.BREVO_API_KEY && process.env.BREVO_API_KEY !== "your_brevo_api_key_here") {
+            const emailService = new EmailService();
+            await emailService.sendOrderConfirmationEmail({
               email,
               name,
               orderId,
@@ -134,13 +134,13 @@ export async function POST(request: NextRequest) {
               months,
               phone
             });
-            console.log("✅ Gmail 주문 확인 이메일 발송 성공:", email);
+            console.log("✅ Brevo 주문 확인 이메일 발송 성공:", email);
             emailSent = true;
           } else {
-            console.error("❌ Gmail 설정도 완료되지 않았습니다.");
+            console.error("❌ Brevo API 키도 설정되지 않았습니다.");
           }
-        } catch (gmailError) {
-          console.error("❌ Gmail 이메일 발송 실패:", gmailError);
+        } catch (brevoError) {
+          console.error("❌ Brevo 이메일 발송 실패:", brevoError);
           // 이메일 발송 실패는 전체 프로세스를 중단시키지 않음
         }
       }
