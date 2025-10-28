@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Header } from "@/components/ui/header"
 import { Hero } from "@/components/ui/hero" 
+import { CompetitorPainPoints } from "@/components/ui/competitor-pain-points"
 import { ProblemSolution } from "@/components/ui/problem-solution"
 import { ModuleFeatures } from "@/components/ui/module-features"
 import { RealScreenshots } from "@/components/ui/real-screenshots"
@@ -15,7 +16,8 @@ export default function LandingPage() {
   const [showPriceCalculator, setShowPriceCalculator] = React.useState(false)
 
   const handlePurchaseClick = () => {
-    setShowPriceCalculator(true)
+    // 가격 계산기 페이지로 리다이렉트
+    window.location.href = '/payment-info'
   }
 
   const handleClosePriceCalculator = () => {
@@ -35,6 +37,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background">
       <Header onPurchaseClick={handlePurchaseClick} />
       <Hero onPurchaseClick={handlePurchaseClick} />
+      <CompetitorPainPoints />
       <ProblemSolution />
       <ModuleFeatures onPurchaseClick={handlePurchaseClick} />
       <RealScreenshots />

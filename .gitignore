@@ -26,3 +26,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+
+# playwright test files
+.playwright-mcp/
+
+# downloads folder (contains binary files)
+downloads/
+temp_downloads/
+
+# Google service account (sensitive)
+google-service-account.json
+google-service-account-compressed.json
+
+# development files
+GEMINI.md
+PLAN.md

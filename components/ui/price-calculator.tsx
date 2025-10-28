@@ -14,7 +14,10 @@ import {
   Calculator,
   Zap,
   Check,
-  X
+  X,
+  RefreshCw,
+  Calendar,
+  CreditCard
 } from "lucide-react"
 import { cn, formatPrice } from "@/lib/utils"
 
@@ -132,11 +135,19 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
             <div>
               <CardTitle className="flex items-center space-x-2">
                 <Calculator className="w-6 h-6 text-brand-accent" />
-                <span>라이선스 가격 계산기</span>
+                <span>월 구독 라이선스 계산기</span>
+                <Badge variant="default" className="bg-brand-accent/10 text-brand-accent border-brand-accent/20 ml-2">
+                  <RefreshCw className="w-3 h-3 mr-1" />
+                  월 구독
+                </Badge>
               </CardTitle>
               <p className="text-muted-foreground mt-2">
-                필요한 기능을 선택하고 정확한 가격을 확인하세요
+                매월 자동 갱신되는 구독 서비스의 가격을 확인하세요
               </p>
+              <div className="flex items-center space-x-2 mt-2 text-sm text-muted-foreground">
+                <Calendar className="w-4 h-4" />
+                <span>매월 1일 자동 결제 · 언제든지 취소 가능</span>
+              </div>
             </div>
             {onClose && (
               <Button variant="ghost" size="sm" onClick={onClose}>
@@ -150,7 +161,13 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* 모듈 선택 섹션 */}
             <div className="lg:col-span-2 space-y-6">
-              <h3 className="text-lg font-semibold">모듈 선택</h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">월 구독 모듈 선택</h3>
+                <Badge variant="outline" className="text-xs">
+                  <CreditCard className="w-3 h-3 mr-1" />
+                  매월 자동 갱신
+                </Badge>
+              </div>
               
               <div className="grid gap-4">
                 {modules.map((module) => {
@@ -202,10 +219,11 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
                         <div className="text-right">
                           <div className="font-semibold">
                             ₩{formatPrice(modulePrice)}
+                            <span className="text-xs text-muted-foreground font-normal">/월</span>
                           </div>
                           {!module.isMainModule && hasWritingModule && (
                             <div className="text-xs text-muted-foreground line-through">
-                              ₩{formatPrice(module.basePrice)}
+                              ₩{formatPrice(module.basePrice)}/월
                             </div>
                           )}
                         </div>
@@ -293,10 +311,10 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
                           {/* 가격 계산 설명 */}
                           <div className="mt-3 p-2 bg-background rounded text-xs">
                             <div className="space-y-1">
-                              <div>기본 기능: ₩{formatPrice(module.basePrice)}</div>
-                              <div>확장 비용: {accountCount} × {postCount} × ₩10,000 = ₩{formatPrice(accountCount * postCount * 10000)}</div>
+                              <div>기본 기능: ₩{formatPrice(module.basePrice)}/월</div>
+                              <div>확장 비용: {accountCount} × {postCount} × ₩10,000 = ₩{formatPrice(accountCount * postCount * 10000)}/월</div>
                               <div className="font-medium border-t pt-1">
-                                총 가격: ₩{formatPrice(modulePrice)}
+                                월 구독료: ₩{formatPrice(modulePrice)}/월
                               </div>
                             </div>
                           </div>
@@ -310,7 +328,10 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
 
             {/* 가격 요약 섹션 */}
             <div className="space-y-6">
-              <h3 className="text-lg font-semibold">가격 요약</h3>
+              <div>
+                <h3 className="text-lg font-semibold">월 구독료 요약</h3>
+                <p className="text-sm text-muted-foreground mt-1">매월 자동 갱신됩니다</p>
+              </div>
               
               <Card>
                 <CardContent className="p-4">
@@ -346,7 +367,7 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
                               </div>
                               <div className="text-right">
                                 <div className="font-medium">
-                                  ₩{formatPrice(modulePrice)}
+                                  ₩{formatPrice(modulePrice)}<span className="text-xs text-muted-foreground">/월</span>
                                 </div>
                                 {!moduleItem.isMainModule && hasWritingModule && (
                                   <div className="text-xs text-success">
@@ -375,14 +396,25 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
                       {/* 총 가격 */}
                       <div className="border-t pt-4">
                         <div className="flex items-center justify-between">
-                          <span className="font-semibold">총 월 이용료</span>
-                          <span className="text-2xl font-bold text-brand-accent">
-                            ₩{formatPrice(totalPrice)}
-                          </span>
+                          <span className="font-semibold">총 월 구독료</span>
+                          <div className="text-right">
+                            <span className="text-2xl font-bold text-brand-accent">
+                              ₩{formatPrice(totalPrice)}
+                            </span>
+                            <span className="text-sm text-muted-foreground">/월</span>
+                          </div>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          * 1개월 단위 자동 갱신
-                        </p>
+                        <div className="mt-2 p-2 bg-brand-accent/5 rounded-lg border border-brand-accent/10">
+                          <div className="flex items-center space-x-2 text-xs text-brand-accent">
+                            <RefreshCw className="w-3 h-3" />
+                            <span className="font-medium">매월 자동 갱신 서비스</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            • 매월 1일 자동 결제 (첫 결제일 기준)<br/>
+                            • 언제든지 구독 취소 가능<br/>
+                            • 이용 중인 월까지 서비스 제공
+                          </p>
+                        </div>
                       </div>
 
                       {/* 구매 버튼 */}
@@ -392,8 +424,8 @@ export function PriceCalculator({ onClose, onPurchase }: PriceCalculatorProps) {
                         className="w-full hover:scale-105 transition-transform duration-200 group"
                         onClick={() => onPurchase?.(selectedModules, totalPrice)}
                       >
-                        <Check className="w-4 h-4 mr-2" />
-                        라이선스 구매하기
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        월 구독 시작하기
                       </Button>
                       
                       {/* 추가 정보 */}

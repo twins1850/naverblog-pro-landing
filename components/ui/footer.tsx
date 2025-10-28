@@ -72,19 +72,19 @@ export function Footer() {
     {
       icon: <Mail className="w-5 h-5" />,
       label: "이메일",
-      value: "support@naverblog-auto.com",
-      href: "mailto:support@naverblog-auto.com"
+      value: "jireh202503@gmail.com",
+      href: "mailto:jireh202503@gmail.com"
     },
     {
       icon: <Phone className="w-5 h-5" />,
       label: "전화",
-      value: "02-1234-5678",
-      href: "tel:02-1234-5678"
+      value: "010-4248-1850",
+      href: "tel:010-4248-1850"
     },
     {
       icon: <MapPin className="w-5 h-5" />,
       label: "주소",
-      value: "서울시 강남구 테헤란로 123",
+      value: "가락로26 702호",
       href: null
     }
   ]
@@ -263,7 +263,7 @@ export function Footer() {
             {/* 부가 정보 */}
             <div className="flex items-center space-x-6">
               <div className="text-sm text-muted-foreground">
-                사업자등록번호: 123-45-67890
+                사업자등록번호: 795-11-02437
               </div>
               
               <div className="flex items-center space-x-2">
