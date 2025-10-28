@@ -27,7 +27,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
   
   // Use fixed indices to avoid hydration mismatch
   // Can be made dynamic based on props or other deterministic factors
-  const commentImages = [1, 3]
+  const commentImages = [1, 2]
 
   return (
     <AnimatedSection delay={delay}>
