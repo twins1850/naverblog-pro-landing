@@ -222,6 +222,7 @@ export default function PaymentInfoPage() {
       email,
       name,
       phone,
+      selectedModules: selectedModules.join(','), // 선택된 모듈 ID들 전달
     });
     window.location.href = `/bank-transfer?${params.toString()}`;
   };

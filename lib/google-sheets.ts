@@ -10,9 +10,10 @@ export class GoogleSheetsService {
     this.spreadsheetId = process.env.GOOGLE_SHEETS_SPREADSHEET_ID!;
     
     // Google 인증 설정
-    if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+    if (serviceAccountJson) {
       // JSON 파일을 통한 인증
-      const credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+      const credentials = JSON.parse(serviceAccountJson);
       this.auth = new GoogleAuth({
         credentials,
         scopes: ['https://www.googleapis.com/auth/spreadsheets'],

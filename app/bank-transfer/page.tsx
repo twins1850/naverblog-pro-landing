@@ -31,6 +31,7 @@ interface OrderInfo {
   email: string;
   name: string;
   phone: string;
+  selectedModules?: string; // 선택된 모듈 ID들
 }
 
 // 입금 계좌 정보 (페이액션 연동 계좌)
@@ -58,6 +59,7 @@ export default function BankTransferPage() {
     const months = urlParams.get('months');
     const discountRate = urlParams.get('discountRate');
     const email = urlParams.get('email');
+    const selectedModules = urlParams.get('selectedModules'); // 선택된 모듈 ID들 받기
     const name = urlParams.get('name');
     const phone = urlParams.get('phone');
 
@@ -72,6 +74,7 @@ export default function BankTransferPage() {
         email,
         name,
         phone,
+        selectedModules: selectedModules || '', // 선택된 모듈 ID들 추가
       });
       setDepositName(name); // 기본값으로 주문자 이름 설정
       
@@ -123,6 +126,8 @@ export default function BankTransferPage() {
           status: '입금대기',
           depositName: depositName,
           paymentMethod: paymentMethod,
+          productName: orderInfo.productName || '알 수 없는 상품',
+          selectedModules: orderInfo.selectedModules || '', // 선택된 모듈 ID들 전달
         }),
       });
 

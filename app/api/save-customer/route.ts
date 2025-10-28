@@ -3,6 +3,44 @@ import { GoogleSheetsService } from "@/lib/google-sheets";
 import { EmailService } from "@/lib/email-service";
 import { GmailEmailService } from "@/lib/email-service-gmail";
 
+// 상품명을 코드로 변환하는 함수 (다중 상품 지원)
+function getProductCodes(productNames: string | string[]): string {
+  const productMap: Record<string, string> = {
+    '글쓰기자동화': 'A',
+    '댓글자동화': 'B', 
+    '서로이웃자동화': 'C',
+    '대댓글자동화': 'D'
+  };
+  
+  // 문자열 처리 - "댓글자동화" 또는 "댓글자동화+서로이웃자동화" 형식 처리
+  if (typeof productNames === 'string') {
+    // + 기호로 분리된 다중 상품 처리
+    if (productNames.includes('+')) {
+      const modules = productNames.split('+').map(name => name.trim());
+      const codes = modules
+        .map(name => productMap[name])
+        .filter(code => code)
+        .sort();
+      return codes.length > 0 ? codes.join('') : '';
+    }
+    
+    // 단일 상품
+    return productMap[productNames] || '';
+  }
+  
+  // 배열 형식 처리 (향후 확장 대비)
+  if (Array.isArray(productNames)) {
+    const codes = productNames
+      .map(name => productMap[name])
+      .filter(code => code)
+      .sort();
+    
+    return codes.length > 0 ? codes.join('') : '';
+  }
+  
+  return '';
+}
+
 // 통합 구조로 변경: 구매 정보는 issue-license에서 함께 처리됩니다.
 // 이 API는 하위 호환성을 위해 유지하지만 실제로는 사용하지 않는 것을 권장합니다.
 export async function POST(request: NextRequest) {
@@ -22,6 +60,8 @@ export async function POST(request: NextRequest) {
       orderId,
       paymentKey,
       status = "결제완료",
+      productName,
+      selectedModules, // 선택된 모듈 ID들 받기
     } = body;
 
     // 입력 데이터 검증
@@ -69,13 +109,33 @@ export async function POST(request: NextRequest) {
 
       const googleSheetsService = new GoogleSheetsService();
       
+      // 선택된 모듈로부터 정확한 상품 코드 생성
+      let productCodes = '';
+      if (selectedModules) {
+        const moduleIdMap: Record<string, string> = {
+          'writing': 'A',
+          'comment': 'B',
+          'neighbor': 'C',
+          'reply': 'D'
+        };
+        
+        const modules = selectedModules.split(',').filter(id => id);
+        const codes = modules.map(id => moduleIdMap[id]).filter(code => code).sort();
+        productCodes = codes.join('');
+      }
+      
+      // productCodes가 없으면 productName으로부터 파싱 시도
+      if (!productCodes) {
+        productCodes = getProductCodes(productName || '');
+      }
+      
       const customerData = {
         이름: name,
         이메일: email,
         연락처: phone,
         결제일시: new Date().toISOString(),
         결제금액: `₩${amount.toLocaleString()}`,
-        상품유형: `blog-pro-${accountCount}계정-${postCount}글-${months}개월`,
+        상품유형: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
         아이디수: accountCount,
         글수: postCount,
         개월수: months,
@@ -104,7 +164,7 @@ export async function POST(request: NextRequest) {
             email,
             name,
             orderId,
-            productName: body.productName || `blog-pro-${accountCount}계정-${postCount}글-${months}개월`,
+            productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
             amount,
             accountIds: accountCount,
             postsPerAccount: postCount,
@@ -127,7 +187,7 @@ export async function POST(request: NextRequest) {
               email,
               name,
               orderId,
-              productName: body.productName || `blog-pro-${accountCount}계정-${postCount}글-${months}개월`,
+              productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
               amount,
               accountIds: accountCount,
               postsPerAccount: postCount,
