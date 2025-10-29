@@ -1,76 +1,127 @@
 import { NextRequest, NextResponse } from "next/server";
-import { EmailService } from "@/lib/email-service";
+import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("🧪 Brevo 이메일 서비스 테스트 시작");
-    
-    // API 키 확인
-    if (!process.env.BREVO_API_KEY || process.env.BREVO_API_KEY === "your_brevo_api_key_here") {
-      return NextResponse.json({
-        success: false,
-        error: "Brevo API 키가 설정되지 않았습니다.",
-        message: "BREVO_API_KEY 환경변수를 실제 API 키로 설정해주세요.",
-        currentKey: process.env.BREVO_API_KEY ? "설정됨 (placeholder)" : "설정안됨",
-        instruction: "https://app.brevo.com → Profile → SMTP & API → API Keys에서 키를 복사하여 .env.local 파일에 설정하세요."
-      }, { status: 400 });
-    }
-
     const body = await request.json();
-    const testEmail = body.email || "test@example.com";
+    const testEmail = body.email || 'twins1850@gmail.com';
     
-    const emailService = new EmailService();
-    
-    // 테스트 주문 데이터
-    const testOrderData = {
-      email: testEmail,
-      name: "테스트 사용자",
-      orderId: `TEST-${Date.now()}`,
-      productName: "blog-pro-2계정-3글-1개월 (테스트)",
-      amount: 50000,
-      accountIds: 2,
-      postsPerAccount: 3,
-      months: 1,
-      phone: "010-1234-5678"
+    // 환경변수 체크
+    const envCheck = {
+      GMAIL_USER: !!process.env.GMAIL_USER,
+      GMAIL_USER_VALUE: process.env.GMAIL_USER || 'MISSING',
+      GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD,
+      PASSWORD_LENGTH: process.env.GMAIL_APP_PASSWORD?.length || 0,
     };
 
-    await emailService.sendOrderConfirmationEmail(testOrderData);
-    
-    console.log("✅ 테스트 이메일 발송 성공:", testEmail);
-    
-    return NextResponse.json({
-      success: true,
-      message: "테스트 이메일이 성공적으로 발송되었습니다.",
-      testData: testOrderData
-    });
-    
+    console.log('🔍 Test Email - 환경변수 체크:', envCheck);
+
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      return NextResponse.json({
+        success: false,
+        error: 'Gmail 환경변수가 설정되지 않았습니다',
+        envCheck,
+        message: 'GMAIL_USER 또는 GMAIL_APP_PASSWORD가 누락됨'
+      }, { status: 500 });
+    }
+
+    // Gmail transporter 생성
+    let transporter;
+    try {
+      transporter = nodemailer.createTransporter({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_APP_PASSWORD
+        }
+      });
+
+      console.log('✅ Gmail transporter 생성 성공');
+    } catch (error) {
+      console.error('❌ Gmail transporter 생성 실패:', error);
+      return NextResponse.json({
+        success: false,
+        error: 'Gmail transporter 생성 실패',
+        details: error instanceof Error ? error.message : String(error),
+        envCheck
+      }, { status: 500 });
+    }
+
+    // transporter 검증
+    try {
+      await transporter.verify();
+      console.log('✅ Gmail 연결 검증 성공');
+    } catch (verifyError) {
+      console.error('❌ Gmail 연결 검증 실패:', verifyError);
+      return NextResponse.json({
+        success: false,
+        error: 'Gmail 인증 실패',
+        details: verifyError instanceof Error ? verifyError.message : String(verifyError),
+        envCheck,
+        hint: '앱 비밀번호가 올바른지 확인하세요'
+      }, { status: 500 });
+    }
+
+    // 테스트 이메일 발송
+    const testMessage = {
+      from: {
+        name: 'Blog Pro Test',
+        address: process.env.GMAIL_USER
+      },
+      to: testEmail,
+      subject: `[테스트] Gmail 연결 확인 - ${new Date().toLocaleString('ko-KR')}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2>🔧 Gmail 테스트 이메일</h2>
+          <p>이 이메일은 Blog Pro의 Gmail 연결을 테스트하기 위해 발송되었습니다.</p>
+          <div style="background: #f0f0f0; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3>테스트 정보:</h3>
+            <ul>
+              <li>발송 시각: ${new Date().toLocaleString('ko-KR')}</li>
+              <li>발신자: ${process.env.GMAIL_USER}</li>
+              <li>수신자: ${testEmail}</li>
+              <li>서버: Vercel Production</li>
+            </ul>
+          </div>
+          <p style="color: green; font-weight: bold;">✅ Gmail 연결이 정상적으로 작동하고 있습니다!</p>
+        </div>
+      `,
+      text: `Gmail 테스트 이메일\n\n이메일이 정상적으로 발송되었습니다.\n발송시각: ${new Date().toLocaleString('ko-KR')}`
+    };
+
+    try {
+      const result = await transporter.sendMail(testMessage);
+      console.log('✅ 테스트 이메일 발송 성공:', result);
+      
+      return NextResponse.json({
+        success: true,
+        message: '테스트 이메일이 성공적으로 발송되었습니다',
+        result: {
+          messageId: result.messageId,
+          response: result.response,
+          accepted: result.accepted,
+          rejected: result.rejected
+        },
+        sentTo: testEmail,
+        timestamp: new Date().toISOString()
+      });
+    } catch (sendError) {
+      console.error('❌ 테스트 이메일 발송 실패:', sendError);
+      return NextResponse.json({
+        success: false,
+        error: '이메일 발송 실패',
+        details: sendError instanceof Error ? sendError.message : String(sendError),
+        code: (sendError as any)?.code,
+        command: (sendError as any)?.command,
+        envCheck
+      }, { status: 500 });
+    }
+
   } catch (error) {
-    console.error("❌ 테스트 이메일 발송 실패:", error);
-    
+    console.error('❌ 테스트 API 오류:', error);
     return NextResponse.json({
       success: false,
-      error: "테스트 이메일 발송 중 오류가 발생했습니다.",
-      details: error instanceof Error ? error.message : String(error),
-      apiKeyStatus: process.env.BREVO_API_KEY ? "설정됨" : "설정안됨"
-    }, { status: 500 });
-  }
-}
-
-export async function GET(request: NextRequest) {
-  try {
-    return NextResponse.json({
-      service: "Brevo Email Service",
-      apiKeyConfigured: !!(process.env.BREVO_API_KEY && process.env.BREVO_API_KEY !== "your_brevo_api_key_here"),
-      senderEmail: process.env.BREVO_SENDER_EMAIL,
-      senderName: process.env.BREVO_SENDER_NAME,
-      currentApiKey: process.env.BREVO_API_KEY ? 
-        (process.env.BREVO_API_KEY === "your_brevo_api_key_here" ? "placeholder" : "configured") 
-        : "not_set",
-      instructions: "https://app.brevo.com → Profile → SMTP & API → API Keys에서 API 키를 가져와서 .env.local 파일에 설정하세요."
-    });
-  } catch (error) {
-    return NextResponse.json({
-      error: "환경변수 확인 중 오류가 발생했습니다.",
+      error: '테스트 중 오류 발생',
       details: error instanceof Error ? error.message : String(error)
     }, { status: 500 });
   }
