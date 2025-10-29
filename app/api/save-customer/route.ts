@@ -14,9 +14,12 @@ function getProductCodes(productNames: string | string[]): string {
   
   // 문자열 처리 - "댓글자동화" 또는 "댓글자동화+서로이웃자동화" 형식 처리
   if (typeof productNames === 'string') {
+    // "글쓰기자동화 1.1" 형식에서 상품명만 추출
+    const cleanProductName = productNames.split(' ')[0]; // "글쓰기자동화 1.1" -> "글쓰기자동화"
+    
     // + 기호로 분리된 다중 상품 처리
-    if (productNames.includes('+')) {
-      const modules = productNames.split('+').map(name => name.trim());
+    if (cleanProductName.includes('+')) {
+      const modules = cleanProductName.split('+').map(name => name.trim());
       const codes = modules
         .map(name => productMap[name])
         .filter(code => code)
@@ -25,13 +28,13 @@ function getProductCodes(productNames: string | string[]): string {
     }
     
     // 단일 상품
-    return productMap[productNames] || '';
+    return productMap[cleanProductName] || '';
   }
   
   // 배열 형식 처리 (향후 확장 대비)
   if (Array.isArray(productNames)) {
     const codes = productNames
-      .map(name => productMap[name])
+      .map(name => productMap[name.split(' ')[0]]) // 각 상품명에서도 버전 제거
       .filter(code => code)
       .sort();
     

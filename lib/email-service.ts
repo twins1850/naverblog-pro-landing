@@ -128,7 +128,7 @@ export class EmailService {
               <p>
                 📧 <strong>이메일:</strong> jireh202503@gmail.com<br>
                 📞 <strong>전화:</strong> 010-4248-1850<br>
-                💬 <strong>카카오톡:</strong> @blogpro
+                💬 <strong>카카오채널:</strong> <a href="http://pf.kakao.com/_ShwJn/chat" style="color: #2196f3; text-decoration: none;">http://pf.kakao.com/_ShwJn/chat</a>
               </p>
             </div>
 
@@ -185,7 +185,7 @@ Blog Pro 주문이 성공적으로 접수되었습니다.
 📞 문의 및 입금 확인
 - 이메일: jireh202503@gmail.com
 - 전화: 010-4248-1850
-- 카카오톡: @blogpro
+- 카카오채널: http://pf.kakao.com/_ShwJn/chat
 
 감사합니다.
 Blog Pro 팀
