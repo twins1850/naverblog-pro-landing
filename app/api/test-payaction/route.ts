@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       data: {
         orderId: testOrderId,
         depositorName: "김테스트M7",
-        amount: 80000, // 글쓰기+대댓글 조합 가격
+        amount: 150000, // 글쓰기(110,000) + 대댓글(40,000) = 150,000원
         bankName: "국민은행",
         accountNumber: "123-456-789",
         depositTime: new Date().toISOString(),
