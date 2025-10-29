@@ -154,11 +154,25 @@ export async function POST(request: NextRequest) {
       await googleSheetsService.addCustomerData(customerData);
       console.log("✅ Google Sheets 자동 연동 성공:", orderId);
 
+      // 환경변수 디버깅 로그
+      console.log("🔍 환경변수 체크:", {
+        GMAIL_USER: !!process.env.GMAIL_USER,
+        GMAIL_USER_VALUE: process.env.GMAIL_USER ? "설정됨" : "없음",
+        GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD,
+        GMAIL_APP_PASSWORD_LENGTH: process.env.GMAIL_APP_PASSWORD?.length || 0,
+        BREVO_API_KEY: !!process.env.BREVO_API_KEY,
+        NODE_ENV: process.env.NODE_ENV
+      });
+
       // 이메일 발송 (Gmail 우선, Brevo 대체)
       let emailSent = false;
       try {
         // Gmail 이메일 서비스 우선 시도
-        if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
+        const hasGmailConfig = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+        console.log("📧 Gmail 설정 상태:", hasGmailConfig ? "활성화" : "비활성화");
+        
+        if (hasGmailConfig && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
+          console.log("🚀 Gmail 발송 시도 시작...");
           const gmailService = new GmailEmailService();
           await gmailService.sendOrderConfirmationEmail({
             email,
@@ -174,10 +188,15 @@ export async function POST(request: NextRequest) {
           console.log("✅ Gmail 주문 확인 이메일 발송 성공:", email);
           emailSent = true;
         } else {
+          console.log("❌ Gmail 설정 누락 - 환경변수를 확인하세요");
           throw new Error("Gmail 설정이 완료되지 않았습니다.");
         }
       } catch (gmailError) {
-        console.warn("⚠️ Gmail 이메일 발송 실패, Brevo로 재시도:", gmailError);
+        console.error("❌ Gmail 이메일 발송 실패 상세:", {
+          error: gmailError instanceof Error ? gmailError.message : String(gmailError),
+          stack: gmailError instanceof Error ? gmailError.stack : undefined,
+        });
+        console.warn("⚠️ Brevo로 재시도합니다...");
         
         // Brevo 이메일 서비스로 대체
         try {

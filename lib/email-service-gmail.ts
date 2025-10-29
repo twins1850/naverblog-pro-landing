@@ -4,13 +4,32 @@ export class GmailEmailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER, // Gmail 계정
-        pass: process.env.GMAIL_APP_PASSWORD // Gmail 앱 비밀번호
-      }
+    // 환경변수 체크
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      console.error('❌ Gmail 환경변수 누락:', {
+        GMAIL_USER: !!process.env.GMAIL_USER,
+        GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD
+      });
+      throw new Error('Gmail 환경변수가 설정되지 않았습니다.');
+    }
+
+    console.log('📧 Gmail 서비스 초기화:', {
+      user: process.env.GMAIL_USER,
+      passwordLength: process.env.GMAIL_APP_PASSWORD.length
     });
+
+    try {
+      this.transporter = nodemailer.createTransporter({
+        service: 'gmail',
+        auth: {
+          user: process.env.GMAIL_USER,
+          pass: process.env.GMAIL_APP_PASSWORD
+        }
+      });
+    } catch (error) {
+      console.error('❌ Gmail transporter 생성 실패:', error);
+      throw error;
+    }
   }
 
   async sendOrderConfirmationEmail(orderData: {
@@ -36,10 +55,29 @@ export class GmailEmailService {
         text: this.generateOrderConfirmationText(orderData)
       };
 
+      console.log('📮 Gmail 발송 시도:', {
+        from: mailOptions.from.address,
+        to: mailOptions.to,
+        subject: mailOptions.subject
+      });
+
       const result = await this.transporter.sendMail(mailOptions);
-      console.log('✅ Gmail로 주문 확인 이메일 발송 성공:', result.messageId);
+      
+      console.log('✅ Gmail로 주문 확인 이메일 발송 성공:', {
+        messageId: result.messageId,
+        response: result.response,
+        to: orderData.email,
+        accepted: result.accepted,
+        rejected: result.rejected
+      });
     } catch (error) {
-      console.error('❌ Gmail 이메일 발송 실패:', error);
+      console.error('❌ Gmail 이메일 발송 실패 상세:', {
+        error: error instanceof Error ? error.message : String(error),
+        code: (error as any)?.code,
+        command: (error as any)?.command,
+        responseCode: (error as any)?.responseCode,
+        stack: error instanceof Error ? error.stack : undefined
+      });
       throw error;
     }
   }
