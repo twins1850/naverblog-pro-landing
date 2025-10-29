@@ -4,19 +4,21 @@ export async function POST(request: NextRequest) {
   try {
     const { productName, accountCount = 5, months = 3 } = await request.json();
     
-    // 기능 코드 추출 로직
+    // 기능 코드 추출 로직 (대댓글 우선 처리)
     const codes = [];
     if (productName.includes('글쓰기') || productName.includes('블로그')) {
       codes.push('A');
     }
-    if (productName.includes('댓글')) {
-      codes.push('B'); 
-    }
-    if (productName.includes('서로이웃')) {
-      codes.push('C');
-    }
+    
+    // ⚠️ 중요: 대댓글을 먼저 확인하고, 순수 댓글자동화와 구분
     if (productName.includes('대댓글')) {
       codes.push('D');
+    } else if (productName.includes('댓글') && !productName.includes('대댓글')) {
+      codes.push('B'); 
+    }
+    
+    if (productName.includes('서로이웃')) {
+      codes.push('C');
     }
     
     const featureCodes = codes.length > 0 ? codes : ['A', 'B', 'C', 'D'];
