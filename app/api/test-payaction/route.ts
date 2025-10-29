@@ -11,23 +11,23 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const testOrderId = body.testOrderId || "BLOG202510296709";
     
-    // 테스트용 PayAction 웹훅 데이터 생성
+    // 글쓰기 자동화 + 대댓글 자동화 조합 테스트 (AD → M7 예상)
     const testPayload = {
       type: "deposit_confirmed",
       data: {
         orderId: testOrderId,
-        depositorName: "김테스트",
-        amount: 110000,
+        depositorName: "김테스트M7",
+        amount: 80000, // 글쓰기+대댓글 조합 가격
         bankName: "국민은행",
         accountNumber: "123-456-789",
         depositTime: new Date().toISOString(),
         customerEmail: "twins1850@naver.com",
-        customerName: "김테스트",
+        customerName: "김테스트M7",
         customerPhone: "010-1234-5678",
-        productName: "글쓰기자동화",
-        accountIds: 1,
-        postsPerAccount: 1,
-        months: 1
+        productName: "글쓰기자동화 + 대댓글자동화",  // AD 조합 (M7 예상)
+        accountIds: 5,
+        postsPerAccount: 3,
+        months: 3
       }
     };
 

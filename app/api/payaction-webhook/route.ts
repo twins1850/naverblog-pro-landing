@@ -127,11 +127,24 @@ export async function POST(request: NextRequest) {
       const licenseResult = await licenseService.issueLicenseFromPayment(licenseCustomerInfo);
 
       if (licenseResult.success) {
+        // 🧪 라이선스 인코딩 테스트 로그 추가
+        const licenseEncoding = licenseResult.licenseKey.split('-')[0];
         console.log("🎉 라이선스 자동 발급 성공:", {
           라이선스키: licenseResult.licenseKey,
+          실제인코딩: licenseEncoding,
+          상품명: licenseCustomerInfo.productName,
           이메일발송: licenseResult.emailSent,
           만료일: licenseResult.expiryDate
         });
+        
+        // G4 인코딩 테스트 결과 확인
+        if (licenseCustomerInfo.productName.includes('댓글')) {
+          if (licenseEncoding === 'G4') {
+            console.log("✅ 댓글자동화 G4 인코딩 성공!");
+          } else {
+            console.log(`❌ 댓글자동화 인코딩 오류: 예상 G4, 실제 ${licenseEncoding}`);
+          }
+        }
 
         // 4단계: Google Sheets에 라이선스 정보 업데이트
         await googleSheetsService.updateLicenseInfo(orderId, {

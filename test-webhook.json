@@ -1,0 +1,18 @@
+{
+  "type": "deposit_confirmed",
+  "data": {
+    "orderId": "BLOG-AD-M7-TEST-001",
+    "depositorName": "김테스트M7",
+    "amount": 80000,
+    "bankName": "국민은행",
+    "accountNumber": "123-456-789",
+    "depositTime": "2025-10-29T08:30:00.000Z",
+    "customerEmail": "twins1850@naver.com",
+    "customerName": "김테스트M7",
+    "customerPhone": "010-1234-5678",
+    "productName": "글쓰기자동화 + 대댓글자동화",
+    "accountIds": 5,
+    "postsPerAccount": 3,
+    "months": 3
+  }
+}
