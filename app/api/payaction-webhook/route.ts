@@ -2,6 +2,74 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleSheetsService } from "@/lib/google-sheets";
 import { LicenseService } from "@/lib/license-service.js";
 
+// 상품별 가격 계산 함수
+function calculateExpectedAmount(productName: string): number {
+  // 가격표 (https://www.autotoolshub.com/payment-info 기준)
+  const prices = {
+    // 단일 모듈
+    '글쓰기자동화': 110000,          // A = ₩110,000
+    '댓글자동화': 50000,            // B = ₩50,000  
+    '서로이웃자동화': 50000,         // C = ₩50,000
+    '대댓글자동화': 40000,          // D = ₩40,000
+    
+    // 조합 모듈 (할인 적용)
+    '글쓰기자동화 + 댓글자동화': 140000,      // AB = ₩140,000
+    '글쓰기자동화 + 서로이웃자동화': 140000,   // AC = ₩140,000  
+    '글쓰기자동화 + 대댓글자동화': 150000,     // AD = ₩150,000
+    '댓글자동화 + 서로이웃자동화': 80000,      // BC = ₩80,000
+    '댓글자동화 + 대댓글자동화': 70000,        // BD = ₩70,000
+    '서로이웃자동화 + 대댓글자동화': 70000,     // CD = ₩70,000
+    
+    // 3개 조합
+    '글쓰기자동화 + 댓글자동화 + 서로이웃자동화': 170000,        // ABC = ₩170,000
+    '글쓰기자동화 + 댓글자동화 + 대댓글자동화': 180000,         // ABD = ₩180,000
+    '글쓰기자동화 + 서로이웃자동화 + 대댓글자동화': 180000,      // ACD = ₩180,000
+    '댓글자동화 + 서로이웃자동화 + 대댓글자동화': 100000,       // BCD = ₩100,000
+    
+    // 전체 패키지
+    '블로그 자동화 풀패키지': 200000,  // ABCD = ₩200,000
+    '글쓰기자동화 + 댓글자동화 + 서로이웃자동화 + 대댓글자동화': 200000
+  };
+
+  // 상품명 정규화 및 매칭
+  const normalizedName = productName?.trim();
+  
+  // 직접 매칭 시도
+  if (prices[normalizedName]) {
+    return prices[normalizedName];
+  }
+  
+  // 부분 매칭으로 개별 모듈 가격 계산
+  let totalPrice = 0;
+  let moduleCount = 0;
+  
+  if (normalizedName.includes('글쓰기')) {
+    totalPrice += 110000;
+    moduleCount++;
+  }
+  if (normalizedName.includes('댓글') && !normalizedName.includes('대댓글')) {
+    totalPrice += 50000;
+    moduleCount++;
+  }
+  if (normalizedName.includes('서로이웃')) {
+    totalPrice += 50000;
+    moduleCount++;
+  }
+  if (normalizedName.includes('대댓글')) {
+    totalPrice += 40000;
+    moduleCount++;
+  }
+  
+  // 다중 모듈 할인 적용
+  if (moduleCount >= 2) {
+    // 실제 웹사이트 가격표의 할인 적용 로직에 따라 조정
+    // 현재는 개별 모듈 합계를 기본값으로 사용
+  }
+  
+  // 기본값: 50,000원 (댓글자동화)
+  return totalPrice > 0 ? totalPrice : 50000;
+}
+
 export async function POST(request: NextRequest) {
   try {
     console.log("🔔 페이액션 입금 알림 웹훅 수신됨");
@@ -78,6 +146,48 @@ export async function POST(request: NextRequest) {
         });
         // 경고만 출력하고 계속 진행
       }
+
+      // 💰 금액 검증 로직 추가
+      const expectedAmount = calculateExpectedAmount(customerInfo.상품유형 || productName);
+      const depositedAmount = parseInt(amount.toString().replace(/[^\d]/g, ''));
+      
+      console.log("💰 금액 검증:", {
+        상품유형: customerInfo.상품유형 || productName,
+        예상금액: expectedAmount,
+        입금금액: depositedAmount,
+        일치여부: depositedAmount >= expectedAmount
+      });
+
+      if (depositedAmount < expectedAmount) {
+        console.error("❌ 입금 금액 부족:", {
+          필요금액: expectedAmount,
+          입금금액: depositedAmount,
+          부족금액: expectedAmount - depositedAmount
+        });
+        
+        // 입금 상태는 "입금부족"으로 업데이트
+        await googleSheetsService.updatePaymentStatus(orderId, {
+          상태: "입금부족",
+          입금자명: depositorName,
+          입금금액: `₩${depositedAmount.toLocaleString()}`,
+          필요금액: `₩${expectedAmount.toLocaleString()}`,
+          부족금액: `₩${(expectedAmount - depositedAmount).toLocaleString()}`,
+          입금시간: depositTime || new Date().toISOString(),
+          결제방식: "계좌이체"
+        });
+
+        return NextResponse.json({
+          success: false,
+          message: "입금 금액이 부족합니다",
+          orderId: orderId,
+          expectedAmount: expectedAmount,
+          depositedAmount: depositedAmount,
+          shortfall: expectedAmount - depositedAmount,
+          status: "insufficient_payment"
+        }, { status: 402 }); // 402 Payment Required
+      }
+
+      console.log("✅ 금액 검증 통과 - 라이선스 발급 진행");
 
       // 2단계: Google Sheets 상태 업데이트 (입금완료)
       console.log("📝 Google Sheets 입금 상태 업데이트 중...");
