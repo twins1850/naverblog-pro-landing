@@ -147,4 +147,103 @@ export class GoogleSheetsService {
       throw error;
     }
   }
+
+  // 웹훅에서 사용할 메소드들 추가
+  async findCustomerByOrderId(orderId: string): Promise<any> {
+    try {
+      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+      if (!sheet) {
+        throw new Error('스프레드시트를 찾을 수 없습니다.');
+      }
+
+      const rows = await sheet.getRows();
+      const targetRow = rows.find(row => row.get('주문번호') === orderId);
+      
+      if (targetRow) {
+        return {
+          이름: targetRow.get('이름'),
+          이메일: targetRow.get('이메일'),
+          연락처: targetRow.get('연락처'),
+          결제금액: targetRow.get('결제금액'),
+          상품유형: targetRow.get('상품유형'),
+          아이디수: targetRow.get('아이디수'),
+          글수: targetRow.get('글수'),
+          개월수: targetRow.get('개월수'),
+          상태: targetRow.get('상태'),
+          주문번호: targetRow.get('주문번호'),
+          결제방식: targetRow.get('결제방식')
+        };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('❌ Google Sheets 고객 조회 실패:', error);
+      throw error;
+    }
+  }
+
+  async updatePaymentStatus(orderId: string, updateData: any): Promise<void> {
+    try {
+      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+      if (!sheet) {
+        throw new Error('스프레드시트를 찾을 수 없습니다.');
+      }
+
+      const rows = await sheet.getRows();
+      const targetRow = rows.find(row => row.get('주문번호') === orderId);
+      
+      if (targetRow) {
+        // 업데이트할 데이터 설정
+        Object.keys(updateData).forEach(key => {
+          targetRow.set(key, updateData[key]);
+        });
+        
+        await targetRow.save();
+        console.log(`✅ 주문번호 ${orderId} 결제 상태 업데이트 완료`);
+      } else {
+        console.warn(`⚠️ 주문번호 ${orderId}를 찾을 수 없습니다.`);
+        throw new Error(`주문번호 ${orderId}를 찾을 수 없습니다.`);
+      }
+    } catch (error) {
+      console.error('❌ Google Sheets 결제 상태 업데이트 실패:', error);
+      throw error;
+    }
+  }
+
+  async updateLicenseInfo(orderId: string, licenseData: any): Promise<void> {
+    try {
+      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+      if (!sheet) {
+        throw new Error('스프레드시트를 찾을 수 없습니다.');
+      }
+
+      const rows = await sheet.getRows();
+      const targetRow = rows.find(row => row.get('주문번호') === orderId);
+      
+      if (targetRow) {
+        // 라이선스 정보 업데이트
+        Object.keys(licenseData).forEach(key => {
+          targetRow.set(key, licenseData[key]);
+        });
+        
+        await targetRow.save();
+        console.log(`✅ 주문번호 ${orderId} 라이선스 정보 업데이트 완료`);
+      } else {
+        console.warn(`⚠️ 주문번호 ${orderId}를 찾을 수 없습니다.`);
+        throw new Error(`주문번호 ${orderId}를 찾을 수 없습니다.`);
+      }
+    } catch (error) {
+      console.error('❌ Google Sheets 라이선스 정보 업데이트 실패:', error);
+      throw error;
+    }
+  }
 }
