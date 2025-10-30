@@ -1,0 +1,18 @@
+{
+  "type": "deposit_confirmed",
+  "data": {
+    "orderId": "COMMENT-G4-TEST-001",
+    "depositorName": "김테스트G4",
+    "amount": 50000,
+    "bankName": "국민은행",
+    "accountNumber": "123-456-789",
+    "depositTime": "2025-10-29T09:00:00.000Z",
+    "customerEmail": "twins1850@naver.com",
+    "customerName": "김테스트G4",
+    "customerPhone": "010-1234-5678",
+    "productName": "댓글자동화",
+    "accountIds": 5,
+    "postsPerAccount": 1,
+    "months": 3
+  }
+}

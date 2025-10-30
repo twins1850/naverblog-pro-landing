@@ -1,0 +1,18 @@
+{
+  "type": "deposit_confirmed",
+  "data": {
+    "orderId": "BLOG202510297239",
+    "depositorName": "김형원",
+    "amount": 50000,
+    "bankName": "카카오뱅크",
+    "accountNumber": "3333-03-1234567",
+    "depositTime": "2025-10-29T18:14:00.000Z",
+    "customerEmail": "twins1850@naver.com",
+    "customerName": "김테스트G4",
+    "customerPhone": "010-1234-5678",
+    "productName": "대댓글자동화",
+    "accountIds": 1,
+    "postsPerAccount": 1,
+    "months": 1
+  }
+}

@@ -1,6 +1,13 @@
 import { GoogleAuth } from 'google-auth-library';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
+// 한국 시간대 헬퍼 함수
+function getKoreanTime(): string {
+  return new Date().toLocaleString('sv-SE', { 
+    timeZone: 'Asia/Seoul' 
+  }).replace(' ', 'T') + '.000Z';
+}
+
 export class GoogleSheetsService {
   private auth: GoogleAuth;
   private spreadsheetId: string;
@@ -52,7 +59,7 @@ export class GoogleSheetsService {
         이름: customerData.이름,
         이메일: customerData.이메일,
         연락처: customerData.연락처,
-        결제일시: customerData.결제일시 || new Date().toISOString(),
+        결제일시: customerData.결제일시 || getKoreanTime(),
         결제금액: customerData.결제금액,
         상품유형: customerData.상품유형,
         아이디수: customerData.아이디수,
@@ -93,14 +100,14 @@ export class GoogleSheetsService {
         이름: purchaseData.이름,
         이메일: purchaseData.이메일,
         연락처: purchaseData.연락처,
-        결제일시: purchaseData.결제일시 || new Date().toISOString(),
+        결제일시: purchaseData.결제일시 || getKoreanTime(),
         결제금액: purchaseData.결제금액,
         상품유형: purchaseData.상품유형,
         아이디수: purchaseData.아이디수,
         글수: purchaseData.글수,
         개월수: purchaseData.개월수,
         라이센스키: licenseKey,
-        발급일시: new Date().toISOString(),
+        발급일시: getKoreanTime(),
         만료일시: '',
         상태: '발급완료',
         하드웨어ID: '',
@@ -135,7 +142,7 @@ export class GoogleSheetsService {
         targetRow.set('상태', status);
         if (licenseKey) {
           targetRow.set('라이센스키', licenseKey);
-          targetRow.set('발급일시', new Date().toISOString());
+          targetRow.set('발급일시', getKoreanTime());
         }
         await targetRow.save();
         console.log(`✅ 주문번호 ${orderId} 상태 업데이트: ${status}`);
@@ -151,6 +158,8 @@ export class GoogleSheetsService {
   // 웹훅에서 사용할 메소드들 추가
   async findCustomerByOrderId(orderId: string): Promise<any> {
     try {
+      console.log(`🔍 주문번호 조회 시작: ${orderId} (타입: ${typeof orderId})`);
+      
       const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
       await doc.loadInfo();
 
@@ -160,7 +169,35 @@ export class GoogleSheetsService {
       }
 
       const rows = await sheet.getRows();
-      const targetRow = rows.find(row => row.get('주문번호') === orderId);
+      console.log(`📊 총 ${rows.length}개 행 검색 중...`);
+      
+      // 주문번호 비교 시 문자열과 숫자 모두 고려
+      const targetRow = rows.find(row => {
+        const sheetOrderId = row.get('주문번호');
+        const match1 = sheetOrderId === orderId; // 문자열 비교
+        const match2 = sheetOrderId === parseInt(orderId); // 숫자 비교
+        const match3 = String(sheetOrderId) === orderId; // 문자열 변환 비교
+        
+        if (match1 || match2 || match3) {
+          console.log(`✅ 주문번호 매칭 성공: ${sheetOrderId} (시트) === ${orderId} (검색)`);
+        }
+        
+        return match1 || match2 || match3;
+      });
+      
+      // 매칭되지 않은 경우 디버깅 정보 출력
+      if (!targetRow) {
+        console.log('❌ 매칭된 주문번호 없음. 모든 주문번호들:');
+        rows.forEach((row, index) => {
+          const sheetOrderId = row.get('주문번호');
+          if (sheetOrderId && sheetOrderId.toString().includes('1025151850')) {
+            console.log(`  ✅ 발견! [${index}] ${sheetOrderId} (타입: ${typeof sheetOrderId})`);
+          }
+          if (index < 5 || index > rows.length - 5) {
+            console.log(`  [${index}] ${sheetOrderId} (타입: ${typeof sheetOrderId})`);
+          }
+        });
+      }
       
       if (targetRow) {
         return {
@@ -243,6 +280,131 @@ export class GoogleSheetsService {
       }
     } catch (error) {
       console.error('❌ Google Sheets 라이선스 정보 업데이트 실패:', error);
+      throw error;
+    }
+  }
+
+  // 🆕 스마트 매칭 메서드들
+  
+  async findCustomerByDepositorAndAmount(depositorName: string, amount: number): Promise<any> {
+    try {
+      console.log(`🔍 입금자명 + 금액으로 매칭 시도: ${depositorName}, ${amount}`);
+      
+      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+      if (!sheet) {
+        throw new Error('스프레드시트를 찾을 수 없습니다.');
+      }
+
+      const rows = await sheet.getRows();
+      console.log(`📊 총 ${rows.length}개 행에서 매칭 검색 중...`);
+      
+      // 입금자명과 금액이 모두 일치하는 주문 찾기
+      const targetRow = rows.find(row => {
+        const rowAmount = parseInt(row.get('결제금액')?.replace(/[^0-9]/g, '') || '0');
+        const rowDepositor = row.get('입금자명');
+        const rowStatus = row.get('상태');
+        
+        // 입금대기 상태이고, 입금자명과 금액이 일치하는 경우
+        const amountMatch = rowAmount === amount;
+        const depositorMatch = rowDepositor === depositorName;
+        const isWaitingPayment = rowStatus === '입금대기';
+        
+        console.log(`📋 행 검사:`, {
+          rowAmount,
+          rowDepositor,
+          rowStatus,
+          amountMatch,
+          depositorMatch,
+          isWaitingPayment
+        });
+        
+        return amountMatch && depositorMatch && isWaitingPayment;
+      });
+      
+      if (targetRow) {
+        console.log("✅ 입금자명 + 금액 매칭 성공");
+        return {
+          이름: targetRow.get('이름'),
+          이메일: targetRow.get('이메일'),
+          연락처: targetRow.get('연락처'),
+          결제금액: targetRow.get('결제금액'),
+          상품유형: targetRow.get('상품유형'),
+          아이디수: targetRow.get('아이디수'),
+          글수: targetRow.get('글수'),
+          개월수: targetRow.get('개월수'),
+          상태: targetRow.get('상태'),
+          주문번호: targetRow.get('주문번호'),
+          결제방식: targetRow.get('결제방식')
+        };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('❌ 입금자명 + 금액 매칭 실패:', error);
+      throw error;
+    }
+  }
+
+  async findRecentCustomerByAmount(amount: number): Promise<any> {
+    try {
+      console.log(`💰 금액으로만 최근 주문 매칭 시도: ${amount}`);
+      
+      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
+      await doc.loadInfo();
+
+      const sheet = doc.sheetsByIndex[0];
+      if (!sheet) {
+        throw new Error('스프레드시트를 찾을 수 없습니다.');
+      }
+
+      const rows = await sheet.getRows();
+      
+      // 24시간 이내의 주문만 검색
+      const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+      
+      // 금액이 일치하고 24시간 이내의 최근 주문 찾기
+      const candidateRows = rows.filter(row => {
+        const rowAmount = parseInt(row.get('결제금액')?.replace(/[^0-9]/g, '') || '0');
+        const rowStatus = row.get('상태');
+        const orderTime = new Date(row.get('결제일시') || '');
+        
+        const amountMatch = rowAmount === amount;
+        const isWaitingPayment = rowStatus === '입금대기';
+        const isRecent = orderTime > twentyFourHoursAgo;
+        
+        return amountMatch && isWaitingPayment && isRecent;
+      });
+      
+      if (candidateRows.length > 0) {
+        // 가장 최근 주문 선택 (최근주문 매칭 설정에 따라)
+        const targetRow = candidateRows.sort((a, b) => {
+          const timeA = new Date(a.get('결제일시') || '').getTime();
+          const timeB = new Date(b.get('결제일시') || '').getTime();
+          return timeB - timeA; // 최근 순 정렬
+        })[0];
+        
+        console.log("✅ 금액 기반 최근 주문 매칭 성공");
+        return {
+          이름: targetRow.get('이름'),
+          이메일: targetRow.get('이메일'),
+          연락처: targetRow.get('연락처'),
+          결제금액: targetRow.get('결제금액'),
+          상품유형: targetRow.get('상품유형'),
+          아이디수: targetRow.get('아이디수'),
+          글수: targetRow.get('글수'),
+          개월수: targetRow.get('개월수'),
+          상태: targetRow.get('상태'),
+          주문번호: targetRow.get('주문번호'),
+          결제방식: targetRow.get('결제방식')
+        };
+      }
+      
+      return null;
+    } catch (error) {
+      console.error('❌ 금액 기반 매칭 실패:', error);
       throw error;
     }
   }

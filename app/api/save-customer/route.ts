@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleSheetsService } from "@/lib/google-sheets";
 import { EmailService } from "@/lib/email-service";
 import { GmailEmailService } from "@/lib/email-service-gmail";
+import { PayActionService } from "@/lib/payaction-service";
+
+// 한국 시간대 헬퍼 함수
+function getKoreanTime(): string {
+  return new Date().toLocaleString('sv-SE', { 
+    timeZone: 'Asia/Seoul' 
+  }).replace(' ', 'T') + '.000Z';
+}
 
 // 상품명을 코드로 변환하는 함수 (다중 상품 지원)
 function getProductCodes(productNames: string | string[]): string {
@@ -136,7 +144,7 @@ export async function POST(request: NextRequest) {
         이름: name,
         이메일: email,
         연락처: phone,
-        결제일시: new Date().toISOString(),
+        결제일시: getKoreanTime(),
         결제금액: `₩${amount.toLocaleString()}`,
         상품유형: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
         아이디수: accountCount,
@@ -156,6 +164,41 @@ export async function POST(request: NextRequest) {
 
       await googleSheetsService.addCustomerData(customerData);
       console.log("✅ Google Sheets 자동 연동 성공:", orderId);
+
+      // 🆕 PayAction에 주문 정보 제출
+      try {
+        console.log("📤 PayAction 주문 제출 시도:", orderId);
+        const payActionService = new PayActionService();
+        
+        const payActionResult = await payActionService.submitOrder({
+          orderId: orderId,
+          amount: amount,
+          customerName: name,
+          expectedDepositor: body.depositName || name, // 예상 입금자명
+          productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
+          customerEmail: email,
+          customerPhone: phone
+        });
+
+        if (payActionResult.success !== false) {
+          console.log("✅ PayAction 주문 제출 성공:", {
+            orderId: orderId,
+            response: payActionResult
+          });
+        } else {
+          console.warn("⚠️ PayAction 주문 제출 실패:", {
+            orderId: orderId,
+            error: payActionResult.error
+          });
+          // 실패해도 계속 진행 (수동 매칭 가능)
+        }
+      } catch (payActionError) {
+        console.error("❌ PayAction 주문 제출 중 예외:", {
+          orderId: orderId,
+          error: payActionError instanceof Error ? payActionError.message : String(payActionError)
+        });
+        // PayAction 오류가 전체 프로세스를 중단시키지 않도록 함
+      }
 
       // 환경변수 디버깅 로그
       console.log("🔍 환경변수 체크:", {
