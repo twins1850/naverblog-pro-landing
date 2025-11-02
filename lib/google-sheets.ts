@@ -30,11 +30,34 @@ function formatPrivateKey(privateKey: string): string {
   
   // 3. private key 형식 검증 및 정규화
   if (formatted.includes('-----BEGIN PRIVATE KEY-----')) {
-    // 이미 올바른 형식인 경우 - 공백 문자만 정리
-    const lines = formatted.split('\n');
-    const cleanLines = lines.map(line => line.trim()).filter(line => line.length > 0);
-    const result = cleanLines.join('\n');
-    console.log('✅ Private key 포맷팅 완료 (기존 형식 유지)');
+    // PEM 형식 검증 및 정규화
+    const beginMarker = '-----BEGIN PRIVATE KEY-----';
+    const endMarker = '-----END PRIVATE KEY-----';
+    
+    // 키 내용 추출
+    const keyStart = formatted.indexOf(beginMarker) + beginMarker.length;
+    const keyEnd = formatted.indexOf(endMarker);
+    
+    if (keyEnd === -1) {
+      console.log('⚠️ END PRIVATE KEY 마커 없음 - 원본 반환');
+      return formatted;
+    }
+    
+    const keyContent = formatted.substring(keyStart, keyEnd)
+      .replace(/\s/g, '') // 모든 공백 제거
+      .replace(/\n/g, ''); // 모든 줄바꿈 제거
+    
+    // 64문자마다 줄바꿈 추가 (PEM 표준)
+    const keyLines = [];
+    for (let i = 0; i < keyContent.length; i += 64) {
+      keyLines.push(keyContent.substring(i, i + 64));
+    }
+    
+    const result = `${beginMarker}\n${keyLines.join('\n')}\n${endMarker}`;
+    console.log('✅ Private key 포맷팅 완료 (PEM 표준 적용)', {
+      keyContentLength: keyContent.length,
+      linesCount: keyLines.length
+    });
     return result;
   } else if (formatted.includes('BEGIN PRIVATE KEY')) {
     // header/footer가 없는 경우 추가
