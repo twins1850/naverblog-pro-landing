@@ -11,19 +11,31 @@ function sanitizeJsonString(str: string): string {
 function formatPrivateKey(privateKey: string): string {
   if (!privateKey) return privateKey;
   
+  console.log('🔧 Private key 포맷팅 시작...', {
+    length: privateKey.length,
+    hasBeginMarker: privateKey.includes('BEGIN PRIVATE KEY'),
+    firstChars: privateKey.substring(0, 50)
+  });
+  
   // 1. 모든 종류의 줄바꿈을 실제 줄바꿈으로 변환
   let formatted = privateKey
     .replace(/\\n/g, '\n')  // \\n -> \n
     .replace(/\\\n/g, '\n') // \\\n -> \n
-    .replace(/\\\\n/g, '\n'); // \\\\n -> \n
+    .replace(/\\\\n/g, '\n') // \\\\n -> \n
+    .replace(/\\r\\n/g, '\n') // \r\n -> \n
+    .replace(/\\r/g, '\n'); // \r -> \n
   
   // 2. 연속된 줄바꿈 정리
   formatted = formatted.replace(/\n+/g, '\n');
   
   // 3. private key 형식 검증 및 정규화
   if (formatted.includes('-----BEGIN PRIVATE KEY-----')) {
-    // 이미 올바른 형식인 경우
-    return formatted.trim();
+    // 이미 올바른 형식인 경우 - 공백 문자만 정리
+    const lines = formatted.split('\n');
+    const cleanLines = lines.map(line => line.trim()).filter(line => line.length > 0);
+    const result = cleanLines.join('\n');
+    console.log('✅ Private key 포맷팅 완료 (기존 형식 유지)');
+    return result;
   } else if (formatted.includes('BEGIN PRIVATE KEY')) {
     // header/footer가 없는 경우 추가
     const keyContent = formatted
@@ -31,9 +43,25 @@ function formatPrivateKey(privateKey: string): string {
       .replace(/-----END PRIVATE KEY-----/g, '')
       .replace(/\s/g, '');
     
-    return `-----BEGIN PRIVATE KEY-----\n${keyContent}\n-----END PRIVATE KEY-----`;
+    const result = `-----BEGIN PRIVATE KEY-----\n${keyContent}\n-----END PRIVATE KEY-----`;
+    console.log('✅ Private key 포맷팅 완료 (헤더/푸터 추가)');
+    return result;
+  } else {
+    // Base64 형식의 키인 경우 헤더/푸터 추가
+    const cleanKey = formatted.replace(/\s/g, ''); // 모든 공백 제거
+    if (cleanKey.length > 100) { // Base64 키로 추정
+      // 64문자마다 줄바꿈 추가 (PEM 표준)
+      const keyLines = [];
+      for (let i = 0; i < cleanKey.length; i += 64) {
+        keyLines.push(cleanKey.substring(i, i + 64));
+      }
+      const result = `-----BEGIN PRIVATE KEY-----\n${keyLines.join('\n')}\n-----END PRIVATE KEY-----`;
+      console.log('✅ Private key 포맷팅 완료 (Base64에서 PEM 변환)');
+      return result;
+    }
   }
   
+  console.log('⚠️ Private key 포맷팅 실패 - 원본 반환');
   return formatted;
 }
 
@@ -99,12 +127,20 @@ export class GoogleSheetsService {
         // 🛡️ 안전한 JSON 파싱을 통한 인증
         console.log('🔧 Google Service Account JSON 파싱 시작...');
         const credentials = safeJsonParse(serviceAccountJson);
-        console.log('✅ Google Service Account JSON 파싱 성공');
+        console.log('✅ Google Service Account JSON 파싱 성공', {
+          type: credentials.type,
+          project_id: credentials.project_id,
+          client_email: credentials.client_email,
+          private_key_id: credentials.private_key_id,
+          hasPrivateKey: !!credentials.private_key,
+          privateKeyLength: credentials.private_key?.length || 0
+        });
         
         this.auth = new GoogleAuth({
           credentials,
           scopes: ['https://www.googleapis.com/auth/spreadsheets'],
         });
+        console.log('🔑 Google Auth 객체 생성 완료');
       } catch (jsonError) {
         console.error('❌ Google Service Account JSON 파싱 실패, 개별 환경변수 사용:', jsonError);
         
