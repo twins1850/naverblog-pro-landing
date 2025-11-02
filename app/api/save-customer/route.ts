@@ -228,7 +228,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 🆕 이메일 발송 (Gmail만 사용)
-    let emailSent = false;
+    emailSent = false; // 기존 변수 재사용
     
     // 상품 코드 생성 (이메일 발송용)
     let productCodes = '';
