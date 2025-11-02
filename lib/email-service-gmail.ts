@@ -13,22 +13,76 @@ export class GmailEmailService {
       throw new Error('Gmail 환경변수가 설정되지 않았습니다.');
     }
 
+    // 환경변수 검증 강화
+    const gmailUser = process.env.GMAIL_USER.trim();
+    const gmailPassword = process.env.GMAIL_APP_PASSWORD.trim();
+    
     console.log('📧 Gmail 서비스 초기화:', {
-      user: process.env.GMAIL_USER,
-      passwordLength: process.env.GMAIL_APP_PASSWORD.length
+      user: gmailUser,
+      passwordLength: gmailPassword.length,
+      passwordFirstChars: gmailPassword.substring(0, 4) + '...',
+      passwordIsAppPassword: gmailPassword.length === 16 && /^[a-z]{4}\s[a-z]{4}\s[a-z]{4}\s[a-z]{4}$/.test(gmailPassword)
     });
+
+    // Gmail 앱 비밀번호 정규화 (공백 제거)
+    const normalizedPassword = gmailPassword.replace(/\s/g, '');
+    
+    console.log('🔧 Gmail 앱 비밀번호 정규화:', {
+      original: gmailPassword,
+      normalized: normalizedPassword,
+      originalLength: gmailPassword.length,
+      normalizedLength: normalizedPassword.length
+    });
+    
+    // 일반적인 Gmail 앱 비밀번호 검증 (16자리)
+    if (normalizedPassword.length !== 16) {
+      console.warn('⚠️ Gmail 앱 비밀번호 길이 문제:', {
+        length: normalizedPassword.length,
+        expected: 16,
+        format: 'Expected: 16 character app password'
+      });
+    }
 
     try {
       this.transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_APP_PASSWORD
-        }
+          user: gmailUser,
+          pass: normalizedPassword
+        },
+        // Gmail SMTP 설정 명시적 지정
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false, // TLS 사용
+        requireTLS: true,
+        debug: true, // 디버그 모드 활성화
+        logger: true // 로깅 활성화
       });
+      
+      console.log('✅ Gmail transporter 생성 완료');
+      
+      // 연결 테스트 (비동기)
+      this.testConnection();
     } catch (error) {
       console.error('❌ Gmail transporter 생성 실패:', error);
       throw error;
+    }
+  }
+
+  private async testConnection(): Promise<void> {
+    try {
+      console.log('🔍 Gmail SMTP 연결 테스트 시작...');
+      const isReady = await this.transporter.verify();
+      if (isReady) {
+        console.log('✅ Gmail SMTP 연결 테스트 성공');
+      }
+    } catch (error) {
+      console.error('❌ Gmail SMTP 연결 테스트 실패:', {
+        error: error instanceof Error ? error.message : String(error),
+        code: (error as any)?.code,
+        command: (error as any)?.command,
+        responseCode: (error as any)?.responseCode,
+      });
     }
   }
 
