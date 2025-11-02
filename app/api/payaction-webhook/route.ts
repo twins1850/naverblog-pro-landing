@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleSheetsService } from "@/lib/google-sheets";
 import { PayActionService } from "@/lib/payaction-service";
-// import { LicenseService } from "@/lib/license-service.js";  // 임시 주석 처리
+import { LicenseService } from "@/lib/license-service.js";
 
 // 한국 시간대 헬퍼 함수
 function getKoreanTime(): string {
@@ -267,9 +267,9 @@ export async function POST(request: NextRequest) {
 
       console.log("✅ Google Sheets 상태 업데이트 완료");
 
-      // 3단계: 라이선스 자동 발급 (임시 주석 처리)
-      console.log("🎯 자동 라이선스 발급 시작... (테스트 모드)");
-      // const licenseService = new LicenseService();
+      // 3단계: 라이선스 자동 발급
+      console.log("🎯 자동 라이선스 발급 시작...");
+      const licenseService = new LicenseService();
 
       // 라이선스 발급을 위한 고객 정보 구성
       const licenseCustomerInfo = {
@@ -297,14 +297,8 @@ export async function POST(request: NextRequest) {
         금액: licenseCustomerInfo.amount
       });
 
-      // 페이액션 웹훅용 라이선스 발급 (이메일 발송 포함) - 임시 시뮬레이션
-      // const licenseResult = await licenseService.issueLicenseFromPayment(licenseCustomerInfo);
-      const licenseResult = {
-        success: true,
-        licenseKey: "J8-TEST-12345-67890",
-        emailSent: true,
-        expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-      };
+      // 페이액션 웹훅용 라이선스 발급 (이메일 발송 포함)
+      const licenseResult = await licenseService.issueLicenseFromPayment(licenseCustomerInfo);
 
       if (licenseResult.success) {
         // 🧪 라이선스 인코딩 테스트 로그 추가

@@ -1,6 +1,38 @@
 import { GoogleAuth } from 'google-auth-library';
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
+// JSON 제어 문자 필터링 함수
+function sanitizeJsonString(str: string): string {
+  // 제어 문자(ASCII 0-31, 127) 제거, 단 탭(\t), 줄바꿈(\n), 캐리지리턴(\r)은 유지
+  return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
+}
+
+// 안전한 JSON 파싱 함수
+function safeJsonParse(jsonString: string): any {
+  try {
+    // 1차: 제어 문자 필터링
+    const sanitized = sanitizeJsonString(jsonString);
+    
+    // 2차: JSON 파싱 시도
+    return JSON.parse(sanitized);
+  } catch (error) {
+    console.error('❌ JSON 파싱 실패 - 원본 문자열:', {
+      length: jsonString.length,
+      firstChars: jsonString.substring(0, 100),
+      error: error instanceof Error ? error.message : String(error)
+    });
+    
+    // 3차: 더 강력한 정화 시도 (모든 제어 문자 제거)
+    try {
+      const strongSanitized = jsonString.replace(/[\x00-\x1F\x7F]/g, '');
+      return JSON.parse(strongSanitized);
+    } catch (secondError) {
+      console.error('❌ 강력한 JSON 파싱도 실패:', secondError);
+      throw new Error(`JSON 파싱 불가능: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+}
+
 // 한국 시간대 헬퍼 함수
 function getKoreanTime(): string {
   return new Date().toLocaleString('sv-SE', { 
@@ -19,12 +51,34 @@ export class GoogleSheetsService {
     // Google 인증 설정
     const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountJson) {
-      // JSON 파일을 통한 인증
-      const credentials = JSON.parse(serviceAccountJson);
-      this.auth = new GoogleAuth({
-        credentials,
-        scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-      });
+      try {
+        // 🛡️ 안전한 JSON 파싱을 통한 인증
+        console.log('🔧 Google Service Account JSON 파싱 시작...');
+        const credentials = safeJsonParse(serviceAccountJson);
+        console.log('✅ Google Service Account JSON 파싱 성공');
+        
+        this.auth = new GoogleAuth({
+          credentials,
+          scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+      } catch (jsonError) {
+        console.error('❌ Google Service Account JSON 파싱 실패, 개별 환경변수 사용:', jsonError);
+        
+        // JSON 파싱 실패 시 개별 환경변수로 대체
+        const credentials = {
+          type: 'service_account',
+          project_id: process.env.GOOGLE_PROJECT_ID || 'default',
+          client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+          private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+          private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
+          client_id: process.env.GOOGLE_CLIENT_ID,
+        };
+
+        this.auth = new GoogleAuth({
+          credentials,
+          scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+        });
+      }
     } else {
       // 개별 환경변수를 통한 인증
       const credentials = {

@@ -92,113 +92,141 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 🆕 Google Sheets 자동 연동 재활성화
+    // 🛡️ 서비스별 독립 실행 결과 저장
+    let googleSheetsSuccess = false;
+    let googleSheetsError = null;
+    let payActionSuccess = false;
+    let payActionError = null;
+    let emailSent = false;
+
+    // 🆕 Google Sheets 자동 연동 (독립 실행)
     try {
       // 환경변수 확인
       if (!process.env.GOOGLE_SHEETS_SPREADSHEET_ID) {
-        console.warn('⚠️ Google Sheets 환경변수가 설정되지 않았습니다. 로컬 저장만 수행합니다.');
+        console.warn('⚠️ Google Sheets 환경변수가 설정되지 않았습니다. Google Sheets 연동 건너뜀');
+        googleSheetsError = "환경변수 설정되지 않음";
+      } else {
+        console.log('🔧 Google Sheets 서비스 초기화 시작...');
+        const googleSheetsService = new GoogleSheetsService();
         
-        // 로컬 로그만 저장
-        console.log('📋 주문 정보 (로컬 저장):', {
+        // 선택된 모듈로부터 정확한 상품 코드 생성
+        let productCodes = '';
+        if (selectedModules) {
+          const moduleIdMap: Record<string, string> = {
+            'writing': 'A',
+            'comment': 'B',
+            'neighbor': 'C',
+            'reply': 'D'
+          };
+          
+          const modules = selectedModules.split(',').filter(id => id);
+          const codes = modules.map(id => moduleIdMap[id]).filter(code => code).sort();
+          productCodes = codes.join('');
+        }
+        
+        // productCodes가 없으면 productName으로부터 파싱 시도
+        if (!productCodes) {
+          productCodes = getProductCodes(productName || '');
+        }
+        
+        const customerData = {
           이름: name,
           이메일: email,
           연락처: phone,
+          결제일시: getKoreanTime(),
           결제금액: `₩${amount.toLocaleString()}`,
+          상품유형: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
+          아이디수: accountCount,
+          글수: postCount,
+          개월수: months,
+          라이센스키: "", // 추후 발급
+          발급일시: "",
+          만료일시: "",
+          상태: "입금대기",
+          하드웨어ID: "",
+          결제상태: status,
           주문번호: orderId,
+          결제ID: paymentKey || "",
           입금자명: body.depositName || "",
           결제방식: body.paymentMethod || "manual",
-        });
-
-        return NextResponse.json({
-          success: true,
-          message: "구매 정보가 접수되었습니다. (로컬 환경)",
-          orderId: orderId,
-          googleSheetsUpdated: false,
-          note: "Google Sheets 연동이 설정되지 않았습니다.",
-        });
-      }
-
-      const googleSheetsService = new GoogleSheetsService();
-      
-      // 선택된 모듈로부터 정확한 상품 코드 생성
-      let productCodes = '';
-      if (selectedModules) {
-        const moduleIdMap: Record<string, string> = {
-          'writing': 'A',
-          'comment': 'B',
-          'neighbor': 'C',
-          'reply': 'D'
         };
+
+        await googleSheetsService.addCustomerData(customerData);
+        console.log("✅ Google Sheets 자동 연동 성공:", orderId);
+        googleSheetsSuccess = true;
+      }
+    } catch (sheetsError) {
+      console.error("❌ Google Sheets 연동 실패:", sheetsError);
+      googleSheetsError = sheetsError instanceof Error ? sheetsError.message : String(sheetsError);
+      // Google Sheets 실패해도 다른 서비스는 계속 진행
+    }
+
+    // 🆕 PayAction에 주문 정보 제출 (독립 실행)
+    try {
+      console.log("📤 PayAction 주문 제출 시도:", orderId);
+      const payActionService = new PayActionService();
+      
+      // PayAction API 인증 상태 확인
+      console.log("🔍 PayAction API 인증 상태 확인...");
+      const credentialCheck = await payActionService.validateCredentials();
+      if (!credentialCheck.valid) {
+        console.error("❌ PayAction API 인증 실패:", credentialCheck.error);
+        payActionError = `인증 실패: ${credentialCheck.error}`;
+      } else {
+        console.log("✅ PayAction API 인증 확인됨");
         
-        const modules = selectedModules.split(',').filter(id => id);
-        const codes = modules.map(id => moduleIdMap[id]).filter(code => code).sort();
-        productCodes = codes.join('');
-      }
-      
-      // productCodes가 없으면 productName으로부터 파싱 시도
-      if (!productCodes) {
-        productCodes = getProductCodes(productName || '');
-      }
-      
-      const customerData = {
-        이름: name,
-        이메일: email,
-        연락처: phone,
-        결제일시: getKoreanTime(),
-        결제금액: `₩${amount.toLocaleString()}`,
-        상품유형: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
-        아이디수: accountCount,
-        글수: postCount,
-        개월수: months,
-        라이센스키: "", // 추후 발급
-        발급일시: "",
-        만료일시: "",
-        상태: "입금대기",
-        하드웨어ID: "",
-        결제상태: status,
-        주문번호: orderId,
-        결제ID: paymentKey || "",
-        입금자명: body.depositName || "",
-        결제방식: body.paymentMethod || "manual",
-      };
-
-      await googleSheetsService.addCustomerData(customerData);
-      console.log("✅ Google Sheets 자동 연동 성공:", orderId);
-
-      // 🆕 PayAction에 주문 정보 제출
-      try {
-        console.log("📤 PayAction 주문 제출 시도:", orderId);
-        const payActionService = new PayActionService();
+        // 상품 코드 재생성 (Google Sheets 실패 시에도 PayAction은 실행되어야 함)
+        let productCodes = '';
+        if (selectedModules) {
+          const moduleIdMap: Record<string, string> = {
+            'writing': 'A',
+            'comment': 'B',
+            'neighbor': 'C',
+            'reply': 'D'
+          };
+          
+          const modules = selectedModules.split(',').filter(id => id);
+          const codes = modules.map(id => moduleIdMap[id]).filter(code => code).sort();
+          productCodes = codes.join('');
+        }
+        
+        if (!productCodes) {
+          productCodes = getProductCodes(productName || '');
+        }
         
         const payActionResult = await payActionService.submitOrder({
           orderId: orderId,
           amount: amount,
           customerName: name,
-          expectedDepositor: body.depositName || name, // 예상 입금자명
+          expectedDepositor: body.depositName || name,
           productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
           customerEmail: email,
           customerPhone: phone
         });
 
-        if (payActionResult.success !== false) {
+        // PayAction API 응답 형식 확인
+        if (payActionResult.status === 'success' || (payActionResult.success !== false && !payActionResult.error)) {
           console.log("✅ PayAction 주문 제출 성공:", {
             orderId: orderId,
             response: payActionResult
           });
+          payActionSuccess = true;
         } else {
           console.warn("⚠️ PayAction 주문 제출 실패:", {
             orderId: orderId,
-            error: payActionResult.error
+            error: payActionResult.error || payActionResult,
+            response: payActionResult
           });
-          // 실패해도 계속 진행 (수동 매칭 가능)
+          payActionError = payActionResult.error || "알 수 없는 오류";
         }
-      } catch (payActionError) {
-        console.error("❌ PayAction 주문 제출 중 예외:", {
-          orderId: orderId,
-          error: payActionError instanceof Error ? payActionError.message : String(payActionError)
-        });
-        // PayAction 오류가 전체 프로세스를 중단시키지 않도록 함
       }
+    } catch (payActionError_) {
+      console.error("❌ PayAction 주문 제출 중 예외:", {
+        orderId: orderId,
+        error: payActionError_ instanceof Error ? payActionError_.message : String(payActionError_)
+      });
+      payActionError = payActionError_ instanceof Error ? payActionError_.message : String(payActionError_);
+    }
 
       // 환경변수 디버깅 로그
       console.log("🔍 환경변수 체크:", {
@@ -270,26 +298,47 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      return NextResponse.json({
-        success: true,
-        message: "구매 정보가 성공적으로 저장되었습니다.",
-        orderId: orderId,
-        googleSheetsUpdated: true,
-        emailSent: emailSent,
-      });
-      
-    } catch (sheetsError) {
-      console.error("❌ Google Sheets 연동 실패:", sheetsError);
-      
-      // Google Sheets 실패해도 구매는 성공으로 처리
-      return NextResponse.json({
-        success: true,
-        message: "구매 정보는 저장되었지만 Google Sheets 연동에 실패했습니다.",
-        orderId: orderId,
-        googleSheetsUpdated: false,
-        warning: "관리자에게 문의하세요.",
-      });
+    // 📊 최종 응답 생성 (모든 서비스 결과 종합)
+    const overallSuccess = true; // 주문 자체는 항상 성공
+    let statusMessage = "구매 정보가 접수되었습니다.";
+    let warnings = [];
+
+    // 각 서비스 상태에 따른 메시지 구성
+    if (googleSheetsSuccess && payActionSuccess) {
+      statusMessage = "구매 정보가 성공적으로 저장되고 PayAction에 등록되었습니다.";
+    } else if (googleSheetsSuccess && !payActionSuccess) {
+      statusMessage = "구매 정보는 저장되었지만 PayAction 등록에 문제가 있습니다.";
+      warnings.push(`PayAction 오류: ${payActionError}`);
+    } else if (!googleSheetsSuccess && payActionSuccess) {
+      statusMessage = "PayAction에는 등록되었지만 Google Sheets 연동에 문제가 있습니다.";
+      warnings.push(`Google Sheets 오류: ${googleSheetsError}`);
+    } else {
+      statusMessage = "구매 정보는 접수되었지만 일부 시스템 연동에 문제가 있습니다.";
+      warnings.push(`Google Sheets 오류: ${googleSheetsError}`);
+      warnings.push(`PayAction 오류: ${payActionError}`);
     }
+
+    console.log("📊 최종 처리 결과:", {
+      orderId,
+      googleSheetsSuccess,
+      payActionSuccess,
+      emailSent,
+      warnings: warnings.length > 0 ? warnings : "없음"
+    });
+
+    return NextResponse.json({
+      success: overallSuccess,
+      message: statusMessage,
+      orderId: orderId,
+      results: {
+        googleSheetsUpdated: googleSheetsSuccess,
+        payActionSubmitted: payActionSuccess,
+        emailSent: emailSent
+      },
+      warnings: warnings.length > 0 ? warnings : undefined,
+      // 하위 호환성을 위한 기존 필드들
+      googleSheetsUpdated: googleSheetsSuccess,
+    });
     
   } catch (error) {
     console.error("구매 정보 저장 중 오류:", error);

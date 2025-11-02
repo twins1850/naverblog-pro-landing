@@ -11,6 +11,22 @@ export class PayActionService {
     if (!this.apiKey || !this.mallId) {
       throw new Error('PayAction API 환경변수가 설정되지 않았습니다.');
     }
+    
+    // 환경변수 유효성 검증
+    if (this.apiKey.length < 10 || this.mallId.length < 5) {
+      console.warn('⚠️ PayAction 환경변수가 유효하지 않을 수 있습니다:', {
+        apiKeyLength: this.apiKey.length,
+        mallIdLength: this.mallId.length
+      });
+    }
+    
+    console.log('🔑 PayAction 서비스 초기화:', {
+      baseUrl: this.baseUrl,
+      apiKeySet: !!this.apiKey,
+      mallIdSet: !!this.mallId,
+      apiKeyLength: this.apiKey.length,
+      mallIdLength: this.mallId.length
+    });
   }
 
   /**
@@ -60,15 +76,52 @@ export class PayActionService {
         body: JSON.stringify(body)
       });
 
-      const result = await response.json();
+      // 응답 상태 및 내용 상세 로깅
+      console.log('📡 PayAction API 응답 상태:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok,
+        url: response.url
+      });
+
+      let result;
+      try {
+        result = await response.json();
+        console.log('📄 PayAction API 응답 내용:', result);
+      } catch (parseError) {
+        console.error('❌ PayAction API 응답 파싱 실패:', parseError);
+        throw new Error(`PayAction API 응답을 JSON으로 파싱할 수 없습니다: ${parseError}`);
+      }
 
       if (!response.ok) {
-        console.error('❌ PayAction API 오류:', {
+        const errorDetails = {
           status: response.status,
           statusText: response.statusText,
-          body: result
-        });
-        throw new Error(`PayAction API 오류: ${response.status} - ${JSON.stringify(result)}`);
+          body: result,
+          url: response.url,
+          orderId: orderData.orderId
+        };
+        console.error('❌ PayAction API HTTP 오류:', errorDetails);
+        
+        // HTTP 오류의 경우 에러 객체 반환 (예외 던지지 않음)
+        return {
+          success: false,
+          error: `HTTP ${response.status}: ${result?.response?.message || response.statusText}`,
+          details: errorDetails,
+          orderId: orderData.orderId
+        };
+      }
+
+      // API 레벨에서의 성공/실패 확인
+      if (result.status === 'error') {
+        const apiError = {
+          success: false,
+          error: result.response?.message || 'PayAction API에서 오류 응답',
+          apiResponse: result,
+          orderId: orderData.orderId
+        };
+        console.error('❌ PayAction API 논리적 오류:', apiError);
+        return apiError;
       }
 
       console.log('✅ PayAction 주문 제출 성공:', {
@@ -79,17 +132,84 @@ export class PayActionService {
       return result;
 
     } catch (error) {
-      console.error('💥 PayAction 주문 제출 실패:', {
+      const errorInfo = {
         orderId: orderData.orderId,
-        error: error instanceof Error ? error.message : String(error)
-      });
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+        type: error instanceof Error ? error.constructor.name : typeof error,
+        apiUrl: `${this.baseUrl}/order`,
+        requestBody: body
+      };
       
-      // PayAction 오류가 전체 주문 프로세스를 중단시키지 않도록 합니다
-      // 오류를 기록하되 예외를 다시 던지지 않습니다
+      console.error('💥 PayAction 주문 제출 예외 발생:', errorInfo);
+      
+      // 네트워크 오류나 기타 예외의 경우 에러 객체 반환
       return {
         success: false,
         error: error instanceof Error ? error.message : String(error),
-        orderId: orderData.orderId
+        errorType: 'exception',
+        orderId: orderData.orderId,
+        details: errorInfo
+      };
+    }
+  }
+
+  /**
+   * PayAction API 연결 및 인증 상태를 테스트합니다.
+   */
+  async validateCredentials(): Promise<{valid: boolean, error?: string}> {
+    try {
+      console.log('🔍 PayAction API 인증 테스트 시작...');
+      
+      // 더미 주문으로 API 연결 테스트 (실제 등록되지 않는 테스트용)
+      const testResponse = await fetch(`${this.baseUrl}/order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': this.apiKey,
+          'x-mall-id': this.mallId,
+        },
+        body: JSON.stringify({
+          order_number: `TEST-${Date.now()}`,
+          order_amount: 1000,
+          order_date: new Date().toISOString().replace('Z', '+09:00'),
+          billing_name: '테스트',
+          orderer_name: '테스트'
+        })
+      });
+
+      const result = await testResponse.json();
+      
+      // 401 Unauthorized: API 키 문제
+      if (testResponse.status === 401) {
+        console.error('❌ PayAction API 인증 실패: 유효하지 않은 API 키');
+        return {valid: false, error: 'API 키가 유효하지 않습니다.'};
+      }
+      
+      // 403 Forbidden: 권한 문제 (mall-id 등)
+      if (testResponse.status === 403) {
+        console.error('❌ PayAction API 권한 실패: 잘못된 상점 ID');
+        return {valid: false, error: '상점 ID가 유효하지 않습니다.'};
+      }
+      
+      // 200 OK or 400 Bad Request (필드 오류): API 연결은 정상
+      if (testResponse.status === 200 || testResponse.status === 400) {
+        console.log('✅ PayAction API 인증 성공');
+        return {valid: true};
+      }
+      
+      // 기타 오류
+      console.warn('⚠️ PayAction API 테스트 응답:', {
+        status: testResponse.status,
+        result
+      });
+      return {valid: false, error: `예상치 못한 응답: ${testResponse.status}`};
+      
+    } catch (error) {
+      console.error('💥 PayAction API 인증 테스트 실패:', error);
+      return {
+        valid: false, 
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
