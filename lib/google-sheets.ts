@@ -7,6 +7,36 @@ function sanitizeJsonString(str: string): string {
   return str.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
 }
 
+// 안전한 private key 포맷팅 함수
+function formatPrivateKey(privateKey: string): string {
+  if (!privateKey) return privateKey;
+  
+  // 1. 모든 종류의 줄바꿈을 실제 줄바꿈으로 변환
+  let formatted = privateKey
+    .replace(/\\n/g, '\n')  // \\n -> \n
+    .replace(/\\\n/g, '\n') // \\\n -> \n
+    .replace(/\\\\n/g, '\n'); // \\\\n -> \n
+  
+  // 2. 연속된 줄바꿈 정리
+  formatted = formatted.replace(/\n+/g, '\n');
+  
+  // 3. private key 형식 검증 및 정규화
+  if (formatted.includes('-----BEGIN PRIVATE KEY-----')) {
+    // 이미 올바른 형식인 경우
+    return formatted.trim();
+  } else if (formatted.includes('BEGIN PRIVATE KEY')) {
+    // header/footer가 없는 경우 추가
+    const keyContent = formatted
+      .replace(/-----BEGIN PRIVATE KEY-----/g, '')
+      .replace(/-----END PRIVATE KEY-----/g, '')
+      .replace(/\s/g, '');
+    
+    return `-----BEGIN PRIVATE KEY-----\n${keyContent}\n-----END PRIVATE KEY-----`;
+  }
+  
+  return formatted;
+}
+
 // 안전한 JSON 파싱 함수
 function safeJsonParse(jsonString: string): any {
   try {
@@ -14,7 +44,14 @@ function safeJsonParse(jsonString: string): any {
     const sanitized = sanitizeJsonString(jsonString);
     
     // 2차: JSON 파싱 시도
-    return JSON.parse(sanitized);
+    const parsed = JSON.parse(sanitized);
+    
+    // 3차: private key 포맷팅 (파싱 성공 후)
+    if (parsed.private_key) {
+      parsed.private_key = formatPrivateKey(parsed.private_key);
+    }
+    
+    return parsed;
   } catch (error) {
     console.error('❌ JSON 파싱 실패 - 원본 문자열:', {
       length: jsonString.length,
@@ -22,10 +59,17 @@ function safeJsonParse(jsonString: string): any {
       error: error instanceof Error ? error.message : String(error)
     });
     
-    // 3차: 더 강력한 정화 시도 (모든 제어 문자 제거)
+    // 4차: 더 강력한 정화 시도 (모든 제어 문자 제거)
     try {
       const strongSanitized = jsonString.replace(/[\x00-\x1F\x7F]/g, '');
-      return JSON.parse(strongSanitized);
+      const parsed = JSON.parse(strongSanitized);
+      
+      // private key 포맷팅
+      if (parsed.private_key) {
+        parsed.private_key = formatPrivateKey(parsed.private_key);
+      }
+      
+      return parsed;
     } catch (secondError) {
       console.error('❌ 강력한 JSON 파싱도 실패:', secondError);
       throw new Error(`JSON 파싱 불가능: ${error instanceof Error ? error.message : String(error)}`);
@@ -69,7 +113,7 @@ export class GoogleSheetsService {
           type: 'service_account',
           project_id: process.env.GOOGLE_PROJECT_ID || 'default',
           client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-          private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+          private_key: formatPrivateKey(process.env.GOOGLE_PRIVATE_KEY || ''),
           private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
           client_id: process.env.GOOGLE_CLIENT_ID,
         };
@@ -85,7 +129,7 @@ export class GoogleSheetsService {
         type: 'service_account',
         project_id: process.env.GOOGLE_PROJECT_ID || 'default',
         client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        private_key: formatPrivateKey(process.env.GOOGLE_PRIVATE_KEY || ''),
         private_key_id: process.env.GOOGLE_PRIVATE_KEY_ID,
         client_id: process.env.GOOGLE_CLIENT_ID,
       };

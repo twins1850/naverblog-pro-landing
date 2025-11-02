@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleSheetsService } from "@/lib/google-sheets";
-import { EmailService } from "@/lib/email-service";
 import { GmailEmailService } from "@/lib/email-service-gmail";
 import { PayActionService } from "@/lib/payaction-service";
 
@@ -228,75 +227,62 @@ export async function POST(request: NextRequest) {
       payActionError = payActionError_ instanceof Error ? payActionError_.message : String(payActionError_);
     }
 
-      // 환경변수 디버깅 로그
-      console.log("🔍 환경변수 체크:", {
-        GMAIL_USER: !!process.env.GMAIL_USER,
-        GMAIL_USER_VALUE: process.env.GMAIL_USER ? "설정됨" : "없음",
-        GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD,
-        GMAIL_APP_PASSWORD_LENGTH: process.env.GMAIL_APP_PASSWORD?.length || 0,
-        BREVO_API_KEY: !!process.env.BREVO_API_KEY,
-        NODE_ENV: process.env.NODE_ENV
-      });
+    // 🆕 이메일 발송 (Gmail만 사용)
+    let emailSent = false;
+    
+    // 상품 코드 생성 (이메일 발송용)
+    let productCodes = '';
+    if (selectedModules) {
+      const moduleIdMap: Record<string, string> = {
+        'writing': 'A',
+        'comment': 'B',
+        'neighbor': 'C',
+        'reply': 'D'
+      };
+      
+      const modules = selectedModules.split(',').filter(id => id);
+      const codes = modules.map(id => moduleIdMap[id]).filter(code => code).sort();
+      productCodes = codes.join('');
+    }
+    
+    // productCodes가 없으면 productName으로부터 파싱 시도
+    if (!productCodes) {
+      productCodes = getProductCodes(productName || '');
+    }
 
-      // 이메일 발송 (Gmail 우선, Brevo 대체)
-      let emailSent = false;
-      try {
-        // Gmail 이메일 서비스 우선 시도
-        const hasGmailConfig = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
-        console.log("📧 Gmail 설정 상태:", hasGmailConfig ? "활성화" : "비활성화");
-        
-        if (hasGmailConfig && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
-          console.log("🚀 Gmail 발송 시도 시작...");
-          const gmailService = new GmailEmailService();
-          await gmailService.sendOrderConfirmationEmail({
-            email,
-            name,
-            orderId,
-            productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
-            amount,
-            accountIds: accountCount,
-            postsPerAccount: postCount,
-            months,
-            phone
-          });
-          console.log("✅ Gmail 주문 확인 이메일 발송 성공:", email);
-          emailSent = true;
-        } else {
-          console.log("❌ Gmail 설정 누락 - 환경변수를 확인하세요");
-          throw new Error("Gmail 설정이 완료되지 않았습니다.");
-        }
-      } catch (gmailError) {
-        console.error("❌ Gmail 이메일 발송 실패 상세:", {
-          error: gmailError instanceof Error ? gmailError.message : String(gmailError),
-          stack: gmailError instanceof Error ? gmailError.stack : undefined,
+    try {
+      // Gmail 이메일 서비스만 사용
+      const hasGmailConfig = process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD;
+      console.log("📧 Gmail 설정 상태:", hasGmailConfig ? "활성화" : "비활성화");
+      
+      if (hasGmailConfig && process.env.GMAIL_APP_PASSWORD !== "your_gmail_app_password_here") {
+        console.log("🚀 Gmail 발송 시도 시작...");
+        const gmailService = new GmailEmailService();
+        await gmailService.sendOrderConfirmationEmail({
+          email,
+          name,
+          orderId,
+          productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
+          amount,
+          accountIds: accountCount,
+          postsPerAccount: postCount,
+          months,
+          phone
         });
-        console.warn("⚠️ Brevo로 재시도합니다...");
-        
-        // Brevo 이메일 서비스로 대체
-        try {
-          if (process.env.BREVO_API_KEY && process.env.BREVO_API_KEY !== "your_brevo_api_key_here") {
-            const emailService = new EmailService();
-            await emailService.sendOrderConfirmationEmail({
-              email,
-              name,
-              orderId,
-              productName: `${productCodes} ${accountCount}계정-${postCount}글-${months}개월`,
-              amount,
-              accountIds: accountCount,
-              postsPerAccount: postCount,
-              months,
-              phone
-            });
-            console.log("✅ Brevo 주문 확인 이메일 발송 성공:", email);
-            emailSent = true;
-          } else {
-            console.error("❌ Brevo API 키도 설정되지 않았습니다.");
-          }
-        } catch (brevoError) {
-          console.error("❌ Brevo 이메일 발송 실패:", brevoError);
-          // 이메일 발송 실패는 전체 프로세스를 중단시키지 않음
-        }
+        console.log("✅ Gmail 주문 확인 이메일 발송 성공:", email);
+        emailSent = true;
+      } else {
+        console.log("❌ Gmail 설정 누락 - 환경변수를 확인하세요");
+        throw new Error("Gmail 설정이 완료되지 않았습니다.");
       }
+    } catch (gmailError) {
+      console.error("❌ Gmail 이메일 발송 실패:", {
+        error: gmailError instanceof Error ? gmailError.message : String(gmailError),
+        stack: gmailError instanceof Error ? gmailError.stack : undefined,
+      });
+      // 이메일 발송 실패는 전체 프로세스를 중단시키지 않음
+      emailSent = false;
+    }
 
     // 📊 최종 응답 생성 (모든 서비스 결과 종합)
     const overallSuccess = true; // 주문 자체는 항상 성공
