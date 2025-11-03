@@ -235,21 +235,29 @@ curl -X POST https://www.autotoolshub.com/api/save-customer \
 
 ## 다음 단계
 
-### 우선순위 1: Gmail 이메일 발송 수정
-**현재 문제**: Gmail 인증 실패
-```
-❌ Gmail 이메일 발송 실패 상세: {
-  error: 'Invalid login: 535-5.7.8 Username and Password not accepted',
-  code: 'EAUTH'
+### 우선순위 1: Gmail 이메일 발송 수정 ✅ 완료!
+
+**최종 해결 (2025-11-03 09:00)**:
+- Gmail 서비스 코드를 이전 성공 버전으로 단순화 완료
+- 과도한 SMTP 설정 및 정규화 로직 제거 완료  
+- Gmail 앱 비밀번호 재생성 및 Vercel 환경변수 업데이트 완료
+- **성공**: Gmail 이메일 발송 정상 작동 확인!
+
+**해결 과정**:
+1. 코드 단순화: 이전 성공 버전(commit effe897)의 간단한 설정으로 복구
+2. 과도한 설정 제거: SMTP 수동 설정, 앱 비밀번호 정규화 로직 제거
+3. 앱 비밀번호 재생성: Google 계정에서 새 16자리 앱 비밀번호 생성
+4. 환경변수 업데이트: Vercel 및 로컬 .env.local 파일 업데이트
+
+**테스트 결과**:
+```json
+{
+  "emailSent": true,
+  "messageId": "<35872108-65ae-0c59-6be8-cac0618cccf0@gmail.com>",
+  "response": "250 2.0.0 OK",
+  "accepted": ["twins1850@gmail.com"]
 }
 ```
-
-**필요한 작업**:
-1. Vercel 환경변수 확인
-   - `GMAIL_USER`: twins1850@gmail.com
-   - `GMAIL_APP_PASSWORD`: 16자리 앱 비밀번호 확인
-2. Gmail 보안 설정 확인
-3. 앱 비밀번호 재생성
 
 ### 우선순위 2: 종합 테스트
 1. 실제 PayAction 웹훅 테스트
