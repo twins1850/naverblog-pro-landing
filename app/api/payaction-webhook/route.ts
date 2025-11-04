@@ -109,42 +109,23 @@ export async function POST(request: NextRequest) {
     console.log("📋 페이액션 웹훅 데이터:", JSON.stringify(body, null, 2));
 
     // 페이액션 웹훅 데이터 구조 확인
-    // 예상 데이터: { type: "deposit_confirmed", data: { ... } }
-    const { type, data } = body;
+    // 실제 데이터: { order_number: "...", order_status: "매칭완료", processing_date: "..." }
+    const { order_status, order_number } = body;
 
-    if (type !== "deposit_confirmed") {
-      console.log("⏭️ 입금 확인이 아닌 알림, 건너뜀:", type);
+    if (order_status !== "매칭완료") {
+      console.log("⏭️ 입금 확인이 아닌 알림, 건너뜀:", order_status);
       return NextResponse.json({ success: true, message: "처리 건너뜀" });
     }
 
-    console.log("💰 입금 확인 알림 처리 시작:", data);
+    console.log("💰 입금 확인 알림 처리 시작:", order_number);
 
-    // 페이액션 데이터에서 주문 정보 추출
-    const {
-      orderId,           // 주문번호
-      depositorName,     // 입금자명  
-      amount,            // 입금금액
-      bankName,          // 은행명
-      accountNumber,     // 계좌번호
-      depositTime,       // 입금시간
-      customerEmail,     // 고객 이메일 (사전 저장된 정보)
-      customerName,      // 고객명
-      customerPhone,     // 고객 연락처
-      productName,       // 상품명
-      accountIds,        // 아이디 수
-      postsPerAccount,   // 글 수
-      months            // 개월 수
-    } = data;
-
-    // 필수 정보 검증
-    if (!orderId || !depositorName || !amount) {
+    // 필수 정보 검증 (PayAction 웹훅에서는 order_number만 제공)
+    if (!order_number) {
       console.error("❌ 페이액션 웹훅 필수 정보 누락:", {
-        orderId: !!orderId,
-        depositorName: !!depositorName,
-        amount: !!amount
+        order_number: !!order_number
       });
       return NextResponse.json(
-        { error: "필수 정보가 누락되었습니다" },
+        { error: "주문번호가 누락되었습니다" },
         { status: 400 }
       );
     }
@@ -159,32 +140,17 @@ export async function POST(request: NextRequest) {
       // 🆕 스마트 매칭 로직
       let customerInfo = null;
       
-      // 1차 시도: 주문번호로 직접 매칭 (PayAction이 orderId를 제공하는 경우)
-      if (orderId) {
-        console.log("🎯 주문번호로 직접 매칭 시도:", orderId);
-        customerInfo = await googleSheetsService.findCustomerByOrderId(orderId);
+      // 1차 시도: 주문번호로 직접 매칭 (PayAction이 order_number를 제공하는 경우)
+      if (order_number) {
+        console.log("🎯 주문번호로 직접 매칭 시도:", order_number);
+        customerInfo = await googleSheetsService.findCustomerByOrderId(order_number);
       }
       
-      // 2차 시도: 입금자명 + 금액으로 매칭
-      if (!customerInfo && depositorName && amount) {
-        console.log("🔍 입금자명 + 금액으로 스마트 매칭 시도:", {
-          depositorName,
-          amount
-        });
-        customerInfo = await googleSheetsService.findCustomerByDepositorAndAmount(depositorName, amount);
-      }
-      
-      // 3차 시도: 금액만으로 매칭 (24시간 내 최근 주문)
-      if (!customerInfo && amount) {
-        console.log("💰 금액으로만 최근 주문 매칭 시도:", amount);
-        customerInfo = await googleSheetsService.findRecentCustomerByAmount(amount);
-      }
+      // PayAction 웹훅에는 주문번호만 포함되므로, 추가 매칭 로직은 생략
       
       if (!customerInfo) {
         console.error("❌ 매칭되는 주문을 찾을 수 없음:", {
-          orderId: orderId || '[없음]',
-          depositorName,
-          amount
+          order_number: order_number || '[없음]'
         });
         return NextResponse.json(
           { error: "매칭되는 주문을 찾을 수 없습니다" },
@@ -196,73 +162,25 @@ export async function POST(request: NextRequest) {
         이름: customerInfo.이름,
         주문번호: customerInfo.주문번호,
         상품유형: customerInfo.상품유형,
-        매칭방법: orderId ? '주문번호 직접매칭' : (depositorName ? '입금자명+금액매칭' : '금액매칭')
+        매칭방법: '주문번호 직접매칭'
       });
 
-      // 실제 주문번호 사용 (PayAction이 제공한 orderId가 없으면 Google Sheets의 주문번호 사용)
-      const actualOrderId = orderId || customerInfo.주문번호;
+      // 실제 주문번호 사용 (PayAction이 제공한 order_number 사용)
+      const actualOrderId = order_number;
       
-      // 입금자명 검증 (선택적 - 이름이 다를 수 있음)
-      if (customerInfo.이름 && depositorName && customerInfo.이름 !== depositorName) {
-        console.warn("⚠️ 입금자명과 주문자명이 다름:", {
-          주문자명: customerInfo.이름,
-          입금자명: depositorName
-        });
-        // 경고만 출력하고 계속 진행
-      }
-
-      // 💰 금액 검증 로직 추가
-      const expectedAmount = calculateExpectedAmount(customerInfo.상품유형 || productName);
-      const depositedAmount = parseInt(amount.toString().replace(/[^\d]/g, ''));
-      
-      console.log("💰 금액 검증:", {
-        상품유형: customerInfo.상품유형 || productName,
-        예상금액: expectedAmount,
-        입금금액: depositedAmount,
-        일치여부: depositedAmount >= expectedAmount
-      });
-
-      if (depositedAmount < expectedAmount) {
-        console.error("❌ 입금 금액 부족:", {
-          필요금액: expectedAmount,
-          입금금액: depositedAmount,
-          부족금액: expectedAmount - depositedAmount
-        });
-        
-        // 입금 상태는 "입금부족"으로 업데이트
-        await googleSheetsService.updatePaymentStatus(actualOrderId, {
-          상태: "입금부족",
-          입금자명: depositorName,
-          입금금액: `₩${depositedAmount.toLocaleString()}`,
-          필요금액: `₩${expectedAmount.toLocaleString()}`,
-          부족금액: `₩${(expectedAmount - depositedAmount).toLocaleString()}`,
-          입금시간: depositTime || getKoreanTime(),
-          결제방식: "계좌이체"
-        });
-
-        return NextResponse.json({
-          success: false,
-          message: "입금 금액이 부족합니다",
-          orderId: actualOrderId,
-          expectedAmount: expectedAmount,
-          depositedAmount: depositedAmount,
-          shortfall: expectedAmount - depositedAmount,
-          status: "insufficient_payment"
-        }, { status: 402 }); // 402 Payment Required
-      }
-
-      console.log("✅ 금액 검증 통과 - 라이선스 발급 진행");
+      // PayAction 웹훅은 매칭완료 상태로만 알림이 오므로 이미 결제가 완료된 상태
+      console.log("✅ PayAction 매칭완료 알림 - 라이선스 발급 진행");
 
       // 2단계: Google Sheets 상태 업데이트 (입금완료)
       console.log("📝 Google Sheets 입금 상태 업데이트 중...");
       await googleSheetsService.updatePaymentStatus(actualOrderId, {
         상태: "입금완료",
-        입금자명: depositorName,
-        입금금액: `₩${amount.toLocaleString()}`,
-        입금시간: depositTime || getKoreanTime(),
-        은행명: bankName || "페이액션",
-        계좌번호: accountNumber || "",
-        결제방식: "계좌이체"
+        입금자명: customerInfo.이름,
+        입금금액: "페이액션 결제완료",
+        입금시간: getKoreanTime(),
+        은행명: "페이액션",
+        계좌번호: "",
+        결제방식: "페이액션"
       });
 
       console.log("✅ Google Sheets 상태 업데이트 완료");
@@ -274,18 +192,17 @@ export async function POST(request: NextRequest) {
       // 라이선스 발급을 위한 고객 정보 구성
       const licenseCustomerInfo = {
         name: customerInfo.이름,
-        email: customerInfo.이메일,
+        email: customerInfo.이메일, // 고객 입력 이메일을 email 필드로 설정
         phone: customerInfo.연락처,
         orderId: actualOrderId,
-        depositorName: depositorName,
-        amount: parseInt(amount.toString().replace(/[^\d]/g, '')), // 숫자만 추출
-        accountCount: customerInfo.아이디수 || accountIds || 1,
-        postsPerAccount: customerInfo.글수 || postsPerAccount || 1,
-        months: customerInfo.개월수 || months || 1,
-        productName: customerInfo.상품유형 || productName || "글쓰기자동화",
-        productType: customerInfo.상품유형 || productName || "standard",
-        paymentMethod: "bank_transfer",
-        customerEmail: customerInfo.이메일,
+        depositorName: customerInfo.이름,
+        amount: 50000, // 기본 금액
+        accountCount: customerInfo.아이디수 || 1,
+        postsPerAccount: customerInfo.글수 || 1,
+        months: customerInfo.개월수 || 1,
+        productName: customerInfo.상품유형 || "글쓰기자동화",
+        productType: customerInfo.상품유형 || "standard",
+        paymentMethod: "payaction",
         paymentKey: `payaction-${actualOrderId}`,
         hardwareId: "PENDING-ACTIVATION"
       };
