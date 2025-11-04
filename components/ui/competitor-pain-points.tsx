@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { AnimatedSection, StaggerContainer } from "@/components/ui/animated-section"
 import { AlertCircle, XCircle, TrendingDown, ThumbsDown, X } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -98,17 +99,15 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
               <>
                 {/* Placeholder for actual screenshot */}
                 <div className="relative">
-                  <img 
+                  <Image 
                     src="/images/competitor-examples/타프로그램 API형식 글쓰기.webp" 
                     alt="타사 프로그램 글쓰기 실패 예시"
+                    width={600}
+                    height={400}
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      // Fallback if image doesn't exist
-                      setImageError(true);
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                    }}
+                    onError={() => setImageError(true)}
                     onLoad={() => setImageError(false)}
+                    priority
                   />
                   <div className="space-y-3 hidden">
                     <div className="flex items-center justify-between">
@@ -134,24 +133,22 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
             {id === 'comment' && (
               <>
                 <div className="grid grid-cols-1 gap-2">
-                  <img 
+                  <Image 
                     src={`/images/competitor-examples/타프로그램 댓글${commentImages[0]}.webp`}
                     alt="타사 프로그램 댓글 실패 예시 1" 
+                    width={600}
+                    height={300}
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      setImageError(true);
-                      e.currentTarget.style.display = 'none';
-                    }}
+                    onError={() => setImageError(true)}
                     onLoad={() => setImageError(false)}
                   />
-                  <img 
+                  <Image 
                     src={`/images/competitor-examples/타프로그램 댓글${commentImages[1]}.webp`}
                     alt="타사 프로그램 댓글 실패 예시 2" 
+                    width={600}
+                    height={300}
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      setImageError(true);
-                      e.currentTarget.style.display = 'none';
-                    }}
+                    onError={() => setImageError(true)}
                     onLoad={() => setImageError(false)}
                   />
                 </div>
@@ -172,15 +169,13 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
 
             {id === 'neighbor' && (
               <>
-                <img 
+                <Image 
                   src="/images/competitor-examples/성의없는 서로이웃신청.webp"
                   alt="타사 프로그램 서로이웃 실패 예시"
+                  width={600}
+                  height={400}
                   className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
-                  onError={(e) => {
-                    setImageError(true);
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
+                  onError={() => setImageError(true)}
                   onLoad={() => setImageError(false)}
                 />
                 <div className="p-3 bg-gray-50 dark:bg-gray-900/50 rounded border border-gray-300 dark:border-gray-800 hidden">
@@ -199,15 +194,13 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
 
             {id === 'reply' && (
               <>
-                <img 
+                <Image 
                   src="/images/competitor-examples/성의없는 대댓글.webp"
                   alt="타사 프로그램 대댓글 실패 예시"
+                  width={600}
+                  height={400}
                   className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
-                  onError={(e) => {
-                    setImageError(true);
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                  }}
+                  onError={() => setImageError(true)}
                   onLoad={() => setImageError(false)}
                 />
                 <div className="space-y-3 hidden">
