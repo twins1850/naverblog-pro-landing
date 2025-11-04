@@ -412,6 +412,9 @@ export class GoogleSheetsService {
 
   async updateLicenseInfo(orderId: string, licenseData: any): Promise<void> {
     try {
+      console.log(`🔄 라이선스 정보 업데이트 시작: 주문번호 ${orderId}`);
+      console.log(`📝 업데이트할 데이터:`, licenseData);
+      
       const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
       await doc.loadInfo();
 
@@ -420,19 +423,35 @@ export class GoogleSheetsService {
         throw new Error('스프레드시트를 찾을 수 없습니다.');
       }
 
+      await sheet.loadHeaderRow();
+      console.log(`📊 스프레드시트 헤더:`, sheet.headerValues);
+
       const rows = await sheet.getRows();
-      const targetRow = rows.find(row => row.get('주문번호') === orderId);
+      console.log(`📋 총 ${rows.length}개 행 검색 중...`);
+      
+      // 주문번호로 행 찾기 (디버깅 추가)
+      const targetRow = rows.find(row => {
+        const rowOrderId = row.get('주문번호');
+        console.log(`🔍 비교: "${rowOrderId}" === "${orderId}" ? ${rowOrderId === orderId}`);
+        return rowOrderId === orderId;
+      });
       
       if (targetRow) {
+        console.log(`✅ 대상 행 발견: 주문번호 ${orderId}`);
+        console.log(`📝 업데이트 전 행 데이터:`, targetRow._rawData);
+        
         // 라이선스 정보 업데이트
         Object.keys(licenseData).forEach(key => {
+          console.log(`🔧 ${key} = ${licenseData[key]}`);
           targetRow.set(key, licenseData[key]);
         });
         
         await targetRow.save();
         console.log(`✅ 주문번호 ${orderId} 라이선스 정보 업데이트 완료`);
+        console.log(`📝 업데이트 후 행 데이터:`, targetRow._rawData);
       } else {
         console.warn(`⚠️ 주문번호 ${orderId}를 찾을 수 없습니다.`);
+        console.log(`📋 기존 주문번호들:`, rows.map(row => row.get('주문번호')).slice(0, 10));
         throw new Error(`주문번호 ${orderId}를 찾을 수 없습니다.`);
       }
     } catch (error) {

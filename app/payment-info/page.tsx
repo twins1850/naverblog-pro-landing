@@ -781,15 +781,13 @@ export default function PaymentInfoPage() {
                 <span className="font-semibold">안전한 결제 시스템</span>
               </div>
               <p className="text-gray-600 text-sm mb-4">
-                <strong>계좌이체</strong>는 입금 후 즉시 자동 확인되며 1분 이내에 라이선스가 발급되고,
-                <br />
-                <strong>카드결제</strong>는 토스(Toss) 안전결제 시스템을 통해 즉시 처리됩니다.
+                <strong>계좌이체</strong>만 가능하며 입금 즉시 자동 확인 후 1분 이내에 라이선스가 발급됩니다.
                 <br />
                 라이선스는 등록하신 이메일로 발송됩니다.
               </p>
               <p className="text-gray-600 text-sm">
                 <span className="font-bold">
-                  결제 관련 문의: jireh202503@gmail.com | 010-4248-1850
+                  결제 관련 문의: <a href="http://pf.kakao.com/_ShwJn/chat" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">http://pf.kakao.com/_ShwJn/chat</a>
                 </span>
               </p>
             </CardContent>

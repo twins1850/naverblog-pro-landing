@@ -2,6 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleSheetsService } from "../../../../lib/google-sheets";
 import { LicenseService } from "../../../../lib/license-service.js";
 
+// 숫자 추출 헬퍼 함수
+function extractNumber(value: any): number {
+  if (typeof value === 'number') return value;
+  if (typeof value === 'string') {
+    const match = value.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 1;
+  }
+  return 1;
+}
+
 export async function POST(request: NextRequest) {
   try {
     console.log("🎯 페이액션 웹훅 수신됨");
@@ -56,17 +66,39 @@ export async function POST(request: NextRequest) {
     
     console.log("✅ 웹훅 데이터 검증 통과");
     console.log(`💰 입금 확인: ${depositorName}님이 ${amount}원 입금 (주문번호: ${orderId})`);
+    console.log(`💰 PayAction 실제 입금 금액 상세:`, {
+      amount: amount,
+      amountType: typeof amount,
+      amountString: String(amount),
+      amountNumber: Number(amount)
+    });
     
     // Google Sheets에서 주문 정보 찾기
     const googleSheetsService = new GoogleSheetsService();
     
-    // 주문번호로 고객 정보 조회 (Google Sheets에서)
-    // TODO: Google Sheets에서 주문 조회 기능 구현 필요
+    console.log("🔍 Google Sheets에서 주문 정보 조회 중...");
+    let originalCustomerData = null;
+    
+    try {
+      // 주문번호로 고객 정보 조회 (Google Sheets에서)
+      originalCustomerData = await googleSheetsService.findCustomerByOrderId(orderId);
+      console.log("✅ Google Sheets 조회 성공:", originalCustomerData ? "데이터 발견" : "데이터 없음");
+      
+      if (!originalCustomerData) {
+        // 입금자명과 금액으로 다시 시도
+        console.log("🔍 입금자명과 금액으로 재검색 시도...");
+        originalCustomerData = await googleSheetsService.findCustomerByDepositorAndAmount(depositorName, amount);
+        console.log("✅ 입금자명/금액 조회 결과:", originalCustomerData ? "데이터 발견" : "데이터 없음");
+      }
+    } catch (sheetsError) {
+      console.error("⚠️ Google Sheets 조회 실패:", sheetsError);
+      // 조회 실패해도 웹훅 처리는 계속 진행
+    }
     
     // 라이선스 발급 서비스 실행
     const licenseService = new LicenseService();
     
-    // 입금 확인된 주문에 대해 라이선스 발급
+    // 입금 확인된 주문에 대해 라이선스 발급 (Google Sheets에서 조회한 정보 병합)
     const customerInfo = {
       orderId: orderId,
       depositorName: depositorName,
@@ -75,10 +107,31 @@ export async function POST(request: NextRequest) {
       paymentMethod: "bank_transfer",
       paymentTime: depositTime || new Date().toISOString(),
       bankName: bankName || "케이뱅크",
-      accountNumber: accountNumber || "100232962872"
+      accountNumber: accountNumber || "100232962872",
+      // Google Sheets에서 조회한 실제 고객 정보 추가
+      name: originalCustomerData?.이름 || depositorName,
+      email: originalCustomerData?.이메일 || "twins1850@gmail.com", // 실제 고객 이메일
+      customerEmail: originalCustomerData?.이메일 || "twins1850@gmail.com",
+      phone: originalCustomerData?.연락처 || "010-0000-0000",
+      productName: originalCustomerData?.상품유형 || "블로그 자동화",
+      productType: originalCustomerData?.상품유형 || "블로그 자동화",
+      accountCount: extractNumber(originalCustomerData?.아이디수) || 1,
+      accountIds: extractNumber(originalCustomerData?.아이디수) || 1,
+      postCount: extractNumber(originalCustomerData?.글수) || 1,
+      postsPerAccount: extractNumber(originalCustomerData?.글수) || 1,
+      months: extractNumber(originalCustomerData?.개월수) || 1,
+      depositTime: depositTime
     };
     
     console.log("🚀 라이선스 발급 프로세스 시작...");
+    console.log("📋 최종 customerInfo 전달 데이터:", {
+      orderId: customerInfo.orderId,
+      amount: customerInfo.amount,
+      amountType: typeof customerInfo.amount,
+      name: customerInfo.name,
+      email: customerInfo.email,
+      productName: customerInfo.productName
+    });
     
     // 라이선스 발급 (기존 로직 활용)
     const licenseResult = await licenseService.issueLicenseFromPayment(customerInfo);

@@ -455,9 +455,7 @@ export default function BankTransferPage() {
                     <Info className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                     <div className="text-sm text-yellow-800">
                       <p className="font-medium">문의 및 입금 확인</p>
-                      <p>📧 이메일: jireh202503@gmail.com</p>
-                      <p>📞 전화: 010-4248-1850</p>
-                      <p>💬 카카오톡: @blogpro</p>
+                      <p>💬 카카오채널: <a href="http://pf.kakao.com/_ShwJn/chat" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">http://pf.kakao.com/_ShwJn/chat</a></p>
                     </div>
                   </div>
                 </div>

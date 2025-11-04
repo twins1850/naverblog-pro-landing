@@ -287,7 +287,7 @@ export async function POST(request: NextRequest) {
     // 📊 최종 응답 생성 (모든 서비스 결과 종합)
     const overallSuccess = true; // 주문 자체는 항상 성공
     let statusMessage = "구매 정보가 접수되었습니다.";
-    let warnings = [];
+    const warnings = [];
 
     // 각 서비스 상태에 따른 메시지 구성
     if (googleSheetsSuccess && payActionSuccess) {
