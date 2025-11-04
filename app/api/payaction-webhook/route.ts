@@ -189,6 +189,9 @@ export async function POST(request: NextRequest) {
       console.log("🎯 자동 라이선스 발급 시작...");
       const licenseService = new LicenseService();
 
+      // 실제 상품 가격 계산
+      const actualAmount = calculateExpectedAmount(customerInfo.상품유형 || "댓글자동화");
+
       // 라이선스 발급을 위한 고객 정보 구성
       const licenseCustomerInfo = {
         name: customerInfo.이름,
@@ -196,7 +199,7 @@ export async function POST(request: NextRequest) {
         phone: customerInfo.연락처,
         orderId: actualOrderId,
         depositorName: customerInfo.이름,
-        amount: 50000, // 기본 금액
+        amount: actualAmount, // 실제 상품 가격 적용
         accountCount: customerInfo.아이디수 || 1,
         postsPerAccount: customerInfo.글수 || 1,
         months: customerInfo.개월수 || 1,
