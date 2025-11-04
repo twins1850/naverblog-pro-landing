@@ -12,47 +12,6 @@ function extractNumber(value: any): number {
   return 1;
 }
 
-// 실제 결제 금액 계산 함수
-function calculateExpectedAmount(productType: string): number {
-  if (!productType) return 50000; // 기본값
-  
-  // Google Sheets 상품 유형에서 금액 추출
-  if (productType.includes('160000') || productType.includes('16만')) return 160000;
-  if (productType.includes('100000') || productType.includes('10만')) return 100000;
-  if (productType.includes('80000') || productType.includes('8만')) return 80000;
-  if (productType.includes('50000') || productType.includes('5만')) return 50000;
-  
-  // 개별 상품 가격 (2024년 기준)
-  const prices = {
-    'A': 50000,  // 글쓰기자동화
-    'B': 50000,  // 댓글자동화  
-    'C': 50000,  // 서로이웃자동화
-    'D': 50000,  // 대댓글자동화
-  };
-  
-  // 조합 상품 할인 계산
-  if (productType.includes('B') && productType.includes('C')) {
-    return 80000; // 댓글+서로이웃 조합 할인
-  }
-  
-  if (productType.includes('B') && productType.includes('D')) {
-    return 80000; // 댓글+대댓글 조합 할인
-  }
-  
-  // 3개 이상 조합
-  const hasA = productType.includes('A');
-  const hasB = productType.includes('B');
-  const hasC = productType.includes('C');
-  const hasD = productType.includes('D');
-  
-  const featureCount = [hasA, hasB, hasC, hasD].filter(Boolean).length;
-  
-  if (featureCount >= 4) return 160000; // 전체 패키지
-  if (featureCount === 3) return 120000; // 3개 조합
-  if (featureCount === 2) return 80000;  // 2개 조합
-  
-  return 50000; // 단일 기능
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -123,11 +82,12 @@ export async function POST(request: NextRequest) {
     // 라이선스 발급 서비스 실행
     const licenseService = new LicenseService();
     
-    // Google Sheets에서 조회한 정보로 실제 결제 금액 계산
-    const actualAmount = calculateExpectedAmount(originalCustomerData?.상품유형 || "");
-    console.log("💰 실제 상품 가격 계산:", {
-      상품유형: originalCustomerData?.상품유형,
-      계산된금액: actualAmount,
+    // Google Sheets E열에서 실제 결제 금액 직접 사용
+    const actualAmount = originalCustomerData?.결제금액 || originalCustomerData?.금액 || 50000;
+    console.log("💰 Google Sheets에서 실제 결제금액 사용:", {
+      E열_결제금액: originalCustomerData?.결제금액,
+      대체_금액: originalCustomerData?.금액,
+      최종사용금액: actualAmount,
       조회된데이터: originalCustomerData
     });
     
