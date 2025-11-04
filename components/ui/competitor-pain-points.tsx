@@ -24,6 +24,7 @@ interface AnimatedCardProps extends PainPoint {
 
 function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: AnimatedCardProps) {
   const [isHovered, setIsHovered] = React.useState(false)
+  const [imageError, setImageError] = React.useState(false)
   
   // Use fixed indices to avoid hydration mismatch
   // Can be made dynamic based on props or other deterministic factors
@@ -103,9 +104,11 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
                       // Fallback if image doesn't exist
+                      setImageError(true);
                       e.currentTarget.style.display = 'none';
                       e.currentTarget.nextElementSibling?.classList.remove('hidden');
                     }}
+                    onLoad={() => setImageError(false)}
                   />
                   <div className="space-y-3 hidden">
                     <div className="flex items-center justify-between">
@@ -136,16 +139,20 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                     alt="타사 프로그램 댓글 실패 예시 1" 
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
+                      setImageError(true);
                       e.currentTarget.style.display = 'none';
                     }}
+                    onLoad={() => setImageError(false)}
                   />
                   <img 
                     src={`/images/competitor-examples/타프로그램 댓글${commentImages[1]}.webp`}
                     alt="타사 프로그램 댓글 실패 예시 2" 
                     className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
+                      setImageError(true);
                       e.currentTarget.style.display = 'none';
                     }}
+                    onLoad={() => setImageError(false)}
                   />
                 </div>
                 <div className="space-y-2 hidden" style={{display: 'none'}}>
@@ -170,9 +177,11 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                   alt="타사 프로그램 서로이웃 실패 예시"
                   className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
                   onError={(e) => {
+                    setImageError(true);
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.nextElementSibling?.classList.remove('hidden');
                   }}
+                  onLoad={() => setImageError(false)}
                 />
                 <div className="p-3 bg-gray-50 dark:bg-gray-900/50 rounded border border-gray-300 dark:border-gray-800 hidden">
                   <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
@@ -195,9 +204,11 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                   alt="타사 프로그램 대댓글 실패 예시"
                   className="w-full h-auto rounded opacity-90 hover:opacity-100 transition-opacity"
                   onError={(e) => {
+                    setImageError(true);
                     e.currentTarget.style.display = 'none';
                     e.currentTarget.nextElementSibling?.classList.remove('hidden');
                   }}
+                  onLoad={() => setImageError(false)}
                 />
                 <div className="space-y-3 hidden">
                   <div className="p-2 bg-gray-50 dark:bg-gray-900/50 rounded border border-gray-300 dark:border-gray-800">
@@ -212,19 +223,16 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
               </>
             )}
 
-            {/* Overlay */}
-            <div className={cn(
-              "absolute inset-0 flex items-center justify-center",
-              "bg-red-500/10 backdrop-blur-[1px]",
-              "opacity-0 transition-opacity duration-300",
-              isHovered && "opacity-100"
-            )}>
-              <div className="transform rotate-12">
-                <div className="px-4 py-2 bg-red-500 text-white font-bold text-lg rounded shadow-xl">
-                  {visual.overlay}
+            {/* Overlay - only show on hover and when images are loaded */}
+            {isHovered && !imageError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-red-500/10 backdrop-blur-[1px] transition-opacity duration-300 pointer-events-none">
+                <div className="transform rotate-12">
+                  <div className="px-4 py-2 bg-red-500 text-white font-bold text-lg rounded shadow-xl">
+                    {visual.overlay}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Problems list */}
