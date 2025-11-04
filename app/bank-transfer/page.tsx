@@ -135,7 +135,7 @@ export default function BankTransferPage() {
       
       if (result.success) {
         alert('주문이 접수되었습니다!\n\n' +
-              '입금 확인 후 24시간 이내에 라이선스가 발급됩니다.\n' +
+              '입금하시면 즉시 자동으로 입금 확인이 이루어지며,\n1분 이내에 라이선스가 발급됩니다.\n\n' +
               '문의: jireh202503@gmail.com');
       } else {
         throw new Error(result.error || '주문 접수 실패');
@@ -439,7 +439,7 @@ export default function BankTransferPage() {
                   <div className="flex items-start space-x-2">
                     <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                     <span>
-                      입금 확인 후 <strong>24시간 이내</strong>에 라이선스 발급
+                      입금 후 <strong>즉시 자동 확인</strong> 및 <strong>1분 이내</strong> 라이선스 발급
                     </span>
                   </div>
                   <div className="flex items-start space-x-2">

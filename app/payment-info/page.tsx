@@ -781,7 +781,7 @@ export default function PaymentInfoPage() {
                 <span className="font-semibold">안전한 결제 시스템</span>
               </div>
               <p className="text-gray-600 text-sm mb-4">
-                <strong>계좌이체</strong>는 입금 확인 후 24시간 이내에 라이선스가 발급되며,
+                <strong>계좌이체</strong>는 입금 후 즉시 자동 확인되며 1분 이내에 라이선스가 발급되고,
                 <br />
                 <strong>카드결제</strong>는 토스(Toss) 안전결제 시스템을 통해 즉시 처리됩니다.
                 <br />

@@ -145,7 +145,7 @@ export class GmailEmailService {
               <ul>
                 <li><strong>정확한 금액</strong> ₩${orderData.amount.toLocaleString()}을 입금해주세요</li>
                 <li><strong>입금자명</strong>을 주문시 입력한 이름과 동일하게 해주세요</li>
-                <li>입금 확인 후 <strong>24시간 이내</strong>에 라이선스가 발급됩니다</li>
+                <li>입금 확인 후 <strong>1분 이내</strong>에 라이선스가 발급됩니다</li>
                 <li>라이선스는 이 이메일 주소로 발송됩니다</li>
               </ul>
             </div>
@@ -160,7 +160,7 @@ export class GmailEmailService {
             </div>
 
             <p style="margin-top: 30px;">
-              입금이 완료되면 자동으로 확인되며, 라이선스 발급까지 최대 24시간이 소요됩니다.<br>
+              입금하시면 즉시 자동으로 입금 확인이 이루어지며, 1분 이내에 라이선스가 발급됩니다.<br>
               궁금한 사항이 있으시면 언제든지 문의해주세요.
             </p>
 
@@ -206,7 +206,7 @@ Blog Pro 주문이 성공적으로 접수되었습니다.
 ⚠️ 중요 안내사항
 - 정확한 금액 ₩${orderData.amount.toLocaleString()}을 입금해주세요
 - 입금자명을 주문시 입력한 이름과 동일하게 해주세요
-- 입금 확인 후 24시간 이내에 라이선스가 발급됩니다
+- 입금하시면 즉시 자동으로 입금 확인이 이루어지며, 1분 이내에 라이선스가 발급됩니다
 - 라이선스는 이 이메일 주소로 발송됩니다
 
 📞 문의 및 입금 확인
