@@ -41,6 +41,15 @@ export async function POST(request: NextRequest) {
     // 라이선스 서비스 초기화
     const licenseService = new LicenseService();
 
+    // Google Sheets에서 실제 결제금액 추출
+    const rawAmount = customerInfo.결제금액 || "50000";
+    const actualAmount = parseInt(String(rawAmount).replace(/[^0-9]/g, '')) || 50000;
+    
+    console.log("💰 수동 라이선스 - 결제금액 처리:", {
+      원본_결제금액: customerInfo.결제금액,
+      숫자_변환후: actualAmount
+    });
+
     // 라이선스 발급을 위한 고객 정보 구성
     const licenseCustomerInfo = {
       name: customerInfo.이름,
@@ -48,7 +57,7 @@ export async function POST(request: NextRequest) {
       phone: customerInfo.연락처,
       orderId: orderId,
       depositorName: customerInfo.이름,
-      amount: 50000,
+      amount: actualAmount, // 실제 결제금액 사용
       accountCount: customerInfo.아이디수 || 1,
       postsPerAccount: customerInfo.글수 || 1,
       months: customerInfo.개월수 || 1,
@@ -86,7 +95,7 @@ export async function POST(request: NextRequest) {
         상태: "입금완료",
         결제상태: "결제완료", // O열 결제상태 추가
         입금자명: customerInfo.이름,
-        입금금액: "₩50,000",
+        입금금액: `₩${actualAmount.toLocaleString()}`,
         입금시간: new Date().toISOString(),
         결제방식: "계좌이체"
       });
