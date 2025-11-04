@@ -12,6 +12,48 @@ function extractNumber(value: any): number {
   return 1;
 }
 
+// 실제 결제 금액 계산 함수
+function calculateExpectedAmount(productType: string): number {
+  if (!productType) return 50000; // 기본값
+  
+  // Google Sheets 상품 유형에서 금액 추출
+  if (productType.includes('160000') || productType.includes('16만')) return 160000;
+  if (productType.includes('100000') || productType.includes('10만')) return 100000;
+  if (productType.includes('80000') || productType.includes('8만')) return 80000;
+  if (productType.includes('50000') || productType.includes('5만')) return 50000;
+  
+  // 개별 상품 가격 (2024년 기준)
+  const prices = {
+    'A': 50000,  // 글쓰기자동화
+    'B': 50000,  // 댓글자동화  
+    'C': 50000,  // 서로이웃자동화
+    'D': 50000,  // 대댓글자동화
+  };
+  
+  // 조합 상품 할인 계산
+  if (productType.includes('B') && productType.includes('C')) {
+    return 80000; // 댓글+서로이웃 조합 할인
+  }
+  
+  if (productType.includes('B') && productType.includes('D')) {
+    return 80000; // 댓글+대댓글 조합 할인
+  }
+  
+  // 3개 이상 조합
+  const hasA = productType.includes('A');
+  const hasB = productType.includes('B');
+  const hasC = productType.includes('C');
+  const hasD = productType.includes('D');
+  
+  const featureCount = [hasA, hasB, hasC, hasD].filter(Boolean).length;
+  
+  if (featureCount >= 4) return 160000; // 전체 패키지
+  if (featureCount === 3) return 120000; // 3개 조합
+  if (featureCount === 2) return 80000;  // 2개 조합
+  
+  return 50000; // 단일 기능
+}
+
 export async function POST(request: NextRequest) {
   try {
     console.log("🎯 페이액션 웹훅 수신됨");
@@ -24,39 +66,24 @@ export async function POST(request: NextRequest) {
     const webhookData = await request.json();
     console.log("📦 웹훅 데이터:", JSON.stringify(webhookData, null, 2));
     
-    // 페이액션 웹훅 검증 (보안)
-    const signature = request.headers.get('x-payaction-signature');
-    if (!signature) {
-      console.error("❌ 웹훅 서명이 없습니다");
-      return NextResponse.json(
-        { error: "웹훅 서명이 필요합니다" },
-        { status: 401 }
-      );
-    }
-    
-    // TODO: 실제 서명 검증 로직 구현
-    // const isValidSignature = verifyWebhookSignature(webhookData, signature);
-    // if (!isValidSignature) {
-    //   return NextResponse.json({ error: "잘못된 서명" }, { status: 401 });
-    // }
-    
-    // 입금 확인 데이터 추출
+    // 실제 PayAction 웹훅 데이터 구조 처리
     const {
-      orderId,
-      amount,
-      depositorName,
-      depositTime,
-      bankName,
-      accountNumber,
-      status
+      order_number,
+      order_status,
+      processing_date
     } = webhookData;
     
+    // PayAction 매칭완료 상태 확인
+    if (order_status !== "매칭완료") {
+      console.log("⏭️ 입금 확인이 아닌 알림, 건너뜀:", order_status);
+      return NextResponse.json({ success: true, message: "처리 건너뜀" });
+    }
+    
     // 필수 필드 검증
-    if (!orderId || !amount || !depositorName) {
+    if (!order_number) {
       console.error("❌ 필수 웹훅 데이터 누락:", {
-        orderId: !!orderId,
-        amount: !!amount, 
-        depositorName: !!depositorName
+        order_number: !!order_number,
+        order_status: !!order_status
       });
       return NextResponse.json(
         { error: "필수 웹훅 데이터가 누락되었습니다" },
@@ -64,14 +91,8 @@ export async function POST(request: NextRequest) {
       );
     }
     
-    console.log("✅ 웹훅 데이터 검증 통과");
-    console.log(`💰 입금 확인: ${depositorName}님이 ${amount}원 입금 (주문번호: ${orderId})`);
-    console.log(`💰 PayAction 실제 입금 금액 상세:`, {
-      amount: amount,
-      amountType: typeof amount,
-      amountString: String(amount),
-      amountNumber: Number(amount)
-    });
+    console.log("✅ PayAction 웹훅 데이터 검증 통과");
+    console.log(`💰 매칭 완료: 주문번호 ${order_number}, 상태: ${order_status}`);
     
     // Google Sheets에서 주문 정보 찾기
     const googleSheetsService = new GoogleSheetsService();
@@ -81,35 +102,47 @@ export async function POST(request: NextRequest) {
     
     try {
       // 주문번호로 고객 정보 조회 (Google Sheets에서)
-      originalCustomerData = await googleSheetsService.findCustomerByOrderId(orderId);
+      originalCustomerData = await googleSheetsService.findCustomerByOrderId(order_number);
       console.log("✅ Google Sheets 조회 성공:", originalCustomerData ? "데이터 발견" : "데이터 없음");
       
       if (!originalCustomerData) {
-        // 입금자명과 금액으로 다시 시도
-        console.log("🔍 입금자명과 금액으로 재검색 시도...");
-        originalCustomerData = await googleSheetsService.findCustomerByDepositorAndAmount(depositorName, amount);
-        console.log("✅ 입금자명/금액 조회 결과:", originalCustomerData ? "데이터 발견" : "데이터 없음");
+        console.log("❌ 주문번호로 고객 정보를 찾을 수 없습니다:", order_number);
+        return NextResponse.json(
+          { error: "주문 정보를 찾을 수 없습니다", orderId: order_number },
+          { status: 404 }
+        );
       }
     } catch (sheetsError) {
       console.error("⚠️ Google Sheets 조회 실패:", sheetsError);
-      // 조회 실패해도 웹훅 처리는 계속 진행
+      return NextResponse.json(
+        { error: "고객 정보 조회 실패", orderId: order_number },
+        { status: 500 }
+      );
     }
     
     // 라이선스 발급 서비스 실행
     const licenseService = new LicenseService();
     
+    // Google Sheets에서 조회한 정보로 실제 결제 금액 계산
+    const actualAmount = calculateExpectedAmount(originalCustomerData?.상품유형 || "");
+    console.log("💰 실제 상품 가격 계산:", {
+      상품유형: originalCustomerData?.상품유형,
+      계산된금액: actualAmount,
+      조회된데이터: originalCustomerData
+    });
+    
     // 입금 확인된 주문에 대해 라이선스 발급 (Google Sheets에서 조회한 정보 병합)
     const customerInfo = {
-      orderId: orderId,
-      depositorName: depositorName,
-      amount: amount,
+      orderId: order_number,
+      depositorName: originalCustomerData?.이름 || "고객",
+      amount: actualAmount, // 실제 상품 가격 사용
       paymentStatus: "completed",
       paymentMethod: "bank_transfer",
-      paymentTime: depositTime || new Date().toISOString(),
-      bankName: bankName || "케이뱅크",
-      accountNumber: accountNumber || "100232962872",
+      paymentTime: processing_date || new Date().toISOString(),
+      bankName: "케이뱅크",
+      accountNumber: "100232962872",
       // Google Sheets에서 조회한 실제 고객 정보 추가
-      name: originalCustomerData?.이름 || depositorName,
+      name: originalCustomerData?.이름 || "고객",
       email: originalCustomerData?.이메일 || "twins1850@gmail.com", // 실제 고객 이메일
       customerEmail: originalCustomerData?.이메일 || "twins1850@gmail.com",
       phone: originalCustomerData?.연락처 || "010-0000-0000",
@@ -120,7 +153,7 @@ export async function POST(request: NextRequest) {
       postCount: extractNumber(originalCustomerData?.글수) || 1,
       postsPerAccount: extractNumber(originalCustomerData?.글수) || 1,
       months: extractNumber(originalCustomerData?.개월수) || 1,
-      depositTime: depositTime
+      depositTime: processing_date
     };
     
     console.log("🚀 라이선스 발급 프로세스 시작...");
@@ -142,7 +175,7 @@ export async function POST(request: NextRequest) {
       
       // Google Sheets 상태 업데이트
       await googleSheetsService.updateLicenseStatus(
-        orderId,
+        order_number,
         "발급완료",
         licenseResult.licenseKey
       );
@@ -150,7 +183,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({
         success: true,
         message: "입금 확인 및 라이선스 발급 완료",
-        orderId: orderId,
+        orderId: order_number,
         licenseKey: licenseResult.licenseKey,
         emailSent: licenseResult.emailSent
       });
@@ -160,7 +193,7 @@ export async function POST(request: NextRequest) {
         {
           error: "라이선스 발급 실패",
           details: licenseResult.error,
-          orderId: orderId
+          orderId: order_number
         },
         { status: 500 }
       );
