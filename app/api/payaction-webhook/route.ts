@@ -94,8 +94,8 @@ export async function POST(request: NextRequest) {
       mallId: mallId || '[MISSING]'
     });
 
-    // 웹훅 키 검증 (임시 비활성화 - 테스트용)
-    if (false && (!webhookKey || !payActionService.validateWebhookKey(webhookKey))) {
+    // 웹훅 키 검증
+    if (!webhookKey || !payActionService.validateWebhookKey(webhookKey)) {
       console.error("❌ 웹훅 키 검증 실패");
       return NextResponse.json(
         { error: "Unauthorized webhook request" },
