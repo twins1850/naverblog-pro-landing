@@ -82,12 +82,13 @@ export async function POST(request: NextRequest) {
     // 라이선스 발급 서비스 실행
     const licenseService = new LicenseService();
     
-    // Google Sheets E열에서 실제 결제 금액 직접 사용
-    const actualAmount = originalCustomerData?.결제금액 || originalCustomerData?.금액 || 50000;
+    // Google Sheets E열에서 실제 결제 금액 직접 사용 (₩ 기호 제거 후 숫자 변환)
+    const rawAmount = originalCustomerData?.결제금액 || originalCustomerData?.금액 || "50000";
+    const actualAmount = parseInt(String(rawAmount).replace(/[^0-9]/g, '')) || 50000;
     console.log("💰 Google Sheets에서 실제 결제금액 사용:", {
-      E열_결제금액: originalCustomerData?.결제금액,
-      대체_금액: originalCustomerData?.금액,
-      최종사용금액: actualAmount,
+      원본_결제금액: originalCustomerData?.결제금액,
+      문자열_정리후: rawAmount,
+      숫자_변환후: actualAmount,
       조회된데이터: originalCustomerData
     });
     
