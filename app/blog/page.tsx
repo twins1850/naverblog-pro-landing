@@ -196,7 +196,7 @@ export default function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-16">
         {/* Hero Section */}
         <section className="section bg-gradient-to-br from-brand-primary/5 to-brand-accent/5">
           <div className="container mx-auto">

@@ -2,8 +2,6 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection } from "@/components/ui/animated-section"
-import { Header } from "@/components/ui/header"
-import { Footer } from "@/components/ui/footer"
 import { 
   Calendar, 
   Clock, 
@@ -152,7 +150,7 @@ export default function BlogMonetizationStrategies() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background pt-16">
         <div className="container mx-auto py-8 max-w-4xl">
           {/* Breadcrumb */}
           <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-8">

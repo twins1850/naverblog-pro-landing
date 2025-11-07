@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 import "@/styles/globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naverblog-pro.com'
@@ -194,6 +196,13 @@ export default function RootLayout({
     "taxID": "795-11-02437"
   };
 
+  const handlePurchaseClick = () => {
+    // 가격 계산기 페이지로 리다이렉트
+    if (typeof window !== 'undefined') {
+      window.location.href = '/payment-info'
+    }
+  }
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
@@ -214,7 +223,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Header onPurchaseClick={handlePurchaseClick} />
+          <main>{children}</main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
