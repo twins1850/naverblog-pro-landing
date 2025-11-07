@@ -74,10 +74,10 @@ export const metadata: Metadata = {
   },
   
   verification: {
-    google: 'iCJ4e5Hok-N-kFIjQNKyedb4gWU7GjC6YE75qSoENo0',
-    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    google: '52HUzxYTz8HntzWHHGmO0TPdq9vyCb3RC4EOeYpvdyc',
+    yandex: 'fde8012ad5530527',
     other: {
-      'naver-site-verification': process.env.NEXT_PUBLIC_NAVER_VERIFICATION || '',
+      'naver-site-verification': '2e9b03b0400033f451f75640c5de4a53b651ce82',
     }
   },
 
