@@ -42,6 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     // 앞으로 추가할 페이지들
     {
+      url: `${siteUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    },
+    {
       url: `${siteUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,

@@ -8,12 +8,12 @@ import {
   Mail, 
   Phone, 
   MapPin, 
-  ArrowRight,
   Github,
   Twitter,
   Youtube,
   MessageCircle
 } from "lucide-react"
+import { NewsletterSignup } from "@/components/ui/newsletter-signup"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
@@ -27,7 +27,7 @@ export function Footer() {
     ],
     support: [
       { name: "도움말", href: "/help" },
-      { name: "문의하기", href: "#contact" },
+      { name: "문의하기", href: "/contact" },
       { name: "FAQ", href: "/faq" },
       { name: "기술지원", href: "/support" },
     ],
@@ -225,32 +225,7 @@ export function Footer() {
         </div>
 
         {/* 뉴스레터 섹션 */}
-        <div className="border-t border-border py-8">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div>
-              <h3 className="font-semibold mb-2">
-                최신 업데이트를 받아보세요
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                새로운 기능, 팁, 그리고 블로그 자동화 전략을 이메일로 받아보세요.
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div className="flex-1">
-                <input
-                  type="email"
-                  placeholder="이메일 주소를 입력하세요"
-                  className="w-full px-4 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-accent focus:border-transparent text-sm"
-                />
-              </div>
-              <Button variant="brand" size="sm">
-                구독하기
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
-        </div>
+        <NewsletterSignup />
 
         {/* 하단 섹션 */}
         <div className="border-t border-border py-6">
