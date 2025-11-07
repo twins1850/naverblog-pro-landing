@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/neighbor-automation-og.png",
+        url: "/images/blog/thumbnails/neighbor-automation.svg",
         width: 1200,
         height: 630,
         alt: "서로이웃 자동화 진실 가이드"
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "서로이웃 자동화의 진실 - 성의없는 신청 vs 진정한 네트워킹 전략",
     description: "진정한 블로그 네트워킹을 위한 서로이웃 자동화 전략을 알아보세요.",
-    images: ["/blog/neighbor-automation-twitter.png"]
+    images: ["/images/blog/thumbnails/neighbor-automation.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/neighbor-automation-reality`
@@ -89,7 +89,7 @@ export default function NeighborAutomationReality() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/neighbor-automation-reality`,
-    "image": `${siteUrl}/blog/neighbor-automation-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/neighbor-automation.svg`,
     "articleSection": category,
     "keywords": "서로이웃 자동화, 블로그 네트워킹, 의미있는 관계 구축, 서로이웃 수락률 향상",
     "wordCount": 1800,

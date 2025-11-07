@@ -1,0 +1,66 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#f8fafc;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="100" r="40" fill="#ffffff" opacity="0.1"/>
+  <circle cx="1100" cy="500" r="60" fill="#ffffff" opacity="0.08"/>
+  <circle cx="200" cy="550" r="25" fill="#ffffff" opacity="0.12"/>
+  
+  <!-- Main Content Card -->
+  <rect x="60" y="80" width="1080" height="470" rx="20" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="2"/>
+  
+  <!-- ChatGPT Icon -->
+  <circle cx="200" cy="200" r="50" fill="#10a37f"/>
+  <text x="200" y="210" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="28" font-weight="bold">GPT</text>
+  
+  <!-- Blog Icon -->
+  <rect x="320" y="160" width="60" height="80" rx="8" fill="#3b82f6" opacity="0.9"/>
+  <rect x="330" y="180" width="40" height="4" fill="white"/>
+  <rect x="330" y="195" width="30" height="3" fill="white" opacity="0.8"/>
+  <rect x="330" y="205" width="35" height="3" fill="white" opacity="0.8"/>
+  <rect x="330" y="215" width="25" height="3" fill="white" opacity="0.8"/>
+  
+  <!-- Arrow -->
+  <path d="M 400 200 L 460 200 M 450 190 L 460 200 L 450 210" stroke="#64748b" stroke-width="4" fill="none"/>
+  
+  <!-- Automation Symbol -->
+  <circle cx="500" cy="200" r="30" fill="#8b5cf6"/>
+  <path d="M 485 200 A 15 15 0 1 1 515 200 M 490 185 L 510 185 M 490 215 L 510 215" stroke="white" stroke-width="3" fill="none"/>
+  
+  <!-- Title -->
+  <text x="600" y="140" font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#1e293b">Blog Pro 글쓰기 자동화</text>
+  <text x="600" y="190" font-family="Arial, sans-serif" font-size="36" font-weight="600" fill="#475569">ChatGPT 연동 가이드</text>
+  
+  <!-- Features -->
+  <circle cx="600" cy="260" r="4" fill="#22c55e"/>
+  <text x="620" y="268" font-family="Arial, sans-serif" font-size="20" fill="#374151">커스텀 GPT 시스템</text>
+  
+  <circle cx="600" cy="290" r="4" fill="#22c55e"/>
+  <text x="620" y="298" font-family="Arial, sans-serif" font-size="20" fill="#374151">평균 2,300자 고품질 콘텐츠</text>
+  
+  <circle cx="600" cy="320" r="4" fill="#22c55e"/>
+  <text x="620" y="328" font-family="Arial, sans-serif" font-size="20" fill="#374151">90초 딥씽킹 모드</text>
+  
+  <!-- Blog Pro Badge -->
+  <rect x="950" y="480" width="150" height="50" rx="25" fill="#1e40af"/>
+  <text x="1025" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">Blog Pro</text>
+  
+  <!-- Performance Stats -->
+  <rect x="600" y="380" width="480" height="80" rx="10" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="620" y="405" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="#64748b">실제 성과</text>
+  <text x="620" y="430" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#1e40af">글쓰기 시간 80% 단축</text>
+  <text x="620" y="450" font-family="Arial, sans-serif" font-size="18" fill="#475569">품질 향상 + 일관성 유지</text>
+</svg>

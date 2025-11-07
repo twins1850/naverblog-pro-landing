@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/reply-automation-og.png",
+        url: "/images/blog/thumbnails/reply-automation-exclusive.svg",
         width: 1200,
         height: 630,
         alt: "대댓글 자동화 독점 기능 가이드"
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "대댓글 자동화 독점 기능 활용법 - Blog Pro만의 차별화된 소통 전략",
     description: "Blog Pro만의 대댓글 자동화로 더 깊이있는 블로그 소통을 경험해보세요.",
-    images: ["/blog/reply-automation-twitter.png"]
+    images: ["/images/blog/thumbnails/reply-automation-exclusive.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/reply-automation-exclusive`
@@ -90,7 +90,7 @@ export default function ReplyAutomationExclusive() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/reply-automation-exclusive`,
-    "image": `${siteUrl}/blog/reply-automation-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/reply-automation-exclusive.svg`,
     "articleSection": category,
     "keywords": "대댓글 자동화, Blog Pro 독점 기능, 깊이있는 소통, 대댓글 전략",
     "wordCount": 1600,

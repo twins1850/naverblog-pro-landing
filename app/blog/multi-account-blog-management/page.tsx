@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/multi-account-og.png",
+        url: "/images/blog/thumbnails/multi-account-management.svg",
         width: 1200,
         height: 630,
         alt: "멀티계정 블로그 관리 전략 가이드"
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "멀티계정 블로그 관리 전략 - 효율적인 계정 운영과 리스크 관리법",
     description: "안전하고 효율적인 멀티계정 블로그 관리 전략을 알아보세요.",
-    images: ["/blog/multi-account-twitter.png"]
+    images: ["/images/blog/thumbnails/multi-account-management.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/multi-account-blog-management`
@@ -88,7 +88,7 @@ export default function MultiAccountBlogManagement() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/multi-account-blog-management`,
-    "image": `${siteUrl}/blog/multi-account-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/multi-account-management.svg`,
     "articleSection": category,
     "keywords": "멀티계정 블로그 관리, 계정 안전 관리, 블로그 네트워크 구축, 계정별 차별화 전략",
     "wordCount": 1700,

@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/naver-seo-og.png",
+        url: "/images/blog/thumbnails/comment-automation.svg",
         width: 1200,
         height: 630,
         alt: "네이버 블로그 댓글 자동화 가이드"
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "네이버 블로그 댓글 자동화의 현실 - Gemini 기반 맞춤형 댓글 시스템",
     description: "Blog Pro의 Gemini 기반 댓글 자동화가 기존 복붙 댓글과 어떻게 다른지 알아보세요.",
-    images: ["/blog/naver-seo-twitter.png"]
+    images: ["/images/blog/thumbnails/comment-automation.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/naver-blog-seo-optimization`
@@ -89,7 +89,7 @@ export default function NaverBlogSEOOptimization() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/naver-blog-seo-optimization`,
-    "image": `${siteUrl}/blog/naver-seo-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/comment-automation.svg`,
     "articleSection": category,
     "keywords": "네이버 블로그 댓글 자동화, Gemini 댓글 시스템, 맞춤형 댓글 생성, 답방률 향상",
     "wordCount": 1900,

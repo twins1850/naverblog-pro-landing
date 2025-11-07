@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection, StaggerContainer } from "@/components/ui/animated-section"
 import { 
@@ -80,7 +81,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "12분",
     category: "AI 자동화",
     tags: ["Blog Pro 사용법", "커스텀 GPT", "고품질 콘텐츠"],
-    image: "/blog/chatgpt-automation.jpg"
+    image: "/images/blog/thumbnails/chatgpt-automation.svg"
   },
   {
     id: "naver-blog-seo-optimization",
@@ -92,7 +93,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "10분",
     category: "AI 자동화",
     tags: ["Gemini 댓글 시스템", "맞춤형 댓글", "답방률 향상"],
-    image: "/blog/naver-comment.jpg"
+    image: "/images/blog/thumbnails/comment-automation.svg"
   },
   {
     id: "multi-account-blog-management",
@@ -104,7 +105,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "8분",
     category: "AI 자동화",
     tags: ["멀티계정 관리", "리스크 분산", "효율적 운영"],
-    image: "/blog/multi-account.jpg"
+    image: "/images/blog/thumbnails/multi-account-management.svg"
   },
   {
     id: "neighbor-automation-reality",
@@ -116,7 +117,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "9분",
     category: "AI 자동화",
     tags: ["서로이웃 자동화", "진정한 네트워킹", "관계 구축"],
-    image: "/blog/neighbor-automation.jpg"
+    image: "/images/blog/thumbnails/neighbor-automation.svg"
   },
   {
     id: "reply-automation-exclusive",
@@ -128,7 +129,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "7분",
     category: "AI 자동화",
     tags: ["대댓글 자동화", "독점 기능", "깊이있는 소통"],
-    image: "/blog/reply-automation.jpg"
+    image: "/images/blog/thumbnails/reply-automation-exclusive.svg"
   },
   {
     id: "blog-monetization-strategies",
@@ -256,10 +257,15 @@ export default function BlogPage() {
                       <div className="md:flex">
                         {/* Image */}
                         <div className="md:w-80 md:flex-shrink-0">
-                          <div className="h-48 md:h-full bg-gradient-to-br from-brand-primary/20 to-brand-accent/20 flex items-center justify-center">
-                            <div className="text-4xl font-bold text-brand-primary/50">
-                              {index + 1}
-                            </div>
+                          <div className="h-48 md:h-full overflow-hidden">
+                            <Image
+                              src={post.image}
+                              alt={post.title}
+                              width={320}
+                              height={192}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              priority={index < 2}
+                            />
                           </div>
                         </div>
                         

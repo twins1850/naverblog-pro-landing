@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/chatgpt-automation-og.png", 
+        url: "/images/blog/thumbnails/chatgpt-automation.svg", 
         width: 1200,
         height: 630,
         alt: "ChatGPT 5.0 블로그 자동화 가이드"
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
     description: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다.",
-    images: ["/blog/chatgpt-automation-twitter.png"]
+    images: ["/images/blog/thumbnails/chatgpt-automation.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/chatgpt-blog-automation-guide`
@@ -85,7 +85,7 @@ export default function ChatGPTBlogAutomationGuide() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/chatgpt-blog-automation-guide`,
-    "image": `${siteUrl}/blog/chatgpt-automation-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/chatgpt-automation.svg`,
     "articleSection": category,
     "keywords": "Blog Pro, 커스텀 GPT, 블로그 글쓰기 자동화, ChatGPT 연동, 고품질 콘텐츠 생성",
     "wordCount": 1800,
