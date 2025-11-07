@@ -19,20 +19,12 @@ export async function POST(request: NextRequest) {
       const { GoogleSheetsService } = await import('@/lib/google-sheets')
       const sheetsService = new GoogleSheetsService()
       
-      // 뉴스레터 구독자 데이터를 Google Sheets에 저장
-      const subscriberData = {
-        timestamp: new Date().toISOString(),
-        email: email,
-        type: '뉴스레터 구독',
-        source: 'website'
-      }
-      
-      // Google Sheets에 저장 (기존 고객 데이터 시트 활용)
-      console.log('Saving newsletter subscriber to Google Sheets:', email)
-      // 실제 Google Sheets 저장 로직은 기존 고객 저장 방식과 동일하게 구현
+      // 뉴스레터 구독자를 Google Sheets에 저장
+      await sheetsService.addNewsletterSubscriber(email)
+      console.log('✅ 뉴스레터 구독자 Google Sheets 저장 완료:', email)
       
     } catch (sheetsError) {
-      console.error('Google Sheets save error:', sheetsError)
+      console.error('❌ Google Sheets save error:', sheetsError)
       // Google Sheets 저장 실패해도 뉴스레터 구독은 성공으로 처리
     }
 
