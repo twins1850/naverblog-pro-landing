@@ -72,27 +72,63 @@ interface BlogPost {
 const featuredPosts: BlogPost[] = [
   {
     id: "chatgpt-blog-automation-guide",
-    title: "ChatGPT 5.0으로 블로그 자동화하기: 완벽 가이드",
-    excerpt: "최신 ChatGPT 5.0을 활용해 24시간 자동으로 블로그를 운영하는 방법을 단계별로 알려드립니다. 월 100만원 수익 달성 사례 포함.",
-    content: "ChatGPT 5.0의 강력한 기능을 활용하여 블로그를 완전 자동화하는 방법에 대해 알아보겠습니다...",
+    title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
+    excerpt: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다. 평균 2,300자 고품질 콘텐츠 생성 방법.",
+    content: "Blog Pro는 기존의 단순 API 호출 방식과는 완전히 다른 '커스텀 GPT 방식'을 사용하여 평균 2,300자의 고품질 콘텐츠를 생성합니다...",
     author: "Blog Pro 팀",
-    publishDate: "2024-01-15",
-    readTime: "8분",
+    publishDate: "2025-01-07",
+    readTime: "12분",
     category: "AI 자동화",
-    tags: ["ChatGPT", "블로그 자동화", "수익화"],
+    tags: ["Blog Pro 사용법", "커스텀 GPT", "고품질 콘텐츠"],
     image: "/blog/chatgpt-automation.jpg"
   },
   {
     id: "naver-blog-seo-optimization",
-    title: "네이버 블로그 SEO 최적화로 검색 상위권 달성하기",
-    excerpt: "네이버 검색 알고리즘을 분석하여 상위 노출을 보장하는 SEO 전략과 실제 적용 사례를 공개합니다.",
-    content: "네이버 블로그에서 검색 상위권을 차지하기 위한 핵심 SEO 전략에 대해 알아보겠습니다...",
+    title: "네이버 블로그 댓글 자동화의 현실 - Gemini 기반 맞춤형 댓글 시스템",
+    excerpt: "Blog Pro의 Gemini 기반 댓글 자동화가 기존 복붙 댓글과 어떻게 다른지, 실제 답방률 300% 향상 사례와 함께 상세히 설명합니다.",
+    content: "기존의 블로그 댓글 자동화는 똑같은 복붙 댓글로 인해 무시당하는 것이 현실입니다...",
     author: "Blog Pro 팀",
-    publishDate: "2024-01-12",
-    readTime: "12분",
-    category: "SEO 전략",
-    tags: ["네이버 SEO", "검색 최적화", "상위 노출"],
-    image: "/blog/naver-seo.jpg"
+    publishDate: "2025-01-06",
+    readTime: "10분",
+    category: "AI 자동화",
+    tags: ["Gemini 댓글 시스템", "맞춤형 댓글", "답방률 향상"],
+    image: "/blog/naver-comment.jpg"
+  },
+  {
+    id: "multi-account-blog-management",
+    title: "멀티계정 블로그 관리 전략 - 효율적인 계정 운영과 리스크 관리법",
+    excerpt: "Blog Pro의 멀티계정 관리 시스템을 활용한 안전하고 효율적인 블로그 네트워크 구축 전략과 실제 성공 사례를 공개합니다.",
+    content: "단일 계정으로는 한계가 있는 블로그 활동을 멀티계정을 통해 효율적으로 확장하면서도 안전하게 관리하는 전략을...",
+    author: "Blog Pro 팀",
+    publishDate: "2025-01-05",
+    readTime: "8분",
+    category: "AI 자동화",
+    tags: ["멀티계정 관리", "리스크 분산", "효율적 운영"],
+    image: "/blog/multi-account.jpg"
+  },
+  {
+    id: "neighbor-automation-reality",
+    title: "서로이웃 자동화의 진실 - 성의없는 신청 vs 진정한 네트워킹 전략",
+    excerpt: "기존 서로이웃 자동화의 문제점과 Blog Pro의 의미있는 관계 구축 시스템을 통한 진정한 블로그 네트워킹 방법을 공개합니다.",
+    content: "'안녕하세요 ~글 잘 읽어 봤어요. 서로이웃 신청합니다' 같은 성의없는 메시지로는 진정한 네트워킹이 불가능합니다...",
+    author: "Blog Pro 팀",
+    publishDate: "2025-01-04",
+    readTime: "9분",
+    category: "AI 자동화",
+    tags: ["서로이웃 자동화", "진정한 네트워킹", "관계 구축"],
+    image: "/blog/neighbor-automation.jpg"
+  },
+  {
+    id: "reply-automation-exclusive",
+    title: "대댓글 자동화 독점 기능 활용법 - Blog Pro만의 차별화된 소통 전략",
+    excerpt: "다른 프로그램에는 없는 Blog Pro만의 대댓글 자동화 기능으로 더 깊이있는 소통을 만드는 전략과 실제 활용 사례를 공개합니다.",
+    content: "기존 블로그 자동화 프로그램들이 제공하지 못하는 Blog Pro만의 차별화된 기능, 대댓글 자동화로 더 깊이있고 의미있는 블로그 소통을...",
+    author: "Blog Pro 팀",
+    publishDate: "2025-01-03",
+    readTime: "7분",
+    category: "AI 자동화",
+    tags: ["대댓글 자동화", "독점 기능", "깊이있는 소통"],
+    image: "/blog/reply-automation.jpg"
   },
   {
     id: "blog-monetization-strategies",
@@ -100,7 +136,7 @@ const featuredPosts: BlogPost[] = [
     excerpt: "성공한 블로거들의 수익화 노하우와 실제 수익 구조를 분석하여 체계적인 수익 창출 방법을 제시합니다.",
     content: "블로그로 안정적인 수익을 창출하는 다양한 방법과 전략에 대해 살펴보겠습니다...",
     author: "Blog Pro 팀", 
-    publishDate: "2024-01-10",
+    publishDate: "2025-01-02",
     readTime: "15분",
     category: "수익화",
     tags: ["블로그 수익화", "애드센스", "제휴마케팅"],
@@ -109,11 +145,8 @@ const featuredPosts: BlogPost[] = [
 ]
 
 const categories = [
-  { name: "AI 자동화", count: 15, icon: <Brain className="w-5 h-5" /> },
-  { name: "SEO 전략", count: 12, icon: <Target className="w-5 h-5" /> },
-  { name: "수익화", count: 18, icon: <TrendingUp className="w-5 h-5" /> },
-  { name: "성장 전략", count: 9, icon: <BarChart3 className="w-5 h-5" /> },
-  { name: "도구 활용", count: 11, icon: <Zap className="w-5 h-5" /> }
+  { name: "AI 자동화", count: 5, icon: <Brain className="w-5 h-5" /> },
+  { name: "수익화", count: 1, icon: <TrendingUp className="w-5 h-5" /> }
 ]
 
 export default function BlogPage() {
