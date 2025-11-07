@@ -15,6 +15,15 @@ export function Header({ onPurchaseClick }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
 
+  const handlePurchaseClick = () => {
+    if (onPurchaseClick) {
+      onPurchaseClick()
+    } else {
+      // 기본 동작: payment-info 페이지로 이동
+      window.location.href = '/payment-info'
+    }
+  }
+
   // 스크롤 감지
   React.useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +86,7 @@ export function Header({ onPurchaseClick }: HeaderProps) {
               variant="brand" 
               size="sm"
               className="hidden sm:inline-flex"
-              onClick={onPurchaseClick}
+              onClick={handlePurchaseClick}
             >
               라이선스 구매
             </Button>
@@ -118,7 +127,7 @@ export function Header({ onPurchaseClick }: HeaderProps) {
                   size="sm" 
                   className="w-full"
                   onClick={() => {
-                    onPurchaseClick?.()
+                    handlePurchaseClick()
                     setIsMenuOpen(false)
                   }}
                 >

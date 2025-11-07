@@ -196,13 +196,6 @@ export default function RootLayout({
     "taxID": "795-11-02437"
   };
 
-  const handlePurchaseClick = () => {
-    // 가격 계산기 페이지로 리다이렉트
-    if (typeof window !== 'undefined') {
-      window.location.href = '/payment-info'
-    }
-  }
-
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
@@ -223,7 +216,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header onPurchaseClick={handlePurchaseClick} />
+          <Header />
           <main>{children}</main>
           <Footer />
         </ThemeProvider>
