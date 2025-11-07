@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: "Blog Pro",
     images: [
       {
-        url: "/blog/monetization-og.png",
+        url: "/images/blog/thumbnails/blog-monetization.svg",
         width: 1200,
         height: 630,
         alt: "블로그 수익화 전략 가이드"
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "블로그 수익화 전략: 월 수익 1000만원 달성 로드맵",
     description: "성공한 블로거들의 수익화 노하우와 실제 수익 구조 분석",
-    images: ["/blog/monetization-twitter.png"]
+    images: ["/images/blog/thumbnails/blog-monetization.svg"]
   },
   alternates: {
     canonical: `${siteUrl}/blog/blog-monetization-strategies`
@@ -88,7 +88,7 @@ export default function BlogMonetizationStrategies() {
     "datePublished": publishDate,
     "dateModified": publishDate,
     "url": `${siteUrl}/blog/blog-monetization-strategies`,
-    "image": `${siteUrl}/blog/monetization-og.png`,
+    "image": `${siteUrl}/images/blog/thumbnails/blog-monetization.svg`,
     "articleSection": category,
     "keywords": "블로그 수익화, 블로그 수익 창출, 애드센스, 제휴마케팅, 블로그 마케팅",
     "wordCount": 3800,

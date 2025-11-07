@@ -141,7 +141,7 @@ const featuredPosts: BlogPost[] = [
     readTime: "15분",
     category: "수익화",
     tags: ["블로그 수익화", "애드센스", "제휴마케팅"],
-    image: "/blog/monetization.jpg"
+    image: "/images/blog/thumbnails/blog-monetization.svg"
   }
 ]
 
