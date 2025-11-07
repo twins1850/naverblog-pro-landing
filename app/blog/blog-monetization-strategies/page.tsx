@@ -2,12 +2,13 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection } from "@/components/ui/animated-section"
+import { Header } from "@/components/ui/header"
+import { Footer } from "@/components/ui/footer"
 import { 
   Calendar, 
   Clock, 
   User, 
   ArrowLeft,
-  ArrowRight,
   Share2,
   BookOpen,
   CheckCircle,

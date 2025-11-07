@@ -53,6 +53,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily' as const,
       priority: 0.8,
     },
+    // 블로그 포스트들
+    {
+      url: `${siteUrl}/blog/chatgpt-blog-automation-guide`,
+      lastModified: new Date('2025-01-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/blog/blog-monetization-strategies`,
+      lastModified: new Date('2024-11-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/blog/multi-account-blog-management`,
+      lastModified: new Date('2024-11-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/blog/naver-blog-seo-optimization`,
+      lastModified: new Date('2024-11-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/blog/neighbor-automation-reality`,
+      lastModified: new Date('2024-11-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/blog/reply-automation-exclusive`,
+      lastModified: new Date('2024-11-07'),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
     {
       url: `${siteUrl}/case-studies`,
       lastModified: new Date(),
