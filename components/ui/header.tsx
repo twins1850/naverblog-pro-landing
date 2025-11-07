@@ -28,6 +28,8 @@ export function Header({ onPurchaseClick }: HeaderProps) {
   const navigation = [
     { name: '기능', href: '#features' },
     { name: '요금제', href: '#pricing' },
+    { name: '블로그', href: '/blog' },
+    { name: 'FAQ', href: '/faq' },
     { name: '문의', href: '#contact' },
   ]
 

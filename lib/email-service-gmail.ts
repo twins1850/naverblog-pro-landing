@@ -4,26 +4,30 @@ export class GmailEmailService {
   private transporter: nodemailer.Transporter;
 
   constructor() {
-    // 환경변수 체크
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    // 환경변수 체크 및 정규화
+    const gmailUser = process.env.GMAIL_USER?.trim();
+    const gmailPassword = process.env.GMAIL_APP_PASSWORD?.trim().replace(/[\r\n\t]/g, '');
+    
+    if (!gmailUser || !gmailPassword) {
       console.error('❌ Gmail 환경변수 누락:', {
-        GMAIL_USER: !!process.env.GMAIL_USER,
-        GMAIL_APP_PASSWORD: !!process.env.GMAIL_APP_PASSWORD
+        GMAIL_USER: !!gmailUser,
+        GMAIL_APP_PASSWORD: !!gmailPassword
       });
       throw new Error('Gmail 환경변수가 설정되지 않았습니다.');
     }
 
     console.log('📧 Gmail 서비스 초기화:', {
-      user: process.env.GMAIL_USER,
-      passwordLength: process.env.GMAIL_APP_PASSWORD.length
+      user: gmailUser,
+      passwordLength: gmailPassword.length,
+      passwordFormat: /^[a-z]{16}$/.test(gmailPassword) ? '정상' : '비정상'
     });
 
     try {
       this.transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_APP_PASSWORD
+          user: gmailUser,
+          pass: gmailPassword
         }
       });
       
@@ -50,7 +54,7 @@ export class GmailEmailService {
       const mailOptions = {
         from: {
           name: 'Blog Pro Support',
-          address: process.env.GMAIL_USER || 'jireh202503@gmail.com'
+          address: process.env.GMAIL_USER?.trim() || 'jireh202503@gmail.com'
         },
         to: orderData.email,
         subject: `[Blog Pro] 주문 접수 완료 - ${orderData.orderId}`,

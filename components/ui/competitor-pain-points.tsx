@@ -100,7 +100,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                 {/* Placeholder for actual screenshot */}
                 <div className="relative">
                   <Image 
-                    src="/images/competitor-examples/타프로그램 API형식 글쓰기.webp" 
+                    src="/images/competitor-examples/competitor-api-writing.webp" 
                     alt="타사 프로그램 글쓰기 실패 예시"
                     width={600}
                     height={400}
@@ -134,7 +134,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
               <>
                 <div className="grid grid-cols-1 gap-2">
                   <Image 
-                    src={`/images/competitor-examples/타프로그램 댓글${commentImages[0]}.webp`}
+                    src={`/images/competitor-examples/competitor-comment-${commentImages[0]}.webp`}
                     alt="타사 프로그램 댓글 실패 예시 1" 
                     width={600}
                     height={300}
@@ -143,7 +143,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
                     onLoad={() => setImageError(false)}
                   />
                   <Image 
-                    src={`/images/competitor-examples/타프로그램 댓글${commentImages[1]}.webp`}
+                    src={`/images/competitor-examples/competitor-comment-${commentImages[1]}.webp`}
                     alt="타사 프로그램 댓글 실패 예시 2" 
                     width={600}
                     height={300}
@@ -170,7 +170,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
             {id === 'neighbor' && (
               <>
                 <Image 
-                  src="/images/competitor-examples/성의없는 서로이웃신청.webp"
+                  src="/images/competitor-examples/competitor-neighbor.webp"
                   alt="타사 프로그램 서로이웃 실패 예시"
                   width={600}
                   height={400}
@@ -195,7 +195,7 @@ function AnimatedCard({ id, title, hookText, problems, visual, delay = 0 }: Anim
             {id === 'reply' && (
               <>
                 <Image 
-                  src="/images/competitor-examples/성의없는 대댓글.webp"
+                  src="/images/competitor-examples/competitor-reply.webp"
                   alt="타사 프로그램 대댓글 실패 예시"
                   width={600}
                   height={400}

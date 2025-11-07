@@ -176,4 +176,26 @@ Vercel에 배포할 때 환경 변수 설정을 잊지 마세요!
 ✅ Google Sheets 연동  
 ✅ **라이선스 자동 발급 + 이메일 발송 시스템**
 
-다음 단계: 고객 지원 시스템 구축 🎯
+## 📚 문서
+
+프로젝트의 상세한 문서는 [`docs`](./docs/) 폴더에서 확인하세요:
+
+- 📖 [개발 로그](./docs/development/DEVELOPMENT_LOG.md) - 전체 개발 과정 및 문제 해결
+- 📋 [프로젝트 계획](./docs/planning/PLAN.md) - 프로젝트 전체 개요
+- 🔗 [PayAction 통합](./docs/integration/PAYACTION_INTEGRATION.md) - 결제 시스템 연동
+- 📊 [분석 보고서](./docs/analysis/) - 사용자 경험 및 시스템 분석
+
+> 💡 **모든 문서가 체계적으로 정리되어 있습니다!** [`docs/README.md`](./docs/README.md)에서 전체 문서 구조를 확인하세요.
+
+---
+
+## 🎯 프로젝트 현재 상태
+
+**✅ 완료된 주요 기능**:
+- PayAction 결제 시스템 완전 자동화
+- Google Sheets 데이터베이스 연동  
+- Gmail 이메일 발송 시스템
+- 라이선스 자동 생성 및 발급
+- 웹사이트 이미지 최적화
+
+**🚀 달성된 목표**: 결제부터 라이선스 발급까지 100% 무인 자동화 시스템 완성! 🎉

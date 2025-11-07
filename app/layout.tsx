@@ -27,6 +27,11 @@ export const metadata: Metadata = {
   publisher: "Blog Pro",
   metadataBase: new URL(siteUrl),
   
+  // Canonical URL
+  alternates: {
+    canonical: siteUrl
+  },
+  
   // Open Graph
   openGraph: {
     type: "website",
@@ -115,7 +120,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const jsonLd = {
+  // 여러 Schema 데이터
+  const softwareSchema = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Blog Pro",
@@ -158,12 +164,46 @@ export default function RootLayout({
     "releaseNotes": "ChatGPT 5.0 지원, 성능 개선"
   };
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Blog Pro",
+    "url": siteUrl,
+    "logo": `${siteUrl}/icon-512.png`,
+    "description": "AI 기반 완전 자동화 시스템으로 블로그를 운영하고 안정적인 수익을 창출하는 솔루션을 제공합니다.",
+    "foundingDate": "2024",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+82-10-4248-1850",
+      "contactType": "customer service",
+      "email": "jireh202503@gmail.com",
+      "availableLanguage": ["Korean"]
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "KR",
+      "addressRegion": "서울",
+      "streetAddress": "가락로26 702호"
+    },
+    "sameAs": [
+      "https://github.com/naverblog-auto",
+      "https://twitter.com/naverblog_auto", 
+      "https://youtube.com/@naverblog-auto",
+      "https://open.kakao.com/o/naverblog-auto"
+    ],
+    "taxID": "795-11-02437"
+  };
+
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body suppressHydrationWarning>

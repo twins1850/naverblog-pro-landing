@@ -202,15 +202,28 @@ export function Features({ onPurchaseClick }: FeaturesProps) {
                 시간은 절약하면서 블로그는 성장시키세요.
               </p>
               
-              <Button 
-                variant="secondary" 
-                size="xl"
-                className="bg-white text-brand-primary hover:bg-white/90"
-                onClick={onPurchaseClick}
-              >
-                지금 시작하기
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  variant="secondary" 
+                  size="xl"
+                  className="bg-white text-brand-primary hover:bg-white/90"
+                  onClick={onPurchaseClick}
+                >
+                  지금 시작하기
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+                
+                <Link href="/faq">
+                  <Button 
+                    variant="outline" 
+                    size="xl"
+                    className="border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                  >
+                    자주 묻는 질문
+                    <CheckCircle className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </AnimatedSection>
