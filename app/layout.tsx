@@ -196,7 +196,7 @@ export default function RootLayout({
 
   return (
     <html lang="ko" suppressHydrationWarning>
-      <head>
+      <Head>
         <meta name="yandex-verification" content="fde8012ad5530527" />
         <script
           type="application/ld+json"
@@ -206,7 +206,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-      </head>
+      </Head>
       <body suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
