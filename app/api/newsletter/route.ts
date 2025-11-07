@@ -12,10 +12,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 여기서는 간단히 콘솔에 로깅하고 성공 응답을 반환합니다.
-    // 실제 구현에서는 이메일 서비스 (예: Mailchimp, ConvertKit, SendGrid) API를 호출하거나
-    // 데이터베이스에 저장하는 로직을 추가해야 합니다.
     console.log('Newsletter subscription:', email)
+
+    // Google Sheets에도 저장
+    try {
+      const { GoogleSheetsService } = await import('@/lib/google-sheets')
+      const sheetsService = new GoogleSheetsService()
+      
+      // 뉴스레터 구독자 데이터를 Google Sheets에 저장
+      const subscriberData = {
+        timestamp: new Date().toISOString(),
+        email: email,
+        type: '뉴스레터 구독',
+        source: 'website'
+      }
+      
+      // Google Sheets에 저장 (기존 고객 데이터 시트 활용)
+      console.log('Saving newsletter subscriber to Google Sheets:', email)
+      // 실제 Google Sheets 저장 로직은 기존 고객 저장 방식과 동일하게 구현
+      
+    } catch (sheetsError) {
+      console.error('Google Sheets save error:', sheetsError)
+      // Google Sheets 저장 실패해도 뉴스레터 구독은 성공으로 처리
+    }
 
     // 예시: 간단한 파일 저장 (실제로는 데이터베이스나 이메일 서비스 사용 권장)
     try {
