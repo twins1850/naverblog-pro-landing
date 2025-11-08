@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
 
     console.log('Newsletter subscription:', email)
 
-    // Google Sheets에도 저장
+    // 뉴스레터 전용 Google Sheets에 저장
     try {
-      const { GoogleSheetsService } = await import('@/lib/google-sheets')
-      const sheetsService = new GoogleSheetsService()
+      const { NewsletterSheetsService } = await import('@/lib/newsletter-sheets')
+      const newsletterSheetsService = new NewsletterSheetsService()
       
-      // 뉴스레터 구독자를 Google Sheets에 저장
-      await sheetsService.addNewsletterSubscriber(email)
-      console.log('✅ 뉴스레터 구독자 Google Sheets 저장 완료:', email)
+      // 뉴스레터 구독자를 전용 시트에 저장
+      await newsletterSheetsService.addNewsletterSubscriber(email)
+      console.log('✅ 뉴스레터 구독자 전용 시트 저장 완료:', email)
       
     } catch (sheetsError) {
       console.error('❌ Google Sheets save error:', sheetsError)

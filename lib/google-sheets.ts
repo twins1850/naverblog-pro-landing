@@ -585,47 +585,4 @@ export class GoogleSheetsService {
     }
   }
 
-  // 뉴스레터 구독자 데이터 추가
-  async addNewsletterSubscriber(email: string): Promise<void> {
-    try {
-      console.log('📧 뉴스레터 구독자 Google Sheets 저장 시작:', email);
-      
-      const doc = new GoogleSpreadsheet(this.spreadsheetId, this.auth);
-      await doc.loadInfo();
-
-      // 첫 번째 시트 가져오기
-      const sheet = doc.sheetsByIndex[0];
-      if (!sheet) {
-        throw new Error('스프레드시트를 찾을 수 없습니다.');
-      }
-
-      // 뉴스레터 구독자 데이터 추가 (기존 고객 데이터 형식에 맞춤)
-      await sheet.addRow({
-        이름: '뉴스레터 구독자',
-        이메일: email,
-        연락처: '',
-        결제일시: getKoreanTime(),
-        결제금액: '',
-        상품유형: '뉴스레터 구독',
-        아이디수: '',
-        글수: '',
-        개월수: '',
-        라이센스키: '',
-        발급일시: '',
-        만료일시: '',
-        상태: '뉴스레터 구독',
-        하드웨어ID: '',
-        결제상태: '뉴스레터',
-        주문번호: `NEWSLETTER-${Date.now()}`,
-        결제ID: '',
-        입금자명: '',
-        결제방식: 'newsletter'
-      });
-
-      console.log('✅ 뉴스레터 구독자 Google Sheets 저장 성공:', email);
-    } catch (error) {
-      console.error('❌ 뉴스레터 구독자 Google Sheets 저장 실패:', error);
-      throw error;
-    }
-  }
 }

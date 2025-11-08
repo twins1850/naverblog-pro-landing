@@ -82,10 +82,10 @@ export async function POST(request: NextRequest) {
     const { action } = await request.json()
 
     if (action === 'sync-to-sheets') {
-      // Google Sheets에 구독자 데이터 동기화
+      // 뉴스레터 전용 Google Sheets에 동기화
       try {
-        const { GoogleSheetsService } = await import('@/lib/google-sheets')
-        const sheetsService = new GoogleSheetsService()
+        const { NewsletterSheetsService } = await import('@/lib/newsletter-sheets')
+        const newsletterSheetsService = new NewsletterSheetsService()
         
         // 구독자 파일 읽기
         const fs = await import('fs')
@@ -95,22 +95,24 @@ export async function POST(request: NextRequest) {
         const fileContent = await fs.promises.readFile(subscribersFile, 'utf-8')
         const lines = fileContent.trim().split('\n').filter(line => line.trim())
         
-        // Google Sheets에 저장할 데이터 준비
-        const subscribersData = lines.map(line => {
+        // 각 이메일을 개별적으로 추가 (중복 체크는 Google Sheets에서)
+        let syncCount = 0
+        for (const line of lines) {
           const [timestamp, email] = line.split(' - ')
-          return [
-            timestamp || '',
-            email || line,
-            '뉴스레터 구독',
-            new Date().toISOString()
-          ]
-        })
-
-        // Google Sheets에 저장 (실제 구현에 따라 조정 필요)
-        console.log('Syncing to Google Sheets:', subscribersData.length, 'subscribers')
+          if (email && email.includes('@')) {
+            try {
+              await newsletterSheetsService.addNewsletterSubscriber(email)
+              syncCount++
+            } catch (error) {
+              console.log('이미 존재하는 구독자이거나 오류:', email)
+            }
+          }
+        }
+        
+        console.log('뉴스레터 전용 시트 동기화 완료:', syncCount, '명')
         
         return NextResponse.json({
-          message: `${subscribersData.length}명의 구독자 데이터가 Google Sheets에 동기화되었습니다.`,
+          message: `${syncCount}명의 구독자 데이터가 뉴스레터 전용 시트에 동기화되었습니다.`,
           success: true
         })
 
