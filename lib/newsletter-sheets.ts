@@ -129,6 +129,12 @@ export class NewsletterSheetsService {
     // 뉴스레터 전용 스프레드시트 ID (환경변수에서 가져옴)
     this.spreadsheetId = process.env.NEWSLETTER_SPREADSHEET_ID || '';
     
+    console.log('🔍 NewsletterSheetsService 환경변수 확인:', {
+      NEWSLETTER_SPREADSHEET_ID: process.env.NEWSLETTER_SPREADSHEET_ID,
+      GOOGLE_SHEETS_SPREADSHEET_ID: process.env.GOOGLE_SHEETS_SPREADSHEET_ID,
+      actualSpreadsheetId: this.spreadsheetId
+    });
+    
     if (!this.spreadsheetId) {
       throw new Error('NEWSLETTER_SPREADSHEET_ID 환경변수가 설정되지 않았습니다.');
     }
@@ -152,6 +158,50 @@ export class NewsletterSheetsService {
       }
     } else {
       throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON 환경변수가 설정되지 않았습니다.');
+    }
+  }
+
+  /**
+   * 뉴스레터 시트의 헤더를 확인하고 설정
+   */
+  private async ensureSheetHeaders(sheet: any): Promise<void> {
+    const expectedHeaders = [
+      '구독일시', 
+      '이메일', 
+      '구독상태', 
+      '구독ID',
+      '수신동의',
+      '마케팅동의',
+      '구독경로'
+    ];
+
+    try {
+      // 첫 번째 행을 로드하여 헤더 확인
+      await sheet.loadHeaderRow();
+      const existingHeaders = sheet.headerValues;
+      
+      console.log('🔍 기존 헤더:', existingHeaders);
+      
+      // 헤더가 없거나 불완전한 경우 설정
+      if (!existingHeaders || existingHeaders.length === 0 || 
+          !expectedHeaders.every(header => existingHeaders.includes(header))) {
+        
+        console.log('📝 뉴스레터 시트 헤더 설정 중...');
+        
+        // 첫 번째 행에 헤더 설정
+        await sheet.setHeaderRow(expectedHeaders);
+        
+        console.log('✅ 뉴스레터 시트 헤더 설정 완료');
+      } else {
+        console.log('✅ 뉴스레터 시트 헤더가 이미 올바르게 설정되어 있습니다');
+      }
+      
+    } catch (error) {
+      console.log('⚠️ 헤더 확인 중 오류, 헤더 재설정:', error);
+      
+      // 오류가 발생한 경우 헤더를 강제로 설정
+      await sheet.setHeaderRow(expectedHeaders);
+      console.log('✅ 뉴스레터 시트 헤더 강제 설정 완료');
     }
   }
 
@@ -183,6 +233,9 @@ export class NewsletterSheetsService {
             '구독경로'
           ]
         });
+      } else {
+        // 기존 시트가 있는 경우 헤더 확인 및 설정
+        await this.ensureSheetHeaders(sheet);
       }
 
       // 구독자 데이터 추가

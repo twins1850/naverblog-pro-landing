@@ -25,7 +25,16 @@ export async function POST(request: NextRequest) {
       
     } catch (sheetsError) {
       console.error('❌ Google Sheets save error:', sheetsError)
-      // Google Sheets 저장 실패해도 뉴스레터 구독은 성공으로 처리
+      console.error('🔍 상세 오류 정보:', {
+        message: sheetsError instanceof Error ? sheetsError.message : String(sheetsError),
+        stack: sheetsError instanceof Error ? sheetsError.stack : undefined,
+        spreadsheetId: process.env.NEWSLETTER_SPREADSHEET_ID
+      })
+      // Google Sheets 저장 실패 시 오류 반환
+      return NextResponse.json(
+        { error: 'Google Sheets 저장 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' },
+        { status: 500 }
+      )
     }
 
     // 예시: 간단한 파일 저장 (실제로는 데이터베이스나 이메일 서비스 사용 권장)
