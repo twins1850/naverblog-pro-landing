@@ -307,7 +307,7 @@ export function CompetitorPainPoints() {
       
       {/* Animated background pattern */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 dark:opacity-5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-100/5 to-transparent dark:via-gray-800/5" />
       </div>
 
       <div className="container relative z-10 mx-auto px-4">

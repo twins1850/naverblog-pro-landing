@@ -211,10 +211,10 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
-        {/* Google Analytics 임시 비활성화 */}
-        {/* {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        {/* Google Analytics 활성화 - AutoToolsHub */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        )} */}
+        )}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
