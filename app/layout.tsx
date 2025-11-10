@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 import "@/styles/globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naverblog-pro.com'
@@ -210,6 +211,10 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning>
+        {/* Google Analytics 임시 비활성화 */}
+        {/* {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )} */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

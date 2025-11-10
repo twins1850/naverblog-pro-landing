@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, CheckCircle } from "lucide-react"
+import { trackNewsletterSignup, trackFormSubmit } from "@/lib/analytics"
 
 export function NewsletterSignup() {
   const [email, setEmail] = useState("")
@@ -35,12 +36,19 @@ export function NewsletterSignup() {
       if (response.ok) {
         setIsSuccess(true)
         setEmail('')
+        // Google Analytics 이벤트 추적
+        trackNewsletterSignup(email)
+        trackFormSubmit('newsletter_signup', true)
       } else {
         setError(data.error || '구독 처리 중 오류가 발생했습니다.')
+        // 실패 이벤트 추적
+        trackFormSubmit('newsletter_signup', false)
       }
     } catch (error) {
       console.error('Newsletter signup error:', error)
       setError('네트워크 오류가 발생했습니다. 다시 시도해주세요.')
+      // 오류 이벤트 추적
+      trackFormSubmit('newsletter_signup', false)
     } finally {
       setIsLoading(false)
     }

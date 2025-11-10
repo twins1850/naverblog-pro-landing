@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { trackPurchase, trackLicenseDownload } from "@/lib/analytics";
 
 // 결제 정보 표시용 타입 추가
 interface PaymentDetail {
@@ -121,6 +122,9 @@ function PaymentSuccessPageInner(props: { paymentDetail?: PaymentDetail }) {
           licenseKey: result.licenseKey,
           message: result.message,
         });
+
+        // Google Analytics 라이선스 다운로드 추적
+        trackLicenseDownload(result.licenseKey);
 
         // Google Sheets 저장 성공 표시
         setIsDataSaved(true);
@@ -256,6 +260,9 @@ function PaymentSuccessPageInner(props: { paymentDetail?: PaymentDetail }) {
         status: "결제완료",
         productType: "standard", // 기본값, 필요시 수정
       };
+
+      // Google Analytics 구매 추적
+      trackPurchase(orderId, Number(amount));
 
       // 라이선스 자동 발급 (Google Sheets 저장 포함)
       issueLicense(customerData);
