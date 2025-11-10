@@ -201,7 +201,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <meta name="yandex-verification" content="fde8012ad5530527" />
-        {/* Google Tag Manager - Force Deploy */}
+        {/* Google Tag Manager - Vercel 캐시 무효화 배포 v2 */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
