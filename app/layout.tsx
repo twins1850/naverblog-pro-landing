@@ -201,7 +201,7 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning>
       <head>
         <meta name="yandex-verification" content="fde8012ad5530527" />
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager - Force Deploy */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
