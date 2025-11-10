@@ -1,6 +1,7 @@
 'use client'
 
 import Script from 'next/script'
+import { useEffect } from 'react'
 
 interface GoogleAnalyticsProps {
   measurementId: string
@@ -13,32 +14,39 @@ declare global {
       targetId: string | Date,
       config?: Record<string, any>
     ) => void
+    dataLayer: any[]
   }
 }
 
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
-  console.log('GoogleAnalytics component rendered with measurementId:', measurementId);
+  useEffect(() => {
+    console.log('GoogleAnalytics component mounted with measurementId:', measurementId);
+  }, [measurementId]);
   
   return (
     <>
-      {/* Add debug comment to verify component is rendering */}
-      {/* Google Analytics Debug: measurementId = {measurementId} */}
-      <div style={{display: 'none'}} data-ga-debug={measurementId}>GA Component Loaded</div>
-      
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
         strategy="afterInteractive"
-        onLoad={() => console.log('GA gtag script loaded')}
-        onError={(e) => console.error('GA gtag script error:', e)}
+        onLoad={() => {
+          console.log('GA gtag script loaded for ID:', measurementId);
+        }}
+        onError={(e) => {
+          console.error('GA gtag script error:', e);
+        }}
       />
       <Script 
         id="google-analytics" 
         strategy="afterInteractive"
-        onLoad={() => console.log('GA inline script loaded')}
-        onError={(e) => console.error('GA inline script error:', e)}
+        onLoad={() => {
+          console.log('GA inline script loaded for ID:', measurementId);
+        }}
+        onError={(e) => {
+          console.error('GA inline script error:', e);
+        }}
       >
         {`
-          console.log('GA inline script executing');
+          console.log('GA inline script executing for ID: ${measurementId}');
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -48,6 +56,9 @@ export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps)
           console.log('GA initialized with ID: ${measurementId}');
         `}
       </Script>
+      <div style={{display: 'none'}} data-ga-debug={measurementId}>
+        GA Component Active: {measurementId}
+      </div>
     </>
   )
 }
