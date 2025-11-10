@@ -212,9 +212,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         {/* Google Analytics 활성화 - AutoToolsHub */}
-        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
-        )}
+        <GoogleAnalytics measurementId="G-QN3V4ZH4HL" />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
