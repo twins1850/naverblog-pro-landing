@@ -214,9 +214,9 @@ export default function RootLayout({
         {/* Google Analytics 활성화 - AutoToolsHub */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-QN3V4ZH4HL"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
