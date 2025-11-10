@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
-import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import Script from "next/script";
 import "@/styles/globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://naverblog-pro.com'
@@ -212,7 +212,18 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         {/* Google Analytics 활성화 - AutoToolsHub */}
-        <GoogleAnalytics measurementId="G-QN3V4ZH4HL" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-QN3V4ZH4HL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-QN3V4ZH4HL');
+          `}
+        </Script>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
