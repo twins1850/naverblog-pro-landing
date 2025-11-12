@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
+import { WebVitals } from "@/components/analytics/web-vitals";
 import Script from "next/script";
 import "@/styles/globals.css";
 
@@ -253,6 +254,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <WebVitals />
           <Header />
           <main>{children}</main>
           <Footer />

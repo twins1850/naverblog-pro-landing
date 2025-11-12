@@ -142,7 +142,7 @@ export function Footer() {
                   key={index}
                   href={social.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="nofollow noopener noreferrer"
                   className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-brand-accent/10 transition-all duration-200"
                 >
                   {social.icon}

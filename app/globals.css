@@ -175,20 +175,25 @@ body {
   
   html {
     @apply scroll-smooth;
+    overflow-x: hidden;
   }
   
   body {
     @apply bg-background text-foreground;
     @apply transition-colors duration-300;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
   
   /* Tailwind container 오버라이드 - 중앙 정렬 보장 */
   .container {
     width: 100%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
     padding-left: 1rem;
     padding-right: 1rem;
+    box-sizing: border-box;
   }
   
   @media (min-width: 640px) {
@@ -266,8 +271,27 @@ body {
   }
   
   p {
-    @apply leading-relaxed;
-    line-height: 1.6;
+    @apply leading-relaxed text-base;
+    line-height: 1.7;
+    font-size: 16px;
+    margin-bottom: 1.2em;
+  }
+
+  /* 모바일에서 더 큰 글자 크기 보장 */
+  @media (max-width: 767px) {
+    p {
+      font-size: 16px !important;
+      line-height: 1.6;
+    }
+    
+    /* 작은 텍스트들도 최소 16px 보장 */
+    .text-sm {
+      font-size: 16px !important;
+    }
+    
+    .text-xs {
+      font-size: 14px !important;
+    }
   }
   
   /* 링크 스타일 */
@@ -278,6 +302,51 @@ body {
   /* 포커스 스타일 */
   :focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* 모바일 터치 최적화 - 최소 44px 보장 */
+  @media (max-width: 767px) {
+    button, 
+    .btn, 
+    a[role="button"],
+    input[type="submit"],
+    input[type="button"] {
+      min-width: 44px !important;
+      min-height: 44px !important;
+      touch-action: manipulation;
+    }
+    
+    /* 작은 버튼들도 터치 영역 확대 */
+    .h-9 {
+      @apply h-12;
+    }
+    
+    /* 아이콘 버튼 터치 영역 확대 */
+    .h-10.w-10 {
+      @apply h-12 w-12;
+    }
+    
+    /* 반응형 이미지 및 미디어 */
+    img, 
+    video, 
+    iframe, 
+    svg {
+      max-width: 100% !important;
+      height: auto !important;
+      box-sizing: border-box;
+    }
+    
+    /* 넘치는 콘텐츠 처리 */
+    * {
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+    
+    /* 긴 텍스트 줄바꿈 */
+    .text-wrap {
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
   }
   
   /* 스크롤바 스타일 */
