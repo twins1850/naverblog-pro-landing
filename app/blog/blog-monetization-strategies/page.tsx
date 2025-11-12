@@ -21,21 +21,21 @@ import {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://autotoolshub.com'
 
 export const metadata: Metadata = {
-  title: "블로그 수익화 전략: 월 수익 1000만원 달성 로드맵 | Blog Pro",
-  description: "성공한 블로거들의 수익화 노하우와 실제 수익 구조를 분석하여 체계적인 수익 창출 방법을 제시합니다. 검증된 수익화 모델 공개.",
+  title: "블로그 수익화 자동화 시스템 | 월 100만원 달성하는 법 2024 | AutoToolsHub",
+  description: "블로그 마케팅 자동화로 월 100만원 수익 달성하는 검증된 방법을 공개합니다. 블로그 수익화 자동화 시스템, 네이버 블로그 자동화를 통한 수익 창출 전략 완벽 가이드.",
   keywords: [
-    "블로그 수익화",
-    "블로그 수익 창출",
-    "애드센스 수익",
-    "제휴마케팅",
-    "블로그 마케팅",
-    "온라인 수익",
-    "부업 블로그",
-    "블로그 비즈니스"
+    "블로그 마케팅 자동화",
+    "블로그 수익화 자동화",
+    "네이버 블로그 자동화",
+    "블로그 자동화로 수익 늘리기",
+    "블로그 수익화 자동화 시스템",
+    "AI 블로그 마케팅",
+    "자동화로 블로그 수익",
+    "블로그 자동 수익화"
   ],
   openGraph: {
-    title: "블로그 수익화 전략: 월 수익 1000만원 달성 로드맵",
-    description: "성공한 블로거들의 수익화 노하우와 실제 수익 구조를 분석하여 체계적인 수익 창출 방법을 제시합니다.",
+    title: "블로그 수익화 자동화 시스템 | 월 100만원 달성하는 법 2024",
+    description: "블로그 마케팅 자동화로 월 100만원 수익 달성하는 검증된 방법을 공개합니다. 블로그 수익화 자동화 시스템, 네이버 블로그 자동화를 통한 수익 창출 전략.",
     url: `${siteUrl}/blog/blog-monetization-strategies`,
     siteName: "Blog Pro",
     images: [
@@ -51,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "블로그 수익화 전략: 월 수익 1000만원 달성 로드맵",
-    description: "성공한 블로거들의 수익화 노하우와 실제 수익 구조 분석",
+    title: "블로그 수익화 자동화 시스템 | 월 100만원 달성하는 법 2024",
+    description: "블로그 마케팅 자동화로 월 100만원 수익 달성하는 검증된 방법을 공개합니다. 블로그 수익화 자동화 시스템, 네이버 블로그 자동화를 통한 수익 창출 전략.",
     images: ["/images/blog/thumbnails/blog-monetization.svg"]
   },
   alternates: {
@@ -70,8 +70,8 @@ export default function BlogMonetizationStrategies() {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "블로그 수익화 전략: 월 수익 1000만원 달성 로드맵",
-    "description": "성공한 블로거들의 수익화 노하우와 실제 수익 구조를 분석하여 체계적인 수익 창출 방법을 제시합니다. 검증된 수익화 모델 공개.",
+    "headline": "블로그 수익화 자동화 시스템 | 월 100만원 달성하는 법 2024",
+    "description": "블로그 마케팅 자동화로 월 100만원 수익 달성하는 검증된 방법을 공개합니다. 블로그 수익화 자동화 시스템, 네이버 블로그 자동화를 통한 수익 창출 전략 완벽 가이드.",
     "author": {
       "@type": "Organization",
       "name": author
@@ -89,7 +89,7 @@ export default function BlogMonetizationStrategies() {
     "url": `${siteUrl}/blog/blog-monetization-strategies`,
     "image": `${siteUrl}/images/blog/thumbnails/blog-monetization.svg`,
     "articleSection": category,
-    "keywords": "블로그 수익화, 블로그 수익 창출, 애드센스, 제휴마케팅, 블로그 마케팅",
+    "keywords": "블로그 마케팅 자동화, 블로그 수익화 자동화, 네이버 블로그 자동화, 블로그 자동화로 수익 늘리기, 블로그 수익화 자동화 시스템",
     "wordCount": 3800,
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -525,9 +525,9 @@ export default function BlogMonetizationStrategies() {
                     <div className="mt-6 pt-4 border-t border-green-500/20">
                       <h4 className="font-medium text-green-500 mb-2">🔑 핵심 전략</h4>
                       <p className="text-sm">
-                        "처음 6개월은 수익보다 독자에게 진정한 가치를 제공하는데 집중했습니다. 
+                        &quot;처음 6개월은 수익보다 독자에게 진정한 가치를 제공하는데 집중했습니다. 
                         전문 지식을 체계적으로 정리해서 공유하고, 독자의 질문에 성실하게 답변하면서 
-                        신뢰관계를 구축한 것이 현재 수익의 기반이 되었습니다."
+                        신뢰관계를 구축한 것이 현재 수익의 기반이 되었습니다.&quot;
                       </p>
                     </div>
                   </div>

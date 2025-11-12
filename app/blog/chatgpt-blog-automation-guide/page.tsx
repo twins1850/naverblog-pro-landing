@@ -17,21 +17,22 @@ import {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://autotoolshub.com'
 
 export const metadata: Metadata = {
-  title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드 | Blog Pro",
-  description: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다. 평균 2,300자 고품질 콘텐츠 생성 방법.",
+  title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화 | AutoToolsHub",
+  description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
   keywords: [
-    "Blog Pro 사용법",
-    "커스텀 GPT",
+    "ChatGPT 블로그 글쓰기",
+    "네이버 블로그 자동화",
+    "블로그 자동 포스팅 프로그램",
+    "AI 글쓰기 프로그램",
+    "ChatGPT로 블로그 포스팅 자동화하는 법",
     "블로그 글쓰기 자동화",
-    "ChatGPT 연동",
-    "고품질 콘텐츠 생성",
-    "2300자 글쓰기",
-    "AI 블로그 도구",
-    "네이버 블로그 자동화"
+    "네이버 블로그 업로드 프로그램",
+    "AI 블로그 작성 도구",
+    "블로그 마케팅 자동화"
   ],
   openGraph: {
-    title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
-    description: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다.",
+    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화",
+    description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
     url: `${siteUrl}/blog/chatgpt-blog-automation-guide`,
     siteName: "Blog Pro",
     images: [
@@ -47,8 +48,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
-    description: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다.",
+    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화",
+    description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
     images: ["/images/blog/thumbnails/chatgpt-automation.svg"]
   },
   alternates: {
@@ -66,8 +67,8 @@ export default function ChatGPTBlogAutomationGuide() {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
-    "description": "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다.",
+    "headline": "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화",
+    "description": "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
     "author": {
       "@type": "Organization",
       "name": author
@@ -85,7 +86,7 @@ export default function ChatGPTBlogAutomationGuide() {
     "url": `${siteUrl}/blog/chatgpt-blog-automation-guide`,
     "image": `${siteUrl}/images/blog/thumbnails/chatgpt-automation.svg`,
     "articleSection": category,
-    "keywords": "Blog Pro, 커스텀 GPT, 블로그 글쓰기 자동화, ChatGPT 연동, 고품질 콘텐츠 생성",
+    "keywords": "ChatGPT 블로그 글쓰기, 네이버 블로그 자동화, 블로그 자동 포스팅 프로그램, AI 글쓰기 프로그램, ChatGPT로 블로그 포스팅 자동화하는 법",
     "wordCount": 1800,
     "mainEntityOfPage": {
       "@type": "WebPage",
@@ -139,7 +140,7 @@ export default function ChatGPTBlogAutomationGuide() {
               </div>
               
               <h1 className="text-headline font-bold mb-6 leading-tight">
-                Blog Pro 글쓰기 자동화 <span className="text-gradient">커스텀 GPT 연동</span> 완벽 가이드
+                ChatGPT 블로그 글쓰기 <span className="text-gradient">완벽 가이드 2024</span> 네이버 블로그 자동화
               </h1>
               
               <div className="flex flex-wrap items-center gap-6 text-muted-foreground text-sm mb-6">

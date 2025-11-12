@@ -72,6 +72,18 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    id: "naver-blog-upload-program-top5-2024",
+    title: "네이버 블로그 자동 업로드 프로그램 추천 TOP 5 (2024년 최신)",
+    excerpt: "2024년 최신 네이버 블로그 자동 업로드 프로그램 5가지를 비교 분석합니다. ChatGPT 기반 프로그램부터 무료 프로그램까지, 각각의 장단점과 실제 사용 후기를 통해 최적의 선택을 도와드립니다.",
+    content: "네이버 블로그 운영을 위한 다양한 자동 업로드 프로그램들을 비교 분석하여, 여러분의 필요에 맞는 최적의 프로그램을 찾아보겠습니다...",
+    author: "Blog Pro 팀",
+    publishDate: "2025-01-08",
+    readTime: "15분",
+    category: "프로그램 비교",
+    tags: ["네이버 블로그 업로드", "자동화 프로그램", "2024 추천"],
+    image: "/images/blog/thumbnails/naver-upload-programs.svg"
+  },
+  {
     id: "chatgpt-blog-automation-guide",
     title: "Blog Pro 글쓰기 자동화 실제 사용법 - ChatGPT 4.0/5.0 연동 가이드",
     excerpt: "Blog Pro의 커스텀 GPT 기능을 활용한 블로그 글쓰기 자동화 시스템을 실제 화면과 함께 단계별로 설명합니다. 평균 2,300자 고품질 콘텐츠 생성 방법.",
@@ -147,6 +159,7 @@ const featuredPosts: BlogPost[] = [
 
 const categories = [
   { name: "AI 자동화", count: 5, icon: <Brain className="w-5 h-5" /> },
+  { name: "프로그램 비교", count: 1, icon: <BarChart3 className="w-5 h-5" /> },
   { name: "수익화", count: 1, icon: <TrendingUp className="w-5 h-5" /> }
 ]
 
