@@ -72,6 +72,66 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    id: "naver-vs-tistory-blog-platform-comparison-2024",
+    title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2024 | 어떤 플랫폼을 선택해야 할까?",
+    excerpt: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다. 초보자부터 전문가까지 완벽한 플랫폼 선택 가이드!",
+    content: "네이버 블로그와 티스토리의 모든 것을 비교 분석하여 최적의 플랫폼 선택을 도와드립니다...",
+    author: "AutoToolsHub 플랫폼 전문팀",
+    publishDate: "2025-01-12",
+    readTime: "19분",
+    category: "플랫폼 가이드",
+    tags: ["네이버 블로그", "티스토리 블로그", "플랫폼 비교"],
+    image: "/images/blog/thumbnails/naver-vs-tistory-comparison.svg"
+  },
+  {
+    id: "naver-blog-automation-safety-risks-guide-2024",
+    title: "네이버 블로그 자동화의 위험성과 안전한 사용법 2024 | 계정 정지 피하는 방법",
+    excerpt: "2024년 네이버 블로그 자동화 프로그램 사용 시 발생할 수 있는 위험성과 계정 정지를 피하는 안전한 사용법을 상세히 알려드립니다. 네이버 이용약관, 제재 사례, 안전 가이드라인까지 완벽 정리!",
+    content: "자동화 프로그램 사용 시 위험성과 안전한 사용법을 완벽 가이드로 제시합니다...",
+    author: "AutoToolsHub 보안 전문팀",
+    publishDate: "2025-01-12",
+    readTime: "17분",
+    category: "안전 가이드",
+    tags: ["네이버 블로그 자동화", "계정 정지", "안전 사용법"],
+    image: "/images/blog/thumbnails/naver-blog-automation-safety-guide.svg"
+  },
+  {
+    id: "naver-blog-monetization-strategies-2024",
+    title: "네이버 블로그 수익화 전략 2024 | 애드포스트 vs 제휴마케팅 완벽 비교",
+    excerpt: "2024년 네이버 블로그 수익화의 모든 것! 애드포스트 현실적 수익, 제휴마케팅 성공법, 수익 다각화 전략까지. 월 100만원 수익 달성 가능한 실전 노하우를 공개합니다.",
+    content: "네이버 블로그로 실질적인 수익을 얻는 방법을 현실적으로 분석하고, 성공 전략을 제시합니다...",
+    author: "AutoToolsHub 수익화 전문팀",
+    publishDate: "2025-01-12",
+    readTime: "16분",
+    category: "수익화",
+    tags: ["네이버 블로그 수익화", "애드포스트", "제휴마케팅"],
+    image: "/images/blog/thumbnails/naver-blog-monetization-strategies.svg"
+  },
+  {
+    id: "naver-blog-seo-optimization-complete-guide-2024",
+    title: "네이버 블로그 SEO 최적화 완벽 가이드 2024 | C-Rank & DIA 알고리즘 공략법",
+    excerpt: "2024년 네이버 검색 알고리즘 C-Rank와 DIA 완벽 분석! 블로그 상위 노출을 위한 실전 SEO 전략과 최신 네이버 검색 정책 변화까지 모든 것을 담았습니다.",
+    content: "C-Rank와 DIA 알고리즘을 완벽 분석하고, 2024년 변화된 네이버 검색 환경에서 블로그 상위 노출을 달성하는 실전 전략을 제공합니다...",
+    author: "AutoToolsHub SEO 전문팀",
+    publishDate: "2025-01-12",
+    readTime: "20분",
+    category: "SEO 최적화",
+    tags: ["네이버 블로그 SEO", "C-Rank 알고리즘", "DIA 알고리즘"],
+    image: "/images/blog/thumbnails/naver-seo-optimization-guide.svg"
+  },
+  {
+    id: "naver-blog-comment-automation-comparison-2024",
+    title: "네이버 블로그 댓글 자동화 프로그램 비교 분석 2024 | 실제 후기와 주의사항",
+    excerpt: "2024년 실제 존재하는 네이버 블로그 댓글 자동화 프로그램 6가지를 철저히 비교분석했습니다. 시스템버킷, N블로그AI, 오토워크 등 실사용 후기와 계정 정지 위험성, 안전한 사용법까지 완벽 정리.",
+    content: "실제 존재하는 네이버 블로그 댓글 자동화 프로그램 6가지를 철저히 분석했습니다...",
+    author: "AutoToolsHub 팀",
+    publishDate: "2025-01-12",
+    readTime: "18분",
+    category: "프로그램 비교",
+    tags: ["네이버 블로그 댓글 자동화", "댓글 프로그램", "안전 사용법"],
+    image: "/images/blog/thumbnails/naver-comment-automation-comparison.svg"
+  },
+  {
     id: "naver-blog-upload-program-top5-2024",
     title: "네이버 블로그 자동 업로드 프로그램 추천 TOP 5 (2024년 최신)",
     excerpt: "2024년 최신 네이버 블로그 자동 업로드 프로그램 5가지를 비교 분석합니다. ChatGPT 기반 프로그램부터 무료 프로그램까지, 각각의 장단점과 실제 사용 후기를 통해 최적의 선택을 도와드립니다.",
@@ -159,8 +219,11 @@ const featuredPosts: BlogPost[] = [
 
 const categories = [
   { name: "AI 자동화", count: 5, icon: <Brain className="w-5 h-5" /> },
-  { name: "프로그램 비교", count: 1, icon: <BarChart3 className="w-5 h-5" /> },
-  { name: "수익화", count: 1, icon: <TrendingUp className="w-5 h-5" /> }
+  { name: "프로그램 비교", count: 2, icon: <BarChart3 className="w-5 h-5" /> },
+  { name: "수익화", count: 2, icon: <TrendingUp className="w-5 h-5" /> },
+  { name: "SEO 최적화", count: 1, icon: <Target className="w-5 h-5" /> },
+  { name: "플랫폼 가이드", count: 1, icon: <Zap className="w-5 h-5" /> },
+  { name: "안전 가이드", count: 1, icon: <Brain className="w-5 h-5" /> }
 ]
 
 export default function BlogPage() {
