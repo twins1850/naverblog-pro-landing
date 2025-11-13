@@ -3,17 +3,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2024 | 어떤 플랫폼을 선택해야 할까? | AutoToolsHub",
+  title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025 | 어떤 플랫폼을 선택해야 할까? | AutoToolsHub",
   description: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다. 초보자부터 전문가까지 완벽한 플랫폼 선택 가이드!",
   keywords: ["네이버 블로그", "티스토리 블로그", "블로그 플랫폼 비교", "블로그 선택", "네이버 vs 티스토리", "블로그 수익화", "블로그 추천", "블로그 플랫폼 가이드"],
   openGraph: {
-    title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2024 | 어떤 플랫폼을 선택해야 할까?",
+    title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025 | 어떤 플랫폼을 선택해야 할까?",
     description: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다.",
     images: ['/images/blog/thumbnails/naver-vs-tistory-comparison.svg']
   },
   twitter: {
     card: 'summary_large_image',
-    title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2024",
+    title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025",
     description: "초보자부터 전문가까지! 네이버 vs 티스토리 완벽 비교 가이드",
     images: ['/images/blog/thumbnails/naver-vs-tistory-comparison.svg']
   }
@@ -30,13 +30,13 @@ export default function NaverVsTistoryComparison() {
           <span>블로그 플랫폼 비교</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          네이버 블로그 VS 티스토리 블로그 완벽 비교 2024
+          네이버 블로그 VS 티스토리 블로그 완벽 비교 2025
         </h1>
         <p className="text-xl text-gray-600 mb-6">
           어떤 플랫폼을 선택해야 할까? 데이터 기반 완벽 가이드
         </p>
         <div className="flex items-center gap-4 text-sm text-gray-500">
-          <time dateTime="2025-01-12">2025년 1월 12일</time>
+          <time dateTime="2024-11-13">2024년 11월 13일</time>
           <span>•</span>
           <span>19분 읽기</span>
           <span>•</span>

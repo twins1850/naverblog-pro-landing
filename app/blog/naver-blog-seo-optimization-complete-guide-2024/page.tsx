@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "네이버 블로그 SEO 최적화 완벽 가이드 2024 | C-Rank & DIA 알고리즘 공략법 | AutoToolsHub",
+  title: "네이버 블로그 SEO 최적화 완벽 가이드 2025 | C-Rank & DIA 알고리즘 공략법 | AutoToolsHub",
   description: "2024년 네이버 검색 알고리즘 C-Rank와 DIA 완벽 분석! 블로그 상위 노출을 위한 실전 SEO 전략과 최신 네이버 검색 정책 변화까지 모든 것을 담았습니다. 실제 성공 사례와 함께 확인하세요.",
   keywords: [
     "네이버 블로그 SEO",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "네이버 검색 알고리즘 2024"
   ],
   openGraph: {
-    title: "네이버 블로그 SEO 최적화 완벽 가이드 2024 | C-Rank & DIA 알고리즘 공략법",
+    title: "네이버 블로그 SEO 최적화 완벽 가이드 2025 | C-Rank & DIA 알고리즘 공략법",
     description: "2024년 네이버 검색 알고리즘 완벽 분석과 블로그 상위 노출 실전 전략",
     images: [
       {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "네이버 블로그 SEO 최적화 완벽 가이드 2024",
+    title: "네이버 블로그 SEO 최적화 완벽 가이드 2025",
     description: "C-Rank & DIA 알고리즘 완벽 분석과 블로그 상위 노출 실전 전략"
   }
 }
@@ -40,17 +40,17 @@ export default function NaverBlogSEOOptimizationGuide2024Page() {
             🎯 2024년 최신 업데이트
           </span>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            네이버 블로그 SEO 최적화 완벽 가이드 2024
+            네이버 블로그 SEO 최적화 완벽 가이드 2025
           </h1>
           <p className="text-lg text-gray-600 leading-relaxed">
-            C-Rank와 DIA 알고리즘을 완벽 분석하고, 2024년 변화된 네이버 검색 환경에서 
+            C-Rank와 DIA 알고리즘을 완벽 분석하고, 2025년 변화된 네이버 검색 환경에서 
             블로그 상위 노출을 달성하는 실전 전략을 제공합니다. VIEW 탭 스마트블록 통합 이후 
             달라진 SEO 전략까지 모든 것을 담았습니다.
           </p>
         </div>
         
         <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-          <span>📅 2025년 1월 12일</span>
+          <span>📅 2024년 11월 13일</span>
           <span>⏱️ 약 20분 읽기</span>
           <span>✍️ AutoToolsHub SEO 전문팀</span>
         </div>
