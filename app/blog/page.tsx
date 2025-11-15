@@ -74,6 +74,18 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    id: "ultimate-blog-automation-guide-2025",
+    title: "Ultimate Blog Automation Guide 2025 | AI-Powered Content Creation",
+    excerpt: "Master blog automation in 2025! Complete guide to AI-powered content creation, SEO optimization, and revenue generation. From beginner to pro with ChatGPT, Blog Pro, and advanced automation tools.",
+    content: "Discover the complete blueprint for automating your blog with AI tools, generating passive income, and scaling your content strategy. From ChatGPT to Blog Pro - everything you need to succeed in 2025...",
+    author: "AutoToolsHub Global Team",
+    publishDate: "2025-01-15",
+    readTime: "20 min",
+    category: "Global Guide",
+    tags: ["blog automation 2025", "AI blog writing", "automated content creation", "ChatGPT blog automation"],
+    image: "/images/ultimate-blog-automation-guide.svg"
+  },
+  {
     id: "naver-blog-auto-upload-complete-guide-2025",
     title: "네이버 블로그 자동 업로드 완벽 가이드 2025 | API 연동부터 자동화까지",
     excerpt: "2025년 최신 네이버 블로그 자동 업로드 방법을 완벽 정리! API 설정부터 Blog Pro 연동, 안전한 자동화 운영법까지 초보자도 쉽게 따라할 수 있는 단계별 가이드를 제공합니다.",
