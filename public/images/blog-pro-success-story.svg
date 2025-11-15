@@ -1,0 +1,147 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- Success Story Badge -->
+  <g transform="translate(20,20)">
+    <rect x="0" y="0" width="70" height="18" rx="9" fill="url(#accent2)"/>
+    <text x="35" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">SUCCESS STORY</text>
+  </g>
+  
+  <!-- Revenue Growth Chart -->
+  <g transform="translate(30,50)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="rgba(255,255,255,0.9)">3개월 수익 성장</text>
+    
+    <!-- Month Bars -->
+    <g transform="translate(0,15)">
+      <!-- Month 1 -->
+      <rect x="0" y="35" width="25" height="15" fill="url(#accent3)" opacity="0.8"/>
+      <text x="12" y="30" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">8만원</text>
+      <text x="12" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">1개월</text>
+      
+      <!-- Month 2 -->
+      <rect x="35" y="25" width="25" height="25" fill="url(#accent1)" opacity="0.8"/>
+      <text x="47" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">22만원</text>
+      <text x="47" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">2개월</text>
+      
+      <!-- Month 3 -->
+      <rect x="70" y="5" width="25" height="45" fill="url(#accent2)"/>
+      <text x="82" y="0" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">45만원</text>
+      <text x="82" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">3개월</text>
+      
+      <!-- Growth Arrow -->
+      <path d="M 100 25 L 115 10" stroke="url(#accent2)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      <text x="125" y="15" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent2)">530% 성장</text>
+    </g>
+  </g>
+  
+  <!-- ROI Calculation -->
+  <g transform="translate(30,130)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.9)">투자 대비 수익</text>
+    
+    <!-- Investment vs Return -->
+    <g transform="translate(0,12)">
+      <!-- Investment -->
+      <rect x="0" y="0" width="40" height="18" rx="3" fill="rgba(59,130,246,0.3)" stroke="url(#accent3)" stroke-width="1"/>
+      <text x="5" y="8" font-family="Arial, sans-serif" font-size="7" fill="url(#accent3)">투입 8.7만</text>
+      <text x="5" y="15" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.6)">3개월</text>
+      
+      <!-- Arrow -->
+      <text x="50" y="12" font-family="Arial, sans-serif" font-size="12" fill="url(#accent1)">→</text>
+      
+      <!-- Return -->
+      <rect x="60" y="0" width="50" height="18" rx="3" fill="rgba(16,185,129,0.3)" stroke="url(#accent2)" stroke-width="1"/>
+      <text x="65" y="8" font-family="Arial, sans-serif" font-size="7" fill="url(#accent2)">수익 75.5만</text>
+      <text x="65" y="15" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.6)">ROI 768%</text>
+    </g>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="230" y="45" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">김○○님</text>
+  <text x="230" y="62" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="url(#accent1)">성공 스토리</text>
+  <text x="230" y="77" font-family="Arial, sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">Blog Pro 활용</text>
+  
+  <!-- Achievement Box -->
+  <g transform="translate(190,85)">
+    <rect x="0" y="0" width="100" height="65" rx="5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    
+    <!-- Monthly Revenue -->
+    <text x="50" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">3개월차 월수익</text>
+    <text x="50" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="url(#accent1)">45만원</text>
+    
+    <!-- Experience -->
+    <text x="50" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">블로그 경험</text>
+    <text x="50" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#accent3)">완전 초보</text>
+  </g>
+  
+  <!-- User Profile Icon -->
+  <g transform="translate(150,40)">
+    <!-- Person Icon -->
+    <circle cx="8" cy="6" r="3" fill="url(#accent3)"/>
+    <path d="M 2 16 Q 8 12 14 16" stroke="url(#accent3)" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Success Indicators -->
+  <g transform="translate(150,130)">
+    <!-- Traffic Growth -->
+    <circle cx="8" cy="8" r="6" fill="none" stroke="url(#accent2)" stroke-width="1.5"/>
+    <text x="8" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="url(#accent2)">1520</text>
+    <text x="8" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.6)">일방문자</text>
+    
+    <!-- Automation -->
+    <g transform="translate(25,0)">
+      <rect x="0" y="2" width="12" height="12" rx="2" fill="url(#accent1)" opacity="0.3"/>
+      <circle cx="6" cy="8" r="2" fill="url(#accent1)"/>
+      <text x="6" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.6)">자동화</text>
+    </g>
+    
+    <!-- Multiple Revenue -->
+    <g transform="translate(50,0)">
+      <text x="6" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent1)">₩₩₩</text>
+      <text x="6" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.6)">다중수익</text>
+    </g>
+  </g>
+  
+  <!-- Testimonial Quote -->
+  <g transform="translate(20,165)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="8" font-style="italic" fill="rgba(255,255,255,0.8)">"Blog Pro 없이는 절대 불가능했을 일이에요"</text>
+  </g>
+  
+  <!-- Bottom Branding -->
+  <text x="20" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,0.6)">AutoToolsHub</text>
+  <text x="250" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="url(#accent1)">Blog Pro</text>
+  
+  <!-- Decorative Elements -->
+  <g opacity="0.3">
+    <circle cx="300" cy="30" r="2" fill="white"/>
+    <circle cx="290" cy="45" r="1.5" fill="white"/>
+    <circle cx="305" cy="60" r="1" fill="white"/>
+    <circle cx="295" cy="170" r="1.5" fill="white"/>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="url(#accent2)"/>
+    </marker>
+  </defs>
+</svg>

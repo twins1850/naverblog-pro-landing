@@ -74,6 +74,42 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    id: "naver-blog-auto-upload-complete-guide-2025",
+    title: "네이버 블로그 자동 업로드 완벽 가이드 2025 | API 연동부터 자동화까지",
+    excerpt: "2025년 최신 네이버 블로그 자동 업로드 방법을 완벽 정리! API 설정부터 Blog Pro 연동, 안전한 자동화 운영법까지 초보자도 쉽게 따라할 수 있는 단계별 가이드를 제공합니다.",
+    content: "네이버 블로그 자동 업로드의 모든 것을 단계별로 완벽 설명하여 안전하고 효율적인 블로그 운영을 도와드립니다...",
+    author: "AutoToolsHub 자동화 전문팀",
+    publishDate: "2025-11-15",
+    readTime: "18분",
+    category: "자동화 가이드",
+    tags: ["네이버 블로그 자동 업로드", "API 연동", "블로그 자동화"],
+    image: "/images/naver-blog-auto-upload-guide.svg"
+  },
+  {
+    id: "chatgpt-blog-writing-speed-guide",
+    title: "ChatGPT로 블로그 글쓰기 10배 빨라지는 실전 가이드 | 프롬프트 엔지니어링 완벽 마스터",
+    excerpt: "ChatGPT 프롬프트 엔지니어링부터 CO-STAR 프레임워크까지! 2025년 최신 AI 블로그 글쓰기 비법과 속도 향상 템플릿 100개로 1일 1포스팅을 실현하세요.",
+    content: "ChatGPT를 활용한 체계적인 블로그 글쓰기 방법으로 글쓰기 속도를 혁신적으로 향상시키는 방법을 제시합니다...",
+    author: "AutoToolsHub AI 전문팀",
+    publishDate: "2025-11-15",
+    readTime: "15분",
+    category: "AI 글쓰기",
+    tags: ["ChatGPT 블로그 글쓰기", "AI 글쓰기 프롬프트", "프롬프트 엔지니어링"],
+    image: "/images/chatgpt-blog-writing-guide.svg"
+  },
+  {
+    id: "blog-automation-programs-comparison-2025",
+    title: "2025년 블로그 자동화 프로그램 추천 및 비교 분석 | 15개 프로그램 완벽 리뷰",
+    excerpt: "ChatGPT, Blog Pro, 오토판다부터 가제트AI까지! 2025년 최신 블로그 자동화 프로그램 15개의 기능, 가격, 성능을 객관적으로 비교 분석하고 여러분의 블로그에 최적화된 도구를 찾아보세요.",
+    content: "15개 주요 블로그 자동화 프로그램을 전문가가 직접 테스트하고 객관적으로 비교 분석한 완벽 가이드입니다...",
+    author: "AutoToolsHub 분석 전문팀",
+    publishDate: "2025-11-15",
+    readTime: "12분",
+    category: "프로그램 비교",
+    tags: ["블로그 자동화 프로그램", "프로그램 비교", "블로그 자동화 도구"],
+    image: "/images/blog-automation-comparison.svg"
+  },
+  {
     id: "naver-vs-tistory-blog-platform-comparison-2024",
     title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025 | 어떤 플랫폼을 선택해야 할까?",
     excerpt: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다. 초보자부터 전문가까지 완벽한 플랫폼 선택 가이드!",
@@ -197,7 +233,10 @@ const featuredPosts: BlogPost[] = [
 
 const categories = [
   { name: "AI 자동화", count: 5, icon: <Brain className="w-5 h-5" /> },
-  { name: "플랫폼 가이드", count: 1, icon: <Zap className="w-5 h-5" /> },
+  { name: "자동화 가이드", count: 1, icon: <Zap className="w-5 h-5" /> },
+  { name: "AI 글쓰기", count: 1, icon: <Brain className="w-5 h-5" /> },
+  { name: "프로그램 비교", count: 1, icon: <BarChart3 className="w-5 h-5" /> },
+  { name: "플랫폼 가이드", count: 1, icon: <Target className="w-5 h-5" /> },
   { name: "수익화", count: 2, icon: <TrendingUp className="w-5 h-5" /> },
   { name: "SEO 최적화", count: 1, icon: <Target className="w-5 h-5" /> },
   { name: "안전 가이드", count: 1, icon: <Brain className="w-5 h-5" /> }

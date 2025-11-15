@@ -1,0 +1,75 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="chatgpt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00a67e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a9b8e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- ChatGPT Logo Background -->
+  <circle cx="80" cy="96" r="35" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- ChatGPT Icon -->
+  <g transform="translate(80,96)">
+    <!-- ChatGPT Symbol -->
+    <circle cx="0" cy="-8" r="8" fill="url(#chatgpt)"/>
+    <circle cx="-12" cy="4" r="6" fill="url(#chatgpt)" opacity="0.8"/>
+    <circle cx="12" cy="4" r="6" fill="url(#chatgpt)" opacity="0.8"/>
+    <rect x="-15" y="12" width="30" height="4" rx="2" fill="url(#chatgpt)" opacity="0.6"/>
+  </g>
+  
+  <!-- Speed Arrow -->
+  <g transform="translate(120,70)">
+    <path d="M 0,0 L 20,10 L 0,20 L 5,10 Z" fill="url(#accent)"/>
+    <path d="M 20,5 L 35,10 L 20,15 L 25,10 Z" fill="url(#accent)" opacity="0.8"/>
+    <path d="M 35,8 L 45,10 L 35,12 L 38,10 Z" fill="url(#accent)" opacity="0.6"/>
+  </g>
+  
+  <!-- "10x" Speed Indicator -->
+  <g transform="translate(45,130)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="url(#accent)">10</text>
+    <text x="25" y="-5" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#accent)">배</text>
+  </g>
+  
+  <!-- Main Text -->
+  <text x="140" y="45" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">ChatGPT로</text>
+  <text x="140" y="68" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">블로그 글쓰기</text>
+  <text x="140" y="95" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#accent)">10배 빠르게</text>
+  <text x="140" y="118" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="rgba(255,255,255,0.9)">실전 가이드</text>
+  
+  <!-- Decorative Elements -->
+  <g transform="translate(260,50)">
+    <!-- Writing Icon -->
+    <rect x="0" y="0" width="3" height="20" rx="1" fill="white" opacity="0.7" transform="rotate(-15)"/>
+    <circle cx="2" cy="-2" r="3" fill="white" opacity="0.5"/>
+  </g>
+  
+  <!-- Bottom Branding -->
+  <text x="20" y="170" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.7)">AutoToolsHub</text>
+  <text x="250" y="170" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="url(#accent)">Blog Pro</text>
+  
+  <!-- Abstract Lines -->
+  <g opacity="0.3">
+    <line x1="280" y1="30" x2="300" y2="35" stroke="white" stroke-width="2"/>
+    <line x1="275" y1="45" x2="295" y2="50" stroke="white" stroke-width="1.5"/>
+    <line x1="285" y1="60" x2="300" y2="63" stroke="white" stroke-width="1"/>
+  </g>
+  
+  <!-- Productivity Indicator -->
+  <g transform="translate(270,130)">
+    <rect x="0" y="0" width="4" height="15" fill="url(#accent)" opacity="0.8"/>
+    <rect x="6" y="5" width="4" height="10" fill="url(#accent)" opacity="0.6"/>
+    <rect x="12" y="8" width="4" height="7" fill="url(#accent)" opacity="0.4"/>
+  </g>
+</svg>

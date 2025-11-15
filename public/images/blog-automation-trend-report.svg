@@ -1,0 +1,142 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- Trend Report Header -->
+  <g transform="translate(20,20)">
+    <rect x="0" y="0" width="60" height="20" rx="10" fill="url(#accent4)"/>
+    <text x="30" y="13" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">TREND 2025</text>
+  </g>
+  
+  <!-- Market Growth Chart -->
+  <g transform="translate(30,50)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="rgba(255,255,255,0.9)">시장 성장 곡선</text>
+    
+    <!-- Growth Line -->
+    <g transform="translate(0,15)">
+      <path d="M 0 40 Q 30 35 60 25 Q 90 15 120 5 Q 150 0 180 -5" 
+            stroke="url(#accent1)" stroke-width="3" fill="none"/>
+      
+      <!-- Data Points -->
+      <circle cx="0" cy="40" r="3" fill="url(#accent1)"/>
+      <circle cx="60" cy="25" r="3" fill="url(#accent1)"/>
+      <circle cx="120" cy="5" r="3" fill="url(#accent1)"/>
+      <circle cx="180" cy="-5" r="3" fill="url(#accent1)"/>
+      
+      <!-- Labels -->
+      <text x="0" y="55" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.6)">2023</text>
+      <text x="60" y="55" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.6)">2024</text>
+      <text x="120" y="55" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.6)">2025</text>
+      <text x="180" y="55" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.6)">2027</text>
+    </g>
+  </g>
+  
+  <!-- Key Technologies -->
+  <g transform="translate(30,130)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.9)">핵심 기술</text>
+    
+    <!-- GAR -->
+    <g transform="translate(0,12)">
+      <rect x="0" y="0" width="35" height="18" rx="3" fill="rgba(59,130,246,0.3)" stroke="url(#accent3)" stroke-width="1"/>
+      <text x="17" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent3)">GAR</text>
+    </g>
+    
+    <!-- SLM -->
+    <g transform="translate(40,12)">
+      <rect x="0" y="0" width="35" height="18" rx="3" fill="rgba(16,185,129,0.3)" stroke="url(#accent2)" stroke-width="1"/>
+      <text x="17" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent2)">SLM</text>
+    </g>
+    
+    <!-- Multimodal -->
+    <g transform="translate(80,12)">
+      <rect x="0" y="0" width="45" height="18" rx="3" fill="rgba(168,85,247,0.3)" stroke="url(#accent4)" stroke-width="1"/>
+      <text x="22" y="12" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent4)">멀티모달</text>
+    </g>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="240" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">2025 산업</text>
+  <text x="240" y="68" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="url(#accent1)">트렌드 리포트</text>
+  <text x="240" y="84" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="rgba(255,255,255,0.8)">블로그 자동화</text>
+  
+  <!-- Market Size -->
+  <g transform="translate(190,95)">
+    <rect x="0" y="0" width="100" height="55" rx="5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    
+    <!-- Market Value -->
+    <text x="50" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="url(#accent1)">49조원</text>
+    <text x="50" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">글로벌 시장규모</text>
+    
+    <!-- Growth Rate -->
+    <text x="50" y="46" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="url(#accent2)">+12.7%</text>
+  </g>
+  
+  <!-- Innovation Icons -->
+  <g transform="translate(150,40)">
+    <!-- AI Brain -->
+    <circle cx="6" cy="6" r="5" fill="none" stroke="url(#accent3)" stroke-width="1.5"/>
+    <circle cx="3" cy="4" r="1" fill="url(#accent3)"/>
+    <circle cx="9" cy="4" r="1" fill="url(#accent3)"/>
+    <circle cx="6" cy="8" r="1" fill="url(#accent3)"/>
+  </g>
+  
+  <!-- Bottom Stats -->
+  <g transform="translate(30,165)">
+    <!-- Company Adoption -->
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="url(#accent2)">61%</text>
+    <text x="25" y="0" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.6)">기업도입</text>
+    
+    <!-- SLM Growth -->
+    <text x="70" y="0" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="url(#accent3)">60%↑</text>
+    <text x="95" y="0" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.6)">SLM성장</text>
+    
+    <!-- Multimodal -->
+    <text x="140" y="0" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="url(#accent4)">46%</text>
+    <text x="165" y="0" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.6)">멀티모달</text>
+  </g>
+  
+  <!-- Bottom Branding -->
+  <text x="20" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="rgba(255,255,255,0.6)">AutoToolsHub Research</text>
+  <text x="250" y="180" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="url(#accent1)">Blog Pro</text>
+  
+  <!-- Decorative Elements -->
+  <g opacity="0.3">
+    <circle cx="300" cy="30" r="2" fill="white"/>
+    <circle cx="290" cy="45" r="1.5" fill="white"/>
+    <circle cx="305" cy="60" r="1" fill="white"/>
+    <circle cx="295" cy="170" r="1.5" fill="white"/>
+  </g>
+  
+  <!-- Future Timeline -->
+  <g transform="translate(150,130)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="rgba(255,255,255,0.8)">미래 전망</text>
+    <rect x="0" y="5" width="2" height="20" fill="url(#accent1)"/>
+    <rect x="5" y="5" width="2" height="20" fill="url(#accent2)" opacity="0.8"/>
+    <rect x="10" y="5" width="2" height="20" fill="url(#accent3)" opacity="0.6"/>
+    <rect x="15" y="5" width="2" height="20" fill="url(#accent4)" opacity="0.4"/>
+    <text x="8" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" fill="rgba(255,255,255,0.5)">25-27</text>
+  </g>
+</svg>

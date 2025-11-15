@@ -1,0 +1,151 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- SEO Strategy Flow -->
+  <g transform="translate(30,40)">
+    <!-- Search Engines Icons -->
+    <g transform="translate(0,0)">
+      <!-- Naver Icon -->
+      <rect x="0" y="0" width="20" height="20" rx="3" fill="url(#accent2)"/>
+      <text x="10" y="14" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">N</text>
+      <text x="10" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.8)">네이버</text>
+      
+      <!-- Google Icon -->
+      <circle cx="50" cy="10" r="10" fill="url(#accent3)"/>
+      <text x="50" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">G</text>
+      <text x="50" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.8)">구글</text>
+    </g>
+    
+    <!-- SEO Optimization Process -->
+    <g transform="translate(90,0)">
+      <!-- Arrow -->
+      <path d="M 0 15 L 20 15" stroke="url(#accent1)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      
+      <!-- SEO Box -->
+      <rect x="25" y="5" width="60" height="20" rx="4" fill="rgba(251,191,36,0.2)" stroke="url(#accent1)" stroke-width="2"/>
+      <text x="55" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="url(#accent1)">SEO 최적화</text>
+      
+      <!-- Arrow -->
+      <path d="M 90 15 L 110 15" stroke="url(#accent2)" stroke-width="2"/>
+      
+      <!-- Results -->
+      <circle cx="120" cy="15" r="12" fill="url(#accent2)"/>
+      <text x="120" y="19" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">1위</text>
+    </g>
+  </g>
+  
+  <!-- Algorithm Updates -->
+  <g transform="translate(30,80)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="rgba(255,255,255,0.9)">2025 알고리즘</text>
+    
+    <!-- D.I.A Model -->
+    <rect x="0" y="10" width="80" height="25" rx="4" fill="rgba(16,185,129,0.2)" stroke="url(#accent2)" stroke-width="1"/>
+    <text x="5" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent2)">D.I.A 모델</text>
+    <text x="5" y="30" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">정보성·경험 중심</text>
+    
+    <!-- E-E-A-T -->
+    <rect x="90" y="10" width="80" height="25" rx="4" fill="rgba(59,130,246,0.2)" stroke="url(#accent3)" stroke-width="1"/>
+    <text x="95" y="20" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="url(#accent3)">E-E-A-T</text>
+    <text x="95" y="30" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">전문성·권위성</text>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="190" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">블로그 자동화</text>
+  <text x="190" y="68" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="url(#accent1)">SEO 최적화</text>
+  <text x="190" y="84" font-family="Arial, sans-serif" font-size="12" fill="rgba(255,255,255,0.8)">완벽 가이드</text>
+  
+  <!-- Performance Metrics -->
+  <g transform="translate(190,95)">
+    <rect x="0" y="0" width="100" height="50" rx="5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    <text x="50" y="15" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="url(#accent1)">상위 10위 진입</text>
+    <text x="50" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">68%</text>
+    <text x="50" y="42" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">3개월 내 달성</text>
+  </g>
+  
+  <!-- SEO Icons -->
+  <g transform="translate(40,120)">
+    <!-- Keyword Icon -->
+    <rect x="0" y="0" width="12" height="12" rx="2" fill="url(#accent1)" opacity="0.8"/>
+    <text x="6" y="9" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="white">K</text>
+    
+    <!-- Link Icon -->
+    <g transform="translate(20,0)">
+      <circle cx="4" cy="4" r="3" fill="none" stroke="url(#accent2)" stroke-width="2"/>
+      <circle cx="8" cy="8" r="3" fill="none" stroke="url(#accent2)" stroke-width="2"/>
+      <path d="M 6 6 L 6 6" stroke="url(#accent2)" stroke-width="2"/>
+    </g>
+    
+    <!-- Content Icon -->
+    <g transform="translate(40,0)">
+      <rect x="0" y="1" width="12" height="10" rx="1" fill="none" stroke="url(#accent3)" stroke-width="2"/>
+      <rect x="2" y="3" width="8" height="1" fill="url(#accent3)"/>
+      <rect x="2" y="5" width="6" height="1" fill="url(#accent3)"/>
+      <rect x="2" y="7" width="4" height="1" fill="url(#accent3)"/>
+    </g>
+    
+    <!-- Analytics Icon -->
+    <g transform="translate(60,0)">
+      <rect x="2" y="8" width="2" height="4" fill="url(#accent1)"/>
+      <rect x="5" y="6" width="2" height="6" fill="url(#accent1)"/>
+      <rect x="8" y="3" width="2" height="9" fill="url(#accent1)"/>
+    </g>
+    
+    <text x="40" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">키워드·링크·콘텐츠·분석</text>
+  </g>
+  
+  <!-- Growth Trajectory -->
+  <g transform="translate(150,125)">
+    <path d="M 0 20 Q 15 15 30 10 Q 45 5 60 0" stroke="url(#accent1)" stroke-width="3" fill="none"/>
+    <!-- Growth points -->
+    <circle cx="0" cy="20" r="2" fill="url(#accent1)"/>
+    <circle cx="30" cy="10" r="2" fill="url(#accent1)"/>
+    <circle cx="60" cy="0" r="2" fill="url(#accent1)"/>
+    
+    <text x="30" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.5)">트래픽 성장 곡선</text>
+  </g>
+  
+  <!-- Bottom Branding -->
+  <text x="20" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.7)">AutoToolsHub</text>
+  <text x="230" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="url(#accent1)">Blog Pro</text>
+  
+  <!-- Decorative Elements -->
+  <g opacity="0.3">
+    <circle cx="280" cy="30" r="2" fill="white"/>
+    <circle cx="290" cy="45" r="1.5" fill="white"/>
+    <circle cx="275" cy="60" r="1" fill="white"/>
+    <circle cx="285" cy="170" r="1.5" fill="white"/>
+  </g>
+  
+  <!-- 2025 Badge -->
+  <g transform="translate(250,20)">
+    <rect x="0" y="0" width="30" height="15" rx="7" fill="url(#accent1)"/>
+    <text x="15" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#0f172a">2025</text>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="url(#accent1)"/>
+    </marker>
+  </defs>
+</svg>

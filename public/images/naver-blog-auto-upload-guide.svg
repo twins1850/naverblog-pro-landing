@@ -1,0 +1,55 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- Upload Icon Background Circle -->
+  <circle cx="80" cy="96" r="35" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+  
+  <!-- Upload Arrow Icon -->
+  <g transform="translate(80,96)">
+    <!-- Arrow Shaft -->
+    <rect x="-2" y="-15" width="4" height="20" fill="white"/>
+    <!-- Arrow Head -->
+    <path d="M -8,-15 L 0,-25 L 8,-15 Z" fill="white"/>
+    <!-- Base Line -->
+    <rect x="-12" y="8" width="24" height="3" fill="white"/>
+  </g>
+  
+  <!-- Naver Logo Area -->
+  <rect x="45" y="75" width="16" height="16" rx="2" fill="url(#accent)"/>
+  <text x="53" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white">N</text>
+  
+  <!-- Automation Symbols -->
+  <g transform="translate(100,60)">
+    <!-- Gear Icon -->
+    <circle cx="0" cy="0" r="8" fill="rgba(255,255,255,0.2)"/>
+    <circle cx="0" cy="0" r="5" fill="none" stroke="white" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="2" fill="white"/>
+  </g>
+  
+  <!-- Content Text -->
+  <text x="140" y="50" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">네이버 블로그</text>
+  <text x="140" y="75" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">자동 업로드</text>
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="16" font-weight="600" fill="rgba(255,255,255,0.9)">완벽 가이드</text>
+  <text x="140" y="125" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="url(#accent)">2025</text>
+  
+  <!-- Bottom Brand -->
+  <text x="20" y="170" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.7)">AutoToolsHub</text>
+  <text x="250" y="170" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="url(#accent)">Blog Pro</text>
+  
+  <!-- Decorative Elements -->
+  <circle cx="280" cy="40" r="3" fill="rgba(255,255,255,0.3)"/>
+  <circle cx="290" cy="55" r="2" fill="rgba(255,255,255,0.2)"/>
+  <circle cx="275" cy="70" r="2.5" fill="rgba(255,255,255,0.25)"/>
+</svg>

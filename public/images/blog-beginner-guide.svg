@@ -1,0 +1,172 @@
+<svg width="320" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="320" height="192" fill="url(#bg)"/>
+  
+  <!-- Learning Steps -->
+  <g transform="translate(30,40)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="rgba(255,255,255,0.9)">30일 학습 로드맵</text>
+    
+    <!-- Week Progress -->
+    <g transform="translate(0,15)">
+      <!-- Week 1 -->
+      <circle cx="15" cy="15" r="8" fill="url(#accent2)"/>
+      <text x="15" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">1주</text>
+      <text x="15" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">개설</text>
+      
+      <!-- Arrow -->
+      <path d="M 25 15 L 35 15" stroke="url(#accent1)" stroke-width="2" marker-end="url(#arrowhead)"/>
+      
+      <!-- Week 2 -->
+      <circle cx="45" cy="15" r="8" fill="url(#accent3)"/>
+      <text x="45" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">2주</text>
+      <text x="45" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">작성</text>
+      
+      <!-- Arrow -->
+      <path d="M 55 15 L 65 15" stroke="url(#accent1)" stroke-width="2"/>
+      
+      <!-- Week 3 -->
+      <circle cx="75" cy="15" r="8" fill="url(#accent1)"/>
+      <text x="75" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">3주</text>
+      <text x="75" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">소통</text>
+      
+      <!-- Arrow -->
+      <path d="M 85 15 L 95 15" stroke="url(#accent1)" stroke-width="2"/>
+      
+      <!-- Week 4 -->
+      <circle cx="105" cy="15" r="8" fill="url(#accent1)"/>
+      <text x="105" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="bold" fill="white">4주</text>
+      <text x="105" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">수익</text>
+    </g>
+    
+    <!-- Platform Icons -->
+    <g transform="translate(0,60)">
+      <text x="0" y="0" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.9)">추천 플랫폼</text>
+      
+      <!-- Naver Blog -->
+      <rect x="0" y="10" width="25" height="15" rx="3" fill="url(#accent2)" opacity="0.8"/>
+      <text x="12" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">N</text>
+      <text x="12" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">네이버</text>
+      
+      <!-- Tistory -->
+      <rect x="35" y="10" width="25" height="15" rx="3" fill="url(#accent3)" opacity="0.8"/>
+      <text x="47" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">T</text>
+      <text x="47" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">티스토리</text>
+      
+      <!-- WordPress -->
+      <rect x="70" y="10" width="25" height="15" rx="3" fill="url(#accent1)" opacity="0.8"/>
+      <text x="82" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">W</text>
+      <text x="82" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">워드프레스</text>
+    </g>
+  </g>
+  
+  <!-- Main Title -->
+  <text x="190" y="50" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">블로그 초보자</text>
+  <text x="190" y="68" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="url(#accent1)">완벽 가이드</text>
+  <text x="190" y="84" font-family="Arial, sans-serif" font-size="12" fill="rgba(255,255,255,0.8)">2025년 최신판</text>
+  
+  <!-- Progress Statistics -->
+  <g transform="translate(180,95)">
+    <rect x="0" y="0" width="110" height="60" rx="5" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+    
+    <!-- 30 Days -->
+    <text x="55" y="18" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="url(#accent1)">30일</text>
+    <text x="55" y="32" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)">마스터 과정</text>
+    
+    <!-- Success Rate -->
+    <text x="55" y="48" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="url(#accent2)">95%</text>
+    <text x="55" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" fill="rgba(255,255,255,0.7)">성공률</text>
+  </g>
+  
+  <!-- Beginner Tips Icons -->
+  <g transform="translate(40,130)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="rgba(255,255,255,0.9)">초보자 필수</text>
+    
+    <!-- Writing Icon -->
+    <g transform="translate(0,10)">
+      <rect x="0" y="0" width="12" height="15" rx="2" fill="none" stroke="url(#accent1)" stroke-width="2"/>
+      <rect x="2" y="3" width="8" height="1" fill="url(#accent1)"/>
+      <rect x="2" y="6" width="6" height="1" fill="url(#accent1)"/>
+      <rect x="2" y="9" width="4" height="1" fill="url(#accent1)"/>
+      <text x="6" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">글쓰기</text>
+    </g>
+    
+    <!-- SEO Icon -->
+    <g transform="translate(30,10)">
+      <circle cx="6" cy="7" r="5" fill="none" stroke="url(#accent2)" stroke-width="2"/>
+      <text x="6" y="11" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="url(#accent2)">SEO</text>
+      <text x="6" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">최적화</text>
+    </g>
+    
+    <!-- Network Icon -->
+    <g transform="translate(60,10)">
+      <circle cx="3" cy="3" r="2" fill="url(#accent3)"/>
+      <circle cx="9" cy="3" r="2" fill="url(#accent3)"/>
+      <circle cx="6" cy="9" r="2" fill="url(#accent3)"/>
+      <path d="M 3 5 L 6 7" stroke="url(#accent3)" stroke-width="1"/>
+      <path d="M 9 5 L 6 7" stroke="url(#accent3)" stroke-width="1"/>
+      <text x="6" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">네트워킹</text>
+    </g>
+    
+    <!-- Money Icon -->
+    <g transform="translate(90,10)">
+      <circle cx="6" cy="7" r="5" fill="none" stroke="url(#accent1)" stroke-width="2"/>
+      <text x="6" y="11" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" font-weight="bold" fill="url(#accent1)">₩</text>
+      <text x="6" y="35" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.7)">수익화</text>
+    </g>
+  </g>
+  
+  <!-- Success Path -->
+  <g transform="translate(150,130)">
+    <path d="M 0 15 Q 15 10 30 5 Q 45 0 60 -5" stroke="url(#accent2)" stroke-width="3" fill="none"/>
+    <!-- Success points -->
+    <circle cx="0" cy="15" r="2" fill="url(#accent2)"/>
+    <circle cx="30" cy="5" r="2" fill="url(#accent2)"/>
+    <circle cx="60" cy="-5" r="2" fill="url(#accent2)"/>
+    
+    <text x="30" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="rgba(255,255,255,0.5)">성장 경로</text>
+  </g>
+  
+  <!-- Beginner Badge -->
+  <g transform="translate(20,20)">
+    <rect x="0" y="0" width="50" height="15" rx="7" fill="url(#accent2)"/>
+    <text x="25" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white">초보자용</text>
+  </g>
+  
+  <!-- Bottom Branding -->
+  <text x="20" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.7)">AutoToolsHub</text>
+  <text x="230" y="175" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="url(#accent1)">Blog Pro</text>
+  
+  <!-- Decorative Elements -->
+  <g opacity="0.3">
+    <circle cx="280" cy="30" r="2" fill="white"/>
+    <circle cx="290" cy="45" r="1.5" fill="white"/>
+    <circle cx="275" cy="60" r="1" fill="white"/>
+    <circle cx="285" cy="170" r="1.5" fill="white"/>
+  </g>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="url(#accent1)"/>
+    </marker>
+  </defs>
+</svg>
