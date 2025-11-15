@@ -17,7 +17,7 @@ import {
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://autotoolshub.com'
 
 export const metadata: Metadata = {
-  title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화 | AutoToolsHub",
+  title: "ChatGPT 블로그 글쓰기 완벽 가이드 2025 | 네이버 블로그 자동화 프로그램 | AutoToolsHub",
   description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
   keywords: [
     "ChatGPT 블로그 글쓰기",
@@ -28,13 +28,15 @@ export const metadata: Metadata = {
     "블로그 글쓰기 자동화",
     "네이버 블로그 업로드 프로그램",
     "AI 블로그 작성 도구",
-    "블로그 마케팅 자동화"
+    "블로그 마케팅 자동화",
+    "Blog Pro",
+    "블로그 프로"
   ],
   openGraph: {
-    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화",
+    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2025 | 네이버 블로그 자동화 프로그램",
     description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
     url: `${siteUrl}/blog/chatgpt-blog-automation-guide`,
-    siteName: "Blog Pro",
+    siteName: "AutoToolsHub",
     images: [
       {
         url: "/images/blog/thumbnails/chatgpt-automation.svg", 
@@ -48,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2024 | 네이버 블로그 자동화",
+    title: "ChatGPT 블로그 글쓰기 완벽 가이드 2025 | 네이버 블로그 자동화 프로그램",
     description: "ChatGPT로 블로그 포스팅 자동화하는 법을 실제 화면과 함께 단계별로 설명합니다. 네이버 블로그 자동 업로드, 평균 2,300자 고품질 콘텐츠 생성 방법 완전 공개.",
     images: ["/images/blog/thumbnails/chatgpt-automation.svg"]
   },

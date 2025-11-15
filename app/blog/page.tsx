@@ -29,7 +29,8 @@ export const metadata: Metadata = {
     "블로그 수익화",
     "네이버 블로그 프로그램",
     "블로그 마케팅 자동화",
-    "AutoToolsHub"
+    "Blog Pro",
+    "블로그 프로"
   ],
   openGraph: {
     title: "블로그 자동화 프로그램 완벽 가이드 2025 | AutoToolsHub",

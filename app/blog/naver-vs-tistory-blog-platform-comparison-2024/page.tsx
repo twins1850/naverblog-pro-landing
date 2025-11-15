@@ -4,11 +4,11 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025 | 어떤 플랫폼을 선택해야 할까? | AutoToolsHub",
-  description: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다. 초보자부터 전문가까지 완벽한 플랫폼 선택 가이드!",
-  keywords: ["네이버 블로그", "티스토리 블로그", "블로그 플랫폼 비교", "블로그 선택", "네이버 vs 티스토리", "블로그 수익화", "블로그 추천", "블로그 플랫폼 가이드"],
+  description: "2025년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다. 초보자부터 전문가까지 완벽한 플랫폼 선택 가이드!",
+  keywords: ["네이버 블로그", "티스토리 블로그", "블로그 플랫폼 비교", "블로그 선택", "네이버 vs 티스토리", "블로그 수익화", "블로그 추천", "블로그 플랫폼 가이드", "AutoToolsHub"],
   openGraph: {
     title: "네이버 블로그 VS 티스토리 블로그 완벽 비교 2025 | 어떤 플랫폼을 선택해야 할까?",
-    description: "2024년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다.",
+    description: "2025년 최신 비교! 네이버 블로그와 티스토리 블로그의 장단점, 수익성, SEO, 사용성을 철저히 분석했습니다.",
     images: ['/images/blog/thumbnails/naver-vs-tistory-comparison.svg']
   },
   twitter: {

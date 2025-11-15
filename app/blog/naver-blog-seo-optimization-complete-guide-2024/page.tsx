@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: "네이버 블로그 SEO 최적화 완벽 가이드 2025 | C-Rank & DIA 알고리즘 공략법 | AutoToolsHub",
-  description: "2024년 네이버 검색 알고리즘 C-Rank와 DIA 완벽 분석! 블로그 상위 노출을 위한 실전 SEO 전략과 최신 네이버 검색 정책 변화까지 모든 것을 담았습니다. 실제 성공 사례와 함께 확인하세요.",
+  description: "2025년 네이버 검색 알고리즘 C-Rank와 DIA 완벽 분석! 블로그 상위 노출을 위한 실전 SEO 전략과 최신 네이버 검색 정책 변화까지 모든 것을 담았습니다. 실제 성공 사례와 함께 확인하세요.",
   keywords: [
     "네이버 블로그 SEO",
     "네이버 SEO 최적화",
@@ -10,17 +10,18 @@ export const metadata: Metadata = {
     "DIA 알고리즘",
     "네이버 상위 노출",
     "블로그 검색 최적화",
-    "네이버 검색 알고리즘 2024"
+    "네이버 검색 알고리즘 2025",
+    "AutoToolsHub"
   ],
   openGraph: {
     title: "네이버 블로그 SEO 최적화 완벽 가이드 2025 | C-Rank & DIA 알고리즘 공략법",
-    description: "2024년 네이버 검색 알고리즘 완벽 분석과 블로그 상위 노출 실전 전략",
+    description: "2025년 네이버 검색 알고리즘 완벽 분석과 블로그 상위 노출 실전 전략",
     images: [
       {
         url: "/images/blog/thumbnails/naver-seo-optimization-guide.svg",
         width: 1200,
         height: 630,
-        alt: "네이버 블로그 SEO 최적화 가이드 2024"
+        alt: "네이버 블로그 SEO 최적화 가이드 2025"
       }
     ]
   },
@@ -37,7 +38,7 @@ export default function NaverBlogSEOOptimizationGuide2024Page() {
       <header className="mb-8">
         <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mb-6">
           <span className="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded mb-4">
-            🎯 2024년 최신 업데이트
+            🎯 2025년 최신 업데이트
           </span>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             네이버 블로그 SEO 최적화 완벽 가이드 2025
