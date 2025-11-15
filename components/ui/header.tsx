@@ -38,6 +38,8 @@ export function Header({ onPurchaseClick }: HeaderProps) {
     { name: '기능', href: '#features' },
     { name: '요금제', href: '/payment-info' },
     { name: '블로그', href: '/blog' },
+    { name: '대시보드', href: '/dashboard' },
+    { name: '커뮤니티', href: '/community' },
     { name: 'FAQ', href: '/faq' },
     { name: '문의', href: '/contact' },
   ]

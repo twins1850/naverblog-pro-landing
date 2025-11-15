@@ -74,6 +74,18 @@ interface BlogPost {
 
 const featuredPosts: BlogPost[] = [
   {
+    id: "youtube-blog-automation-tutorial-2025",
+    title: "YouTube × 블로그 자동화 완전 연동 수익극대화 전략 | AutoToolsHub TV 시리즈",
+    excerpt: "AutoToolsHub TV와 함께하는 YouTube × 블로그 완전 연동 전략! EP.1 초기 설정부터 EP.3 고급 자동화까지, 구독자 127K 채널의 검증된 노하우로 수익을 극대화하세요.",
+    content: "YouTube와 블로그를 완전히 연동하여 수익을 극대화하는 전략을 AutoToolsHub TV 시리즈로 완벽 마스터하세요...",
+    author: "AutoToolsHub TV",
+    publishDate: "2025-11-15",
+    readTime: "22분",
+    category: "YouTube 연동",
+    tags: ["YouTube 블로그 연동", "멀티플랫폼", "수익 극대화", "AutoToolsHub TV"],
+    image: "/images/youtube-blog-automation-tutorial.svg"
+  },
+  {
     id: "ultimate-blog-automation-guide-2025",
     title: "Ultimate Blog Automation Guide 2025 | AI-Powered Content Creation",
     excerpt: "Master blog automation in 2025! Complete guide to AI-powered content creation, SEO optimization, and revenue generation. From beginner to pro with ChatGPT, Blog Pro, and advanced automation tools.",

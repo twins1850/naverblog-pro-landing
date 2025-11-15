@@ -23,13 +23,13 @@ export function Footer() {
       { name: "기능", href: "#features" },
       { name: "요금제", href: "#pricing" },
       { name: "데모", href: "#demo" },
-      { name: "업데이트", href: "/updates" },
+      { name: "대시보드", href: "/dashboard" },
     ],
     support: [
       { name: "도움말", href: "/help" },
       { name: "문의하기", href: "/contact" },
       { name: "FAQ", href: "/faq" },
-      { name: "기술지원", href: "/support" },
+      { name: "커뮤니티", href: "/community" },
     ],
     company: [
       { name: "회사소개", href: "/about" },
