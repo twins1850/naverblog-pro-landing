@@ -20,22 +20,22 @@ export function Footer() {
 
   const navigation = {
     product: [
-      { name: "기능", href: "#features" },
-      { name: "요금제", href: "#pricing" },
-      { name: "데모", href: "#demo" },
-      { name: "대시보드", href: "/dashboard" },
+      { name: "블로그자동화 기능", href: "#features" },
+      { name: "네이버블로그자동화 요금제", href: "#pricing" },
+      { name: "AI댓글자동화 데모", href: "#demo" },
+      { name: "블로그자동화 대시보드", href: "/dashboard" },
     ],
     support: [
-      { name: "도움말", href: "/help" },
-      { name: "문의하기", href: "/contact" },
-      { name: "FAQ", href: "/faq" },
-      { name: "커뮤니티", href: "/community" },
+      { name: "블로그자동화 도움말", href: "/help" },
+      { name: "AI댓글자동화 문의", href: "/contact" },
+      { name: "블로그자동화 FAQ", href: "/faq" },
+      { name: "블로그자동화 커뮤니티", href: "/community" },
     ],
     company: [
-      { name: "회사소개", href: "/about" },
-      { name: "블로그", href: "/blog" },
-      { name: "채용", href: "/careers" },
-      { name: "파트너십", href: "/partners" },
+      { name: "블로그자동화 회사소개", href: "/about" },
+      { name: "블로그자동화 가이드 블로그", href: "/blog" },
+      { name: "블로그자동화 전문가 채용", href: "/careers" },
+      { name: "블로그자동화 파트너십", href: "/partners" },
     ],
     legal: [
       { name: "이용약관", href: "/terms" },

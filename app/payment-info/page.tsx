@@ -123,9 +123,9 @@ export default function PaymentInfoPage() {
   // 수량 조절 함수
   const adjustCount = (type: 'account' | 'post', operation: 'increase' | 'decrease') => {
     if (type === 'account') {
-      setAccountCount(prev => operation === 'increase' ? Math.min(prev + 1, 10) : Math.max(prev - 1, 1));
+      setAccountCount(prev => operation === 'increase' ? Math.min(prev + 1, 3) : Math.max(prev - 1, 1));
     } else {
-      setPostCount(prev => operation === 'increase' ? Math.min(prev + 1, 10) : Math.max(prev - 1, 1));
+      setPostCount(prev => operation === 'increase' ? Math.min(prev + 1, 3) : Math.max(prev - 1, 1));
     }
   };
 
@@ -174,13 +174,13 @@ export default function PaymentInfoPage() {
       return;
     }
 
-    // 6.6 초과 버전 차단 로직 추가
-    if (accountCount > 6 || postCount > 6) {
+    // 3.3 초과 버전 차단 로직 추가
+    if (accountCount > 3 || postCount > 3) {
       alert(
-        `❌ 랜딩페이지에서는 최대 아이디 6개, 글 6개까지만 구매 가능합니다.\n\n` +
+        `❌ 웹사이트에서는 최대 아이디 3개, 글 3개까지만 구매 가능합니다.\n\n` +
         `현재 선택: 아이디 ${accountCount}개, 글 ${postCount}개\n` +
-        `최대 허용: 아이디 6개, 글 6개\n\n` +
-        `더 많은 아이디/글이 필요하시면 카카오채널로 기업형 문의 바랍니다.\n` +
+        `최대 허용: 아이디 3개, 글 3개\n\n` +
+        `더 많은 아이디/글이 필요하시면 카카오채널로 맞춤형 라이선스 문의 바랍니다.\n` +
         `문의: http://pf.kakao.com/_ShwJn/chat`
       );
       return;
@@ -363,7 +363,7 @@ export default function PaymentInfoPage() {
                                     e.stopPropagation();
                                     adjustCount('account', 'increase');
                                   }}
-                                  disabled={accountCount >= 10}
+                                  disabled={accountCount >= 3}
                                 >
                                   <Plus className="w-4 h-4" />
                                 </Button>
@@ -399,7 +399,7 @@ export default function PaymentInfoPage() {
                                     e.stopPropagation();
                                     adjustCount('post', 'increase');
                                   }}
-                                  disabled={postCount >= 10}
+                                  disabled={postCount >= 3}
                                 >
                                   <Plus className="w-4 h-4" />
                                 </Button>
@@ -414,6 +414,23 @@ export default function PaymentInfoPage() {
                               <div>확장 비용: {accountCount} × {postCount} × ₩10,000 = ₩{formatPrice(accountCount * postCount * 10000)}/월</div>
                               <div className="font-medium border-t pt-1">
                                 월 구독료: ₩{formatPrice(modulePrice)}/월
+                              </div>
+                            </div>
+                          </div>
+                          
+                          {/* 4개 이상 필요시 안내 */}
+                          <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <div className="flex items-start space-x-2">
+                              <Info className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                              <div className="text-xs">
+                                <div className="font-medium text-yellow-800 mb-1">
+                                  💼 4개 이상 아이디/글이 필요하신가요?
+                                </div>
+                                <div className="text-yellow-700 space-y-1">
+                                  <div>• 마케팅 업체 할인가 적용 가능</div>
+                                  <div>• 맞춤형 라이선스 발급</div>
+                                  <div>• 카카오톡 문의: <a href="http://pf.kakao.com/_ShwJn/chat" target="_blank" rel="noopener noreferrer" className="underline font-medium">http://pf.kakao.com/_ShwJn/chat</a></div>
+                                </div>
                               </div>
                             </div>
                           </div>

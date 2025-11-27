@@ -26,8 +26,8 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
   const modules = [
     {
       icon: <PenTool className="w-8 h-8" />,
-      title: "📝 글쓰기 자동화",
-      subtitle: "커스텀 GPT 방식",
+      title: "📝 블로그AI자동화",
+      subtitle: "ChatGPT 5.0 기반 글쓰기",
       gradient: "from-blue-500 to-cyan-600",
       existing: {
         title: "기존 프로그램",
@@ -50,8 +50,8 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
     },
     {
       icon: <MessageCircle className="w-8 h-8" />,
-      title: "💬 댓글 자동화", 
-      subtitle: "AI 맞춤 소통",
+      title: "💬 AI댓글자동화", 
+      subtitle: "Gemini AI 맞춤 소통",
       gradient: "from-green-500 to-emerald-600",
       existing: {
         title: "기존 프로그램",
@@ -74,8 +74,8 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
     },
     {
       icon: <Users className="w-8 h-8" />,
-      title: "👥 서로이웃 자동화",
-      subtitle: "AI 개인화 메시지", 
+      title: "👥 AI서로이웃자동화",
+      subtitle: "개인화된 네트워킹 메시지", 
       gradient: "from-purple-500 to-pink-600",
       existing: {
         title: "기존 프로그램",
@@ -98,7 +98,7 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
     },
     {
       icon: <RotateCcw className="w-8 h-8" />,
-      title: "🔄 대댓글 자동화",
+      title: "🔄 AI대댓글자동화",
       subtitle: "세계 최초 독점 기능",
       gradient: "from-yellow-500 to-orange-600", 
       existing: {
@@ -124,15 +124,15 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
   ]
 
   return (
-    <section className="py-20 bg-background">
+    <section id="module-features" className="py-20 bg-background">
       <div className="container mx-auto">
         <AnimatedSection animation="fade-up" className="text-center mb-16">
           <h2 className="text-title font-bold mb-6">
-            4개 모듈별 <span className="text-gradient">혁신적 차이</span>
+            네이버블로그자동화 핵심 4가지 모듈
           </h2>
           
           <p className="text-body-large text-muted-foreground max-w-3xl mx-auto">
-            각 모듈마다 기존 프로그램과 완전히 다른 접근 방식으로 혁신적인 결과를 만들어냅니다.
+            블로그AI자동화부터 AI댓글자동화, AI서로이웃자동화, 세계최초 AI대댓글자동화까지 완벽한 블로그자동화 시스템입니다.
           </p>
         </AnimatedSection>
 
@@ -242,11 +242,10 @@ export function ModuleFeatures({ onPurchaseClick }: ModuleFeaturesProps) {
         <AnimatedSection animation="fade-up" delay={600} className="text-center mt-16">
           <div className="bg-gradient-to-r from-brand-primary/5 to-brand-accent/5 border border-brand-primary/20 rounded-2xl p-8">
             <h3 className="text-subtitle font-bold mb-4">
-              이 모든 혁신적 기능을 한 번에
+              완벽한 블로그자동화프로그램을 한 번에
             </h3>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              4개 모듈이 완벽하게 연동되어 시너지 효과를 극대화합니다. 
-              멀티계정 관리로 효율성까지 더한 완전한 솔루션을 경험해보세요.
+              블로그AI자동화부터 AI댓글자동화, AI서로이웃자동화, AI대댓글자동화까지 4개 모듈이 완벽하게 연동되어 네이버블로그자동화의 새로운 기준을 제시합니다.
             </p>
             
             <Button 

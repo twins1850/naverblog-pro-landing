@@ -10,8 +10,33 @@ interface HeroProps {
   onPurchaseClick?: () => void
 }
 
+declare global {
+  interface Window {
+    UnicornStudio: {
+      isInitialized: boolean;
+      init?: () => void;
+    };
+  }
+}
+
 export function Hero({ onPurchaseClick }: HeroProps) {
   const [isVideoPlaying, setIsVideoPlaying] = React.useState(false)
+  
+  React.useEffect(() => {
+    // Unicorn Studio 스크립트 로드
+    if (typeof window !== 'undefined' && !window.UnicornStudio) {
+      window.UnicornStudio = { isInitialized: false };
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.35/dist/unicornStudio.umd.js';
+      script.onload = function() {
+        if (!window.UnicornStudio.isInitialized && window.UnicornStudio.init) {
+          window.UnicornStudio.init();
+          window.UnicornStudio.isInitialized = true;
+        }
+      };
+      (document.head || document.body).appendChild(script);
+    }
+  }, [])
 
   const stats = [
     { 
@@ -32,17 +57,20 @@ export function Hero({ onPurchaseClick }: HeroProps) {
   ]
 
   const benefits = [
-    "ChatGPT 4.0 & 5.0 지원으로 고품질 콘텐츠 생성",
-    "완전 자동화된 블로그 포스팅 시스템",
-    "SEO 최적화 및 키워드 자동 삽입",
-    "검색 노출 극대화 전략"
+    "블로그AI자동화로 ChatGPT 4.0 & 5.0 기반 고품질 콘텐츠 생성",
+    "네이버블로그자동화 완전 자동 포스팅 시스템",
+    "AI댓글자동화와 AI서로이웃자동화로 진짜 소통",
+    "세계최초 AI대댓글자동화로 재방문율 300% 증가"
   ]
 
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-to-br from-background via-background to-muted/20 overflow-hidden">
-      {/* 배경 패턴 */}
-      <div className="absolute inset-0 bg-grid opacity-20" />
-      <div className="absolute inset-0 bg-noise" />
+      {/* Unicorn Studio 배경 */}
+      <div 
+        data-us-project="IcM2PA8DF9cFazivL5K1" 
+        className="absolute inset-0"
+        style={{ width: '100%', height: '100%', minHeight: '100vh' }}
+      />
       
       {/* 그라데이션 오버레이 */}
       <div className="absolute inset-0 bg-gradient-to-r from-brand-primary/5 via-transparent to-brand-accent/5" />
@@ -53,38 +81,38 @@ export function Hero({ onPurchaseClick }: HeroProps) {
           <AnimatedSection animation="fade-up" className="space-y-8">
             {/* 배지 */}
             <div className="inline-block px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-red-500 text-sm font-medium mb-4">
-              🚀 기존 블로그 자동화는 잊어주세요
+              🚀 기존 블로그자동화는 잊어주세요
             </div>
 
             {/* 메인 헤딩 */}
             <div className="space-y-6">
               <h1 className="text-display font-bold tracking-tight">
-                진짜 AI가 만드는<br />
-                <span className="text-gradient">진짜 소통</span>의 시대
+                블로그자동화 프로그램<br />
+                <span className="text-gradient">AI댓글자동화</span>의 혁신
               </h1>
               
               <div className="space-y-3 text-body-large">
                 <div className="flex items-center space-x-3">
                   <span className="text-red-500">❌</span>
-                  <span className="line-through text-muted-foreground">"복붙 댓글"</span>
+                  <span className="line-through text-muted-foreground">"기존 댓글자동화"</span>
                   <span className="text-muted-foreground">→</span>
-                  <span className="text-green-500 font-medium">"맞춤형 진심 소통"</span>
+                  <span className="text-green-500 font-medium">"AI댓글자동화로 진짜 소통"</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-red-500">❌</span>
-                  <span className="line-through text-muted-foreground">"기계적 글쓰기"</span>
+                  <span className="line-through text-muted-foreground">"단순 블로그자동화"</span>
                   <span className="text-muted-foreground">→</span>
-                  <span className="text-green-500 font-medium">"전문가급 고품질 콘텐츠"</span>
+                  <span className="text-green-500 font-medium">"네이버블로그자동화 전문"</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <span className="text-red-500">❌</span>
                   <span className="line-through text-muted-foreground">"무차별 서로이웃"</span>
                   <span className="text-muted-foreground">→</span>
-                  <span className="text-green-500 font-medium">"AI 개인화 메시지"</span>
+                  <span className="text-green-500 font-medium">"AI서로이웃자동화 개인화"</span>
                 </div>
                 <div className="flex items-center space-x-3 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-lg p-3">
                   <span className="text-yellow-500">🏆</span>
-                  <span className="font-bold text-yellow-600">세계 최초 대댓글 자동화</span>
+                  <span className="font-bold text-yellow-600">세계 최초 AI대댓글자동화</span>
                 </div>
               </div>
             </div>

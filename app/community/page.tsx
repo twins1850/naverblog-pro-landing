@@ -369,7 +369,7 @@ export default function Community() {
                 <a href="/dashboard" className="block text-blue-600 hover:text-blue-800 text-sm font-medium">
                   📊 성과 대시보드
                 </a>
-                <a href="/tutorials" className="block text-blue-600 hover:text-blue-800 text-sm font-medium">
+                <a href="/#module-features" className="block text-blue-600 hover:text-blue-800 text-sm font-medium">
                   🎥 동영상 튜토리얼
                 </a>
                 <a href="/support" className="block text-blue-600 hover:text-blue-800 text-sm font-medium">
